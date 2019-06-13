@@ -1,0 +1,50 @@
+<template lang="pug">
+  .box
+    article.media
+      .media-left
+        picture.image.is-64x64
+          img.lazyload(:data-srcset="`${item.image}`",
+                       :alt="`Image of ${item.title}`")
+      .media-content
+        .content
+          p
+            strong {{ item.title }}
+            br
+            span.itemCount {{ item.count }}
+            |  x {{ item.amount*1 | usdollar }} = ${{ item.count * item.amount }}
+        nav.level.is-mobile
+          .level-left
+            a.level-item.removeItem(@click="removeItem(item)", title="Remove")
+              span.icon.is-small
+                i.fa.fa-trash-alt
+            a.level-item
+              span.icon.is-small
+                i.fa.fa-retweet
+            a.level-item
+              span.icon.is-small
+                i.fa.fa-heart
+</template>
+
+<script>
+import { createNamespacedHelpers } from "vuex";
+
+const { mapActions } = createNamespacedHelpers("cart");
+
+export default {
+  name: "CartProductListItem",
+  filters: {
+    usdollar: function(value) {
+      return `$${value}`;
+    }
+  },
+  props: {
+    item: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: {
+    ...mapActions(["removeItem"])
+  }
+};
+</script>
