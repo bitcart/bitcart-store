@@ -37,11 +37,11 @@ describe('ProductListItem', () => {
   })
 
   it('show name of item', () => {
-    b.see(firstProduct.name, '.media-content p.title')
+    b.see(firstProduct.title, '.media-content p.title')
   })
 
   it('show price of item', () => {
-    b.see(`$${firstProduct.price}`, '.item-price')
+    b.see(`$${firstProduct.amount}`, '.item-price')
   })
 
   it('call addItem action when click on btn item', () => {

@@ -1,5 +1,3 @@
-import { firebaseAction } from 'vuexfire'
-import { db } from '@/plugins/firebase'
 import axios from 'axios'
 
 export default {
