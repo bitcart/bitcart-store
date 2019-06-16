@@ -2,5 +2,5 @@
   "extends": [
     "config:base"
   ],
-  "prCreation": "not-pending"
+  "schedule": "every weekend"
 }
