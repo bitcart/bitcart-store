@@ -1,4 +1,4 @@
-
+require('dotenv').config()
 export default {
   mode: 'universal',
   /*
@@ -18,7 +18,10 @@ export default {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: { color: '#3B8070' },
+  manifest: {
+    theme_color: '#3B8070'
+  },
   /*
   ** Global CSS
   */
@@ -28,13 +31,21 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '~plugins/axios.js', mode: 'client' }
   ],
   /*
   ** Nuxt.js modules
   */
   modules: [
     '@nuxtjs/pwa',
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
+    ['nuxt-env', {
+      keys: [
+        { key: 'BITCART_FRONTEND_URL' },
+        { key: 'BITCART_FRONTEND_USER' },
+        { key: 'BITCART_FRONTEND_PASS' }
+      ]
+    }]
   ],
   /*
   ** Build configuration

@@ -1,55 +1,75 @@
-<template>
-  <div>
-    <nuxt />
-  </div>
+<template lang="pug">
+  section.hero
+    .hero-head
+      app-header
+    .hero-body
+      nuxt
+    .hero-footer
+      .container
+        p © Bitcart 2018-2019
+    </nav>
 </template>
 
-<style>
+<script>
+import Header from '@/components/Header'
+
+export default {
+  components: { AppHeader: Header }
+}
+</script>
+
+<style lang="stylus">
+@require '../node_modules/bulma/css/bulma.min.css';
+@require '../node_modules/@fortawesome/fontawesome-free/css/all.css';
+@require './css/_transition';
+@require './css/_slider';
+
 html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
+  overflow-y: auto;
 }
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
+.section {
+  padding: 3rem 0 1.5rem;
 }
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
+.hero {
+  min-height: 100vh;
+
+  .hero-body {
+    flex: 1;
+  }
+
+  .hero-footer {
+    margin-bottom: 0.5rem;
+  }
 }
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
+.is-light {
+  background-color: #f5f5f5;
+  color: #363636;
 }
 
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
+$card-radius = 5px;
+
+.is-radius {
+  border-radius: $card-radius;
 }
 
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+@media (max-width: 600px) {
+  aside {
+    width: 100% !important;
+    margin-bottom: 10px !important;
+  }
+
+  .content {
+    width: 100% !important;
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .content {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
 }
 </style>

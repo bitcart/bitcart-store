@@ -1,72 +1,46 @@
-<template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        bitcart
-      </h1>
-      <h2 class="subtitle">
-        A project to simplify cryptocurrencies integration
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+  .container
+    .section
+      app-hero
+    .section.capsule.is-clearfix
+      app-sidebar(:pricerange.sync="highprice")
+      transition-group.content.is-pulled-right(name="items", tag="div")
+        app-product-list-item(v-for="product in products",
+                              :key="product['id']",
+                              :item="product")
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import { createNamespacedHelpers } from 'vuex'
+import Hero from '@/components/Hero'
+import ProductListItem from '@/components/ProductListItem'
+import Sidebar from '@/components/Sidebar'
+
+const { mapGetters } = createNamespacedHelpers('product')
 
 export default {
   components: {
-    Logo
+    AppHero: Hero,
+    AppProductListItem: ProductListItem,
+    AppSidebar: Sidebar
+  },
+  computed: {
+    ...mapGetters(['products', 'highprice'])
+  },
+  created() {
+    this.$store.dispatch('product/setProductsRef')
   }
 }
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+<style lang="stylus" scoped>
+.content {
+  /* no grid support */
+  width: 79.7872%;
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+  padding: 0;
 }
 </style>
