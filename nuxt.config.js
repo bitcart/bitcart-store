@@ -31,13 +31,14 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    { src: '~plugins/axios.js', mode: 'client' }
+    '~plugins/axios.js'
   ],
   /*
   ** Nuxt.js modules
   */
   modules: [
     '@nuxtjs/pwa',
+    '@nuxtjs/axios',
     '@nuxtjs/eslint-module',
     ['nuxt-env', {
       keys: [
@@ -47,6 +48,13 @@ export default {
       ]
     }]
   ],
+  axios: {
+    baseURL: process.env.BITCART_FRONTEND_URL,
+    auth: {
+      username: process.env.BITCART_FRONTEND_USER,
+      password: process.env.BITCART_FRONTEND_PASS
+    }
+  },
   /*
   ** Build configuration
   */
