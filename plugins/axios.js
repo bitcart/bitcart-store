@@ -1,6 +1,6 @@
+import axios from 'axios'
 
-export default function ({ $axios }) {
-  $axios.defaults.headers.common.Authorization = `Token ` + process.env.BITCART_FRONTEND_TOKEN
-  // $axios.setToken(process.env.BITCART_FRONTEND_TOKEN, 'Token')
-  // Consola.log($axios.defaults.headers.common.Authorization)
-}
+const instance = axios.create({ baseURL: process.env.BITCART_FRONTEND_URL })
+instance.defaults.headers.common.Authorization = 'Token ' + process.env.BITCART_FRONTEND_TOKEN
+
+export default instance

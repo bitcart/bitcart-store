@@ -31,30 +31,18 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~plugins/axios.js'
+    '~plugins/axios.js',
+    '~/plugins/lazysizes.js'
   ],
   /*
   ** Nuxt.js modules
   */
   modules: [
     '@nuxtjs/pwa',
-    '@nuxtjs/axios',
-    '@nuxtjs/eslint-module',
-    ['nuxt-env', {
-      keys: [
-        { key: 'BITCART_FRONTEND_URL' },
-        { key: 'BITCART_FRONTEND_USER' },
-        { key: 'BITCART_FRONTEND_PASS' }
-      ]
-    }]
+    '@nuxtjs/dotenv',
+    '@nuxtjs/eslint-module'
+
   ],
-  axios: {
-    baseURL: process.env.BITCART_FRONTEND_URL,
-    auth: {
-      username: process.env.BITCART_FRONTEND_USER,
-      password: process.env.BITCART_FRONTEND_PASS
-    }
-  },
   /*
   ** Build configuration
   */

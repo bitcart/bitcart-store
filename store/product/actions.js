@@ -1,4 +1,4 @@
-import Consola from 'consola'
+import axios from '~/plugins/axios'
 
 export default {
   switchSale: ({ commit }) =>
@@ -7,9 +7,6 @@ export default {
     commit('UPDATE_HIGH_PRICE', value),
   setCategory: ({ commit }, value) =>
     commit('SET_CATEGORY', value),
-  setProductsRef: async function ({ commit }) {
-    const data = (await this.$axios.$get('/api/v1/product/?format=json')).results
-    Consola.log(data)
-    commit('SET_PRODUCTS', data)
-  }
+  setProductsRef: ({ commit }) =>
+    axios.get('/api/v1/product/?format=json').then(r => commit('SET_PRODUCTS', r.data.results))
 }
