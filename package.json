@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "yarn lint",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
