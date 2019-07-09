@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  web:
+    restart: unless-stopped
+    image: my_app
+    ports:
+      - "5000"
+    environment: 
+      BITCART_FRONTEND_URL: ${BITCART_FRONTEND_URL}
+      BITCART_FRONTEND_TOKEN: ${BITCART_FRONTEND_TOKEN}

@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const instance = axios.create({ baseURL: process.env.BITCART_FRONTEND_URL })
-instance.defaults.headers.common.Authorization = 'Token ' + process.env.BITCART_FRONTEND_TOKEN
-
-export default instance
+export default ({ store }, inject) => {
+  const instance = axios.create({ baseURL: store.state.env.URL })
+  instance.defaults.headers.common.Authorization = 'Token ' + store.state.env.TOKEN
+  inject('axios', instance)
+}

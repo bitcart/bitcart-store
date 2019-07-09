@@ -1,4 +1,3 @@
-require('dotenv').config()
 export default {
   mode: 'universal',
   /*
@@ -39,7 +38,6 @@ export default {
   */
   modules: [
     '@nuxtjs/pwa',
-    '@nuxtjs/dotenv',
     '@nuxtjs/eslint-module'
 
   ],
