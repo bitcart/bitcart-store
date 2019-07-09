@@ -41,8 +41,7 @@ jobs:
       - image: circleci/node:12.6.0
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
+      - setup_remote_docker
       - run: |
           docker build -t $DOCKER_IMAGE:latest .
           docker login -u $DOCKER_USER -p $DOCKER_PASS
