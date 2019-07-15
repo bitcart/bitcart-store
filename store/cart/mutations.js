@@ -6,18 +6,18 @@ const calculateAmount = obj =>
 export default {
   ADD_ITEM: (state, item) => {
     state.total++
-    if (item.name in state.cart) {
-      state.cart[item.name].count++
+    if (item.id in state.cart) {
+      state.cart[item.id].count++
     } else {
       const stateItem = { ...item }
       stateItem.count = 1
-      state.cart[item.name] = stateItem
+      state.cart[item.id] = stateItem
     }
     state.amount = calculateAmount(state.cart)
   },
   REMOVE_ITEM: (state, item) => {
     state.total = state.total - item.count
-    delete state.cart[item.name]
+    delete state.cart[item.id]
     state.amount = calculateAmount(state.cart)
   },
   CLEAR_CONTENTS: (state) => { state.cart = {} },

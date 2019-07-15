@@ -31,7 +31,9 @@ export default {
   */
   plugins: [
     '~plugins/axios.js',
-    '~/plugins/lazysizes.js'
+    '~/plugins/lazysizes.js',
+    '~/plugins/veeValidate.js',
+    '~/plugins/vueQr.js'
   ],
   /*
   ** Nuxt.js modules

@@ -22,21 +22,9 @@
             p.help.is-danger(v-if="errors.has('email')") {{ errors.first('email') }}
 
         .field
-          label.label(for="card") Credit Card
-          p.help
-            | Test using this credit card:&nbsp;
-            strong 4242 4242 4242 4242,<br>
-            | and enter any 5 digits for the zip code
-
-        .field
-          card.stripe-card.input#card(:class="{ 'complete': isStripeCardCompleted }",
-                                      :stripe="stripePublishableKey",
-                                      @change="setIsStripeCardCompleted($event.complete)")
-
-        .field
-          button.button.is-success.pay-with-stripe(:disabled="!isStripeCardCompleted || errors.any()",
+          button.button.is-success.pay-with-stripe(:disabled="errors.any()",
                                                    :class="{ 'is-loading': isLoading }")
-            | Pay with credit card
+            | Generate invoice
 
       .statusFailure.has-text-centered(v-if="status === 'failure'")
         h3 Oh No!
@@ -47,12 +35,13 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-
+import Consola from 'consola'
 const { mapActions, mapGetters } = createNamespacedHelpers('checkout')
 const STRIPE_URL = process.env.STRIPE_URL
 
 export default {
   name: 'Checkout',
+
   props: {
     total: {
       type: [Number, String],
@@ -78,20 +67,17 @@ export default {
       'pay',
       'setIsStripeCardCompleted',
       'setStatus'
+
     ]),
 
     async beforePay() {
       const isAllFieldsValid = await this.$validator.validateAll()
+      Consola.log(isAllFieldsValid)
       if (!isAllFieldsValid) {
         this.setStatus('failure')
         return
       }
-
-      await this.pay({
-        userEmail: this.userEmail,
-        total: this.total,
-        url: this.stripeUrl
-      })
+      await this.$emit('pay')
     }
   }
 }

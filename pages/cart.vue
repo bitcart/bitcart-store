@@ -16,7 +16,9 @@
               button.button.is-success.is-pulled-right(@click="setActualStep(1)") > Next
 
           div(v-if="actualStep === 1")
-            Checkout(:total="amount")
+            Checkout(:total="amount", v-on:pay="setActualStep(2)")
+          div(v-if="actualStep === 2")
+            CheckoutModal(:total="amount", :cart="Object.keys(cart)", v-on:close="setActualStep(3)")
 
         .empty.has-text-centered(v-else-if="!total && !success")
           h3 Your cart is empty.
@@ -33,6 +35,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 import Checkout from '@/components/Checkout'
+import CheckoutModal from '@/components/CheckoutModal'
 import CartProductListItem from '@/components/CartProductListItem'
 import StepMenu from '@/components/StepMenu'
 import stepMenuContent from '@/components/StepMenu/stepMenuContent.json'
@@ -40,13 +43,11 @@ import stepMenuContent from '@/components/StepMenu/stepMenuContent.json'
 const { mapGetters, mapActions } = createNamespacedHelpers('cart')
 
 export default {
-  head: {
-    script: [{ src: 'https://js.stripe.com/v3/' }]
-  },
   components: {
     StepMenu,
     CartProductListItem,
-    Checkout
+    Checkout,
+    CheckoutModal
   },
   filters: {
     usdollar: value => `$${value}`
