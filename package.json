@@ -31,7 +31,7 @@
     "vee-validate": "^2.2.13"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config": "^1.0.1",
+    "@nuxtjs/eslint-config": "^1.1.2",
     "@nuxtjs/eslint-module": "^1.0.0",
     "@vue/test-utils": "^1.0.0-beta.27",
     "babel-core": "7.0.0-bridge.0",
