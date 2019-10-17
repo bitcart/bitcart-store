@@ -44,9 +44,9 @@ export default {
   beforeMount () {
     Consola.log(this.total)
     Consola.log(this.cart)
-    this.$axios.get('api/v1/rate/').then((r) => {
+    this.$axios.get('rate').then((r) => {
       this.amount = parseFloat(this.total / r.data).toFixed(8)
-      this.$axios.post('/api/v1/invoice/', { products: this.cart, amount: this.amount }).then((res) => {
+      this.$axios.post('invoices', { products: this.cart, amount: this.amount }).then((res) => {
         Consola.log(res.data)
         this.bitcoin_address = res.data.bitcoin_address
         this.message = `Waiting for ${this.amount} BTC payment`

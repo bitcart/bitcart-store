@@ -8,6 +8,6 @@ export default {
   setCategory: ({ commit }, value) =>
     commit('SET_CATEGORY', value),
   setProductsRef ({ commit }) {
-    this.$axios.get('/api/v1/product/?format=json').then(r => commit('SET_PRODUCTS', r.data.results))
+    this.$axios.get('/products').then(r => commit('SET_PRODUCTS', r.data.result))
   }
 }
