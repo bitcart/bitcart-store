@@ -45,7 +45,7 @@ export default {
       default: 300
     }
   },
-  data() {
+  data () {
     return {
       min: 0,
       max: 400

@@ -25,7 +25,7 @@ const { mapGetters } = createNamespacedHelpers('cart')
 
 export default {
   name: 'AppHeader',
-  head() {
+  head () {
     return {
       htmlAttrs: {
         class: this.isIndexRoute && 'has-navbar-fixed-top'
@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     ...mapGetters(['total']),
-    isIndexRoute() {
+    isIndexRoute () {
       return this.$route.name === 'index'
     }
   }

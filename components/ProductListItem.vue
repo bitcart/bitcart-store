@@ -37,7 +37,7 @@ export default {
     }
   },
   computed: {
-    slug() {
+    slug () {
       return slug(this.item.title)
     }
   },

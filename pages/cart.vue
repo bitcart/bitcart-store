@@ -58,7 +58,7 @@ export default {
   computed: {
     ...mapGetters(['cart', 'total', 'amount', 'success', 'actualStep'])
   },
-  beforeDestroy() {
+  beforeDestroy () {
     this.success && this.setSuccess(false)
     this.setActualStep(0)
   },

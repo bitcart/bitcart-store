@@ -33,7 +33,7 @@ const { mapActions } = createNamespacedHelpers('cart')
 export default {
   name: 'CartProductListItem',
   filters: {
-    usdollar: function (value) {
+    usdollar (value) {
       return `$${value}`
     }
   },

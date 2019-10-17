@@ -52,7 +52,7 @@ export default {
       default: STRIPE_URL
     }
   },
-  data() {
+  data () {
     return {
       userEmail: undefined,
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY
@@ -70,7 +70,7 @@ export default {
 
     ]),
 
-    async beforePay() {
+    async beforePay () {
       const isAllFieldsValid = await this.$validator.validateAll()
       Consola.log(isAllFieldsValid)
       if (!isAllFieldsValid) {

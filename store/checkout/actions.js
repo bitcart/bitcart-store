@@ -41,7 +41,7 @@ export default {
     }
     commit('SET_IS_LOADING', false)
   },
-  clearCheckout({ commit }) {
+  clearCheckout ({ commit }) {
     commit('SET_IS_SUBMITTED', false)
     commit('SET_IS_STRIPE_CARD_COMPLETED', false)
     commit('SET_STATUS', '')

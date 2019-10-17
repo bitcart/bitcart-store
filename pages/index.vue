@@ -27,7 +27,7 @@ export default {
   computed: {
     ...mapGetters(['products', 'highprice'])
   },
-  created() {
+  created () {
     this.$store.dispatch('product/setProductsRef')
   }
 }

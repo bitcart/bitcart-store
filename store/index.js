@@ -3,12 +3,12 @@ export const state = () => ({
 })
 
 export const mutations = {
-  setEnv(state, env) {
+  setEnv (state, env) {
     state.env = env
   }
 }
 export const actions = {
-  nuxtServerInit({ commit }) {
+  nuxtServerInit ({ commit }) {
     if (process.server) {
       commit('setEnv', {
         URL: process.env.BITCART_FRONTEND_URL,

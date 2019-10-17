@@ -31,7 +31,7 @@ export default {
       required: true
     }
   },
-  data: function () {
+  data () {
     return {
       network: process.env.VUE_APP_BITCOIN_NETWORK || 'mainnet',
       bitcoin_address: process.env.VUE_APP_BITCOIN_ADDRESS,
@@ -41,7 +41,7 @@ export default {
     }
   },
 
-  beforeMount() {
+  beforeMount () {
     Consola.log(this.total)
     Consola.log(this.cart)
     this.$axios.get('api/v1/rate/').then((r) => {
@@ -70,11 +70,11 @@ export default {
     })
   },
   methods: {
-    completedPayment() {
+    completedPayment () {
       this.showCheckout = false
       this.message = `Thank you for your payment.<br><a class="b green" href="${process.env.VUE_APP_CONTENT_URL}" target="_blank">Click here to download.</a>`
     },
-    combineURLs(baseURL, relativeURL) {
+    combineURLs (baseURL, relativeURL) {
       return relativeURL
         ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
         : baseURL

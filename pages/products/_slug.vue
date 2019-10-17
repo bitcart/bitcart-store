@@ -23,20 +23,20 @@ const { mapGetters } = createNamespacedHelpers('product')
 export default {
   computed: {
     ...mapGetters(['productFromSlugParamRoute']),
-    item() {
+    item () {
       return this.productFromSlugParamRoute(this.$route.params.slug)
     }
   },
-  fetch({ store, error, params }) {
+  fetch ({ store, error, params }) {
     !store.state.products && store.dispatch('product/setProductsRef')
   },
 
   methods: {
-    addItem(item) {
+    addItem (item) {
       return this.$store.dispatch('cart/addItem', item)
     }
   },
-  head() {
+  head () {
     return this.item
       ? {
         title: `${this.item.title} | ${this.$store.getters['pkg/name']}`
