@@ -3,5 +3,6 @@ export default () => ({
   amount: 0,
   actualStep: 0,
   cart: {},
+  userEmail: undefined,
   success: false
 })

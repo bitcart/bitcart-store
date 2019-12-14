@@ -4,11 +4,11 @@
       .media-left
         picture.image.is-64x64
           img.lazyload(:data-srcset="`${item.image}`",
-                       :alt="`Image of ${item.title}`")
+                       :alt="`Image of ${item.name}`")
       .media-content
         .content
           p
-            strong {{ item.title }}
+            strong {{ item.name }}
             br
             span.itemCount {{ item.count }}
             |  x {{ item.amount*1 | usdollar }} = ${{ item.count * item.amount }}

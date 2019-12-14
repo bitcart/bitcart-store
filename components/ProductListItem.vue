@@ -4,12 +4,12 @@
       nuxt-link(exact, :to="{name: 'products-slug', params: { slug: `${slug}` } }")
         picture.image
           img.lazyload(:data-srcset="`${item.image}`",
-                       :alt="`Image of ${item.title}`")
+                       :alt="`Image of ${item.name}`")
     .card-content
       .media
         .media-content
           nuxt-link(exact, :to="{name: 'products-slug', params: { slug: `${slug}` } }")
-            p.title.is-5 {{ item.title }}
+            p.title.is-5 {{ item.name }}
             p.item-price {{ item.amount*1 | usdollar }}
         .media-right
           p.field
@@ -38,7 +38,7 @@ export default {
   },
   computed: {
     slug () {
-      return slug(this.item.title)
+      return slug(this.item.name)
     }
   },
   methods: {

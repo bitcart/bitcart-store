@@ -12,5 +12,7 @@ export default {
   setActualStep: ({ commit }, value) =>
     commit('SET_ACTUAL_STEP', value),
   setTotal: ({ commit }, value) =>
-    commit('SET_TOTAL', value)
+    commit('SET_TOTAL', value),
+  setUserEmail: ({ commit }, value) =>
+    commit('SET_USER_EMAIL', value)
 }

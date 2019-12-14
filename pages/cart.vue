@@ -8,7 +8,7 @@
           div(v-if="actualStep === 0")
             transition-group.content(name="items", tag="div")
               CartProductListItem(v-for="item in cart",
-                                  :key="item.title",
+                                  :key="item.name",
                                   :item="item")
 
             .is-clearfix
@@ -56,7 +56,7 @@ export default {
     stepMenuContent
   }),
   computed: {
-    ...mapGetters(['cart', 'total', 'amount', 'success', 'actualStep'])
+    ...mapGetters(['cart', 'total', 'amount', 'success', 'actualStep', 'userEmail'])
   },
   beforeDestroy () {
     this.success && this.setSuccess(false)

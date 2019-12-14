@@ -6,7 +6,7 @@
       .navbar-brand
         nuxt-link.navbar-item(exact, :to="{name: 'index'}")
           strong
-            i Bitcart
+            i {{$store.state.store.name}}
       .navbar-end.is-flex-touch
         .navbar-item
           .field

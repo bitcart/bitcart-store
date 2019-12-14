@@ -10,9 +10,9 @@
           .control.has-icons-left.has-icons-right
             input.input#email(type="email",
                               required,
-                              v-model="userEmail",
                               placeholder="name@example.com",
                               name="email",
+                              @input="setUserEmail($event.target.value)"
                               v-validate="'required|email'",
                               :class="{ 'is-danger': errors.has('email') }")
             span.icon.is-small.is-left
@@ -34,9 +34,8 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-import Consola from 'consola'
-const { mapActions, mapGetters } = createNamespacedHelpers('checkout')
+import { mapActions, mapGetters } from 'vuex'
+
 const STRIPE_URL = process.env.STRIPE_URL
 
 export default {
@@ -54,25 +53,24 @@ export default {
   },
   data () {
     return {
-      userEmail: undefined,
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY
     }
   },
   computed: {
-    ...mapGetters(['isStripeCardCompleted', 'status', 'isLoading'])
+    ...mapGetters('checkout', ['isStripeCardCompleted', 'status', 'isLoading']),
+    ...mapGetters('cart', ['userEmail'])
   },
   methods: {
-    ...mapActions([
+    ...mapActions('cart', [
       'clearCheckout',
       'pay',
       'setIsStripeCardCompleted',
-      'setStatus'
-
+      'setStatus',
+      'setUserEmail'
     ]),
 
     async beforePay () {
       const isAllFieldsValid = await this.$validator.validateAll()
-      Consola.log(isAllFieldsValid)
       if (!isAllFieldsValid) {
         this.setStatus('failure')
         return

@@ -14,7 +14,10 @@
 import Header from '@/components/Header'
 
 export default {
-  components: { AppHeader: Header }
+  components: { AppHeader: Header },
+  beforeCreate () {
+    this.$store.dispatch('syncStats')
+  }
 }
 </script>
 

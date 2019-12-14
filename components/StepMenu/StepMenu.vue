@@ -8,7 +8,7 @@
         span.icon
           i.fa(:class="item.icon")
       .step-details(:class="[actualStep < index && 'has-text-grey-light']")
-        p.step-title {{item.title}}
+        p.step-title {{item.name}}
 </template>
 
 <script>

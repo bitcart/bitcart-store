@@ -18,7 +18,11 @@
 </template>
 
 <script>
-import Consola from 'consola'
+import Cookies from 'js-cookie'
+import { createNamespacedHelpers } from 'vuex'
+
+const { mapGetters } = createNamespacedHelpers('cart')
+
 export default {
   name: 'Modal',
   props: {
@@ -40,27 +44,22 @@ export default {
       showCheckout: true
     }
   },
-
+  computed: {
+    ...mapGetters(['userEmail'])
+  },
   beforeMount () {
-    Consola.log(this.total)
-    Consola.log(this.cart)
     this.$axios.get('rate').then((r) => {
       this.amount = parseFloat(this.total / r.data).toFixed(8)
-      this.$axios.post('invoices', { products: this.cart, amount: this.amount }).then((res) => {
-        Consola.log(res.data)
+      this.$axios.post('invoices', { products: this.cart, amount: this.amount, buyer_email: this.userEmail }).then((res) => {
         this.bitcoin_address = res.data.bitcoin_address
         this.message = `Waiting for ${this.amount} BTC payment`
-        Consola.log(this.$store.state.env.URL)
-        let url = this.combineURLs(`${this.$store.state.env.URL}`, `/i/${res.data.id}/status/ws/`)
+        let url = this.combineURLs(`${this.$store.state.env.URL}`, `ws/invoices/${res.data.id}`)
         url = url.replace(`http://`, `ws://`).replace(`https://`, `wss://`)
-        Consola.log(url)
+        url += `?token=${Cookies.get('access_token')}`
         const ref = this
         const websocket = new WebSocket(url)
         websocket.onmessage = function (event) {
           const status = JSON.parse(event.data).status
-          Consola.log(event.data)
-          Consola.log(status)
-          Consola.log(this)
           if (status === 'complete') {
             ref.showCheckout = false
             ref.message = 'Thank you for paying!'

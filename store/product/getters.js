@@ -18,7 +18,7 @@ export default {
     getProductsByCategory(getProductsUnderHighPrice(products, showSale, highprice), categorySelected),
 
   productFromSlugParamRoute: ({ products }) => paramSlug =>
-    products.find(({ title }) => slug(title) === paramSlug),
+    products.find(({ name }) => slug(name) === paramSlug),
 
   categories: ({ products }) =>
     ['all', ...new Set(products.map(({ article }) => article))].sort(),

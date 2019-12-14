@@ -21,7 +21,7 @@
             :value="category") {{ category }}
     .sidearea
       h4.subtitle.is-5 Contact Us
-      p Contact data
+      p {{$store.state.store.email}}
 </template>
 
 <script>
@@ -48,7 +48,7 @@ export default {
   data () {
     return {
       min: 0,
-      max: 400
+      max: 4000
     }
   },
   computed: {

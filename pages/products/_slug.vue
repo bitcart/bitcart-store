@@ -4,10 +4,10 @@
       .column.is-5
         picture.image.is-square
           img.lazyload(:data-srcset="`${item.image}`",
-                       :alt="`Image of ${item.title}`")
+                       :alt="`Image of ${item.name}`")
 
       .column.is-6.is-offset-1
-        h1.title.is-2 {{ item.title }}
+        h1.title.is-2 {{ item.name }}
         h2.subtitle.is-4 {{item.description}}
         p.is-size-6 ${{ item.amount*1 }}
         br
@@ -39,7 +39,7 @@ export default {
   head () {
     return this.item
       ? {
-        title: `${this.item.title} | ${this.$store.getters['pkg/name']}`
+        title: `${this.item.name} | ${this.$store.getters['package/name']}`
       }
       : false
   }
