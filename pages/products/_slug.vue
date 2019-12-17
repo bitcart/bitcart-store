@@ -2,8 +2,8 @@
   .container.has-text-centered(v-if="item")
     .columns.is-vcentered
       .column.is-5
-        picture.image.is-square
-          img.lazyload(:data-srcset="`${item.image}`",
+        picture.image.is_square
+          img.lazyload(:data-srcset="`${productURL(item.image)}`",
                        :alt="`Image of ${item.name}`")
 
       .column.is-6.is-offset-1
@@ -27,13 +27,21 @@ export default {
       return this.productFromSlugParamRoute(this.$route.params.slug)
     }
   },
-  fetch ({ store, error, params }) {
-    !store.state.products && store.dispatch('product/setProductsRef')
+  created () {
+    !this.$store.state.products && this.$store.dispatch('product/setProductsRef')
   },
 
   methods: {
     addItem (item) {
       return this.$store.dispatch('cart/addItem', item)
+    },
+    combineURLs (baseURL, relativeURL) {
+      return relativeURL
+        ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+        : baseURL
+    },
+    productURL (url) {
+      return this.combineURLs(`${this.$store.state.env.URL}`, url)
     }
   },
   head () {

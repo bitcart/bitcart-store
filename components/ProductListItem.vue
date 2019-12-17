@@ -2,8 +2,8 @@
   .card.is-radius
     .card-image
       nuxt-link(exact, :to="{name: 'products-slug', params: { slug: `${slug}` } }")
-        picture.image
-          img.lazyload(:data-srcset="`${item.image}`",
+        picture.image.image-preview
+          img.lazyload(:data-srcset="`${productURL(item.image)}`",
                        :alt="`Image of ${item.name}`")
     .card-content
       .media
@@ -42,7 +42,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['addItem'])
+    ...mapActions(['addItem']),
+    combineURLs (baseURL, relativeURL) {
+      return relativeURL
+        ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+        : baseURL
+    },
+    productURL (url) {
+      return this.combineURLs(`${this.$store.state.env.URL}`, url)
+    }
   }
 }
 </script>

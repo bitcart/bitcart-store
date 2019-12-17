@@ -31,6 +31,14 @@ html {
   overflow-y: auto;
 }
 
+.image-preview {
+  width: auto;
+  height: auto;
+  max-width: 200px;
+  max-height: 200px;
+  vertical-align: middle;
+}
+
 .section {
   padding: 3rem 0 1.5rem;
 }

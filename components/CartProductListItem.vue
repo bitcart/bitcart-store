@@ -3,7 +3,7 @@
     article.media
       .media-left
         picture.image.is-64x64
-          img.lazyload(:data-srcset="`${item.image}`",
+          img.lazyload(:data-srcset="`${productURL(item.image)}`",
                        :alt="`Image of ${item.name}`")
       .media-content
         .content
@@ -44,7 +44,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['removeItem'])
+    ...mapActions(['removeItem']),
+    combineURLs (baseURL, relativeURL) {
+      return relativeURL
+        ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+        : baseURL
+    },
+    productURL (url) {
+      return this.combineURLs(`${this.$store.state.env.URL}`, url)
+    }
   }
 }
 </script>
