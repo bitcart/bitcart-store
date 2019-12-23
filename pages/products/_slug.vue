@@ -27,8 +27,8 @@ export default {
       return this.productFromSlugParamRoute(this.$route.params.slug)
     }
   },
-  created () {
-    !this.$store.state.products && this.$store.dispatch('product/setProductsRef')
+  async fetch ({ store }) {
+    await store.dispatch('product/setProductsRefAsync')
   },
 
   methods: {
