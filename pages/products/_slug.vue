@@ -45,11 +45,21 @@ export default {
     }
   },
   head () {
-    return this.item
-      ? {
-        title: `${this.item.name} | ${this.$store.getters['package/name']}`
+    if (this.item) {
+      const headData = {
+        title: `${this.item.name} | ${this.$store.getters['package/name']}`,
+        meta: [
+          { hid: 'og:title', property: 'og:title', content: this.item.name },
+          { hid: 'og:type', property: 'og:type', content: 'article' },
+          { hid: 'og:url', property: 'og:url', content: new URL(this.$route.path, document.location).href }
+
+        ]
       }
-      : false
+      if (this.item.description) { headData.meta.push({ hid: 'og:description', property: 'og:description', content: this.item.description }) }
+      if (this.item.image) { headData.meta.push({ hid: 'og:image', property: 'og:image', content: this.productURL(this.item.image) }) }
+      return headData
+    }
+    return false
   }
 }
 </script>
