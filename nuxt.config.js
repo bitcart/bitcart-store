@@ -27,6 +27,9 @@ export default {
   */
   css: [
   ],
+  router: {
+    middleware: 'axiosRefresh'
+  },
   /*
   ** Plugins to load before mounting the App
   */

@@ -1,6 +1,7 @@
 export const state = () => ({
   env: {},
-  store: {}
+  store: {},
+  url: ''
 })
 
 export const mutations = {
@@ -9,7 +10,13 @@ export const mutations = {
   },
   store (state, val) {
     state.store = val
+  },
+  SET_CURRENT_URL (state, val) {
+    state.url = val
   }
+}
+export const getters = {
+  url: ({ url }) => url
 }
 export const actions = {
   nuxtServerInit ({ commit }) {

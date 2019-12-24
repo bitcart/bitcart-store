@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import isHTTPS from 'is-https'
 import { createNamespacedHelpers } from 'vuex'
 
 const { mapGetters } = createNamespacedHelpers('product')
@@ -27,8 +28,17 @@ export default {
       return this.productFromSlugParamRoute(this.$route.params.slug)
     }
   },
-  async fetch ({ store }) {
-    await store.dispatch('product/setProductsRefAsync')
+  fetch ({ store, req, app }) {
+    app.$axios.defaults.baseURL = store.state.env.URL
+    let url = ''
+    if (req) {
+      url = req.headers.host
+      if (isHTTPS(req)) { url = 'https://' + url } else { url = 'http://' + url }
+    } else { url = window.location.origin }
+    store.commit('SET_CURRENT_URL', url)
+    return app.$axios.get('/products').then((r) => {
+      store.commit('product/SET_PRODUCTS', r.data.result)
+    })
   },
 
   methods: {
@@ -45,13 +55,15 @@ export default {
     }
   },
   head () {
+    let url = ''
+    if (process.server) { const URL = require('url').URL; url = new URL(this.$route.path, this.$store.getters.url).href } else { url = new URL(this.$route.path, this.$store.getters.url).href }
     if (this.item) {
       const headData = {
         title: `${this.item.name} | ${this.$store.getters['package/name']}`,
         meta: [
           { hid: 'og:title', property: 'og:title', content: this.item.name },
           { hid: 'og:type', property: 'og:type', content: 'article' },
-          { hid: 'og:url', property: 'og:url', content: new URL(this.$route.path, document.location).href }
+          { hid: 'og:url', property: 'og:url', content: url }
 
         ]
       }

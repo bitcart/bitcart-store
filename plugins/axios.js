@@ -1,11 +1,19 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-export default ({ store }, inject) => {
+function getCookie (cookieName, stringCookie) {
+  if (!stringCookie) { return undefined }
+  const strCookie = new RegExp('' + cookieName + '[^;]+').exec(stringCookie)[0]
+  return unescape(strCookie ? strCookie.toString().replace(/^[^=]+./, '') : '')
+}
+
+export default ({ store, req }, inject) => {
   const instance = axios.create({ baseURL: store.state.env.URL })
   instance.interceptors.request.use(
     (config) => {
-      config.headers.authorization = `Bearer ${Cookies.get('access_token')}`
+      if (req) {
+        config.headers.authorization = `Bearer ${getCookie('access_token', req.headers.cookie)}`
+      } else { config.headers.authorization = `Bearer ${Cookies.get('access_token')}` }
       return config
     },
     err => Promise.reject(err)
