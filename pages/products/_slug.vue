@@ -28,17 +28,14 @@ export default {
       return this.productFromSlugParamRoute(this.$route.params.slug)
     }
   },
-  fetch ({ store, req, app }) {
-    app.$axios.defaults.baseURL = store.state.env.URL
+  fetch ({ store, req }) {
     let url = ''
     if (req) {
       url = req.headers.host
       if (isHTTPS(req)) { url = 'https://' + url } else { url = 'http://' + url }
     } else { url = window.location.origin }
     store.commit('SET_CURRENT_URL', url)
-    return app.$axios.get('/products').then((r) => {
-      store.commit('product/SET_PRODUCTS', r.data.result)
-    })
+    return store.dispatch('product/setProductsRef')
   },
 
   methods: {
