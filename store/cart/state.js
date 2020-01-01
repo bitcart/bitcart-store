@@ -4,5 +4,6 @@ export default () => ({
   actualStep: 0,
   cart: {},
   userEmail: undefined,
+  promocode: null,
   success: false
 })

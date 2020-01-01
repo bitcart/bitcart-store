@@ -28,5 +28,6 @@ export default {
   SET_ACTUAL_STEP: (state, step) => { state.actualStep = step },
   SET_SUCCESS: (state, value) => { state.success = value },
   SET_TOTAL: (state, value) => { state.total = value },
-  SET_USER_EMAIL: (state, value) => { state.userEmail = value }
+  SET_USER_EMAIL: (state, value) => { state.userEmail = value },
+  SET_PROMOCODE: (state, value) => { state.promocode = value }
 }

@@ -45,12 +45,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userEmail'])
+    ...mapGetters(['userEmail', 'promocode'])
   },
   beforeMount () {
     this.$axios.get('rate').then((r) => {
       this.amount = parseFloat(this.total / r.data).toFixed(8)
-      this.$axios.post('invoices', { products: this.cart, amount: this.amount, buyer_email: this.userEmail }).then((res) => {
+      this.$axios.post('invoices', { products: this.cart, amount: this.amount, buyer_email: this.userEmail, promocode: this.promocode }).then((res) => {
         this.bitcoin_address = res.data.bitcoin_address
         this.message = `Waiting for ${this.amount} BTC payment`
         let url = this.combineURLs(`${this.$store.state.env.URL}`, `ws/invoices/${res.data.id}`)

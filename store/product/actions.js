@@ -6,6 +6,6 @@ export default {
   setCategory: ({ commit }, value) =>
     commit('SET_CATEGORY', value),
   setProductsRef ({ commit }) {
-    return this.$axios.get('/products').then(r => commit('SET_PRODUCTS', r.data.result))
+    return this.$axios.get(`/products?store=${this.state.env.STORE}`).then(r => commit('SET_PRODUCTS', r.data.result))
   }
 }

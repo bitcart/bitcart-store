@@ -22,7 +22,7 @@ export default ({ store, res, app }) => {
             if (resp.status === 200) {
               if (!res.finished) { res.setHeader('Set-Cookie', [`access_token=${resp.data.access_token}`]) }
               originalRequest.headers.authorization = `Bearer ${resp.data.access_token}`
-              app.$axios.defaults.headers.authorization = `Bearer ${resp.data.access_token}`
+              originalRequest.headers.refreshing = true
               return app.$axios(originalRequest)
             }
           })

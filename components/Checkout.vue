@@ -20,6 +20,13 @@
             span.icon.is-small.is-right(v-if="errors.has('email')")
               i.fa.fa-exclamation-triangle
             p.help.is-danger(v-if="errors.has('email')") {{ errors.first('email') }}
+        .field
+          label.label(for="promocode") Promocode
+          input.input#promocode(type="text",
+                            label="Promocode",
+                            name="promocode",
+                            @input="setPromocode($event.target.value)"
+                            :class="{ 'is-danger': errors.has('promocode') }")
 
         .field
           button.button.is-success.pay-with-stripe(:disabled="errors.any()",
@@ -66,7 +73,8 @@ export default {
       'pay',
       'setIsStripeCardCompleted',
       'setStatus',
-      'setUserEmail'
+      'setUserEmail',
+      'setPromocode'
     ]),
 
     async beforePay () {

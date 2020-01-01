@@ -7,7 +7,7 @@ const getProductsUnderHighPrice = (products, showSale, highprice) =>
 const getProductsByCategory = (products, category) =>
   products.filter(product =>
     category !== 'all'
-      ? product.article === category
+      ? product.category === category
       : product)
 
 export default {
@@ -21,6 +21,6 @@ export default {
     products.find(({ name }) => slug(name) === paramSlug),
 
   categories: ({ products }) =>
-    ['all', ...new Set(products.map(({ article }) => article))].sort(),
+    ['all', ...new Set(products.map(({ category }) => category))].sort(),
   categorySelected: ({ categorySelected }) => categorySelected
 }

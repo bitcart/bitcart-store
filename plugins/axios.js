@@ -12,11 +12,9 @@ export default ({ store, req }, inject) => {
   const instance = axios.create({ baseURL: store.state.env.URL })
   instance.interceptors.request.use(
     (config) => {
-      if (!config.headers.authorization) {
-        if (req) {
-          config.headers.authorization = `Bearer ${getCookie('access_token', req.headers.cookie)}`
-        } else { config.headers.authorization = `Bearer ${Cookies.get('access_token')}` }
-      }
+      if (config.headers.refreshing) { config.headers.refreshing = false } else if (req) {
+        config.headers.authorization = `Bearer ${getCookie('access_token', req.headers.cookie)}`
+      } else { config.headers.authorization = `Bearer ${Cookies.get('access_token')}` }
       config.baseURL = store.state.env.URL
       return config
     },
