@@ -1,30 +1,48 @@
 <template lang="pug">
-.content
-  transition(name='modal')
-    .modal-mask
-      .modal-wrapper
-        .modal-container
-          .modal-header
-            slot(name='header')
-              a.modal-default-button(href='#' @click="$emit('close')") Close
-          .modal-body
-            .checkout(v-if="showCheckout")
-              qrcode.mt4(:value='bitcoin_address' :options='{ scale: 8 }')
-              .f7.fw1.lh-copy {{bitcoin_address}}
-              .mt4 {{message}}
-
-            .green.mv6.f3(v-if='!showCheckout')
-              | Thank you for your payment
+.container(v-if="!loading")
+  b-tabs(v-if="showCheckout && !noTabs" type="is-boxed" :animated="false" v-model="selectedTab")
+    b-tab-item(v-for="(itemv, key) in tabitem" :key="key" :label="key.toUpperCase()")
+      .card
+        header.card-header.has-text-centered
+          p.card-header-title.is-centered Checkout
+        .card-content
+          .container
+            .columns
+              .column.has-text-centered
+                qrcode(:options="{width: 256}" :value="itemv.payment_url" tag="img")
+            .columns
+              .column.has-text-centered
+                p.mt-6.mb-0.title.has-text-weight-bold {{ itemv.payment_address }}
+                p.mt-6.mb-0.title Waiting for {{ itemv.amount }} {{ itemv.currency.toUpperCase() }} payment
+        .card-footer
+          .card-footer-item
+            button.button.is-primary(@click="copyText(itemv.payment_url, 'URL')")
+              b-icon(icon="content-copy")
+              span Copy
+  .card(v-if="showCheckout && noTabs")
+    header.card-header.has-text-centered
+      p.card-header-title.is-centered Empty
+    .card-content.has-text-centered No payment methods available
+  .card(v-if="!showCheckout && !success")
+    .card-content
+      .container
+        .columns
+          .column.has-text-centered
+            span {{ texts[status].text}}
+        .columns
+          .column.has-text-centered
+            button.button.is-primary(@click="setActualStep(1)")
+              b-icon(icon="arrow-left")
+              span Back to payment details
 </template>
 
 <script>
 import Cookies from 'js-cookie'
 import { createNamespacedHelpers } from 'vuex'
 
-const { mapGetters } = createNamespacedHelpers('cart')
+const { mapActions, mapGetters } = createNamespacedHelpers('cart')
 
 export default {
-  name: 'Modal',
   props: {
     total: {
       type: [Number, String],
@@ -37,22 +55,58 @@ export default {
   },
   data () {
     return {
-      network: process.env.VUE_APP_BITCOIN_NETWORK || 'mainnet',
-      bitcoin_address: process.env.VUE_APP_BITCOIN_ADDRESS,
-      amount: 0.5,
-      message: '',
-      showCheckout: true
+      showCheckout: true,
+      selectedTab: null,
+      whatToCopy: 'ID',
+      amount: 0,
+      invoice: {},
+      tabitem: {},
+      loading: true,
+      status: 'Pending',
+      texts: {
+        expired: {
+          icon: 'mdi-close',
+          text: 'This invoice has expired'
+        },
+        complete: {
+          icon: 'mdi-check',
+          text: 'This invoice has been paid'
+        },
+        Failed:
+        {
+          icon: 'mdi-close',
+          text: 'This invoice has failed'
+        },
+        Invalid:
+        {
+          icon: 'mdi-close',
+          text: 'This invoice is invalid'
+        },
+        '': {
+          icon: 'mdi-close',
+          text: 'This invoice is invalid'
+        }
+      }
     }
   },
   computed: {
-    ...mapGetters(['userEmail', 'promocode'])
+    ...mapGetters(['userEmail', 'promocode', 'success']),
+    noTabs () {
+      return Object.entries(this.tabitem).length === 0 && this.tabitem.constructor === Object
+    }
+  },
+  watch: {
+    showCheckout (val) {
+      if (!val) { this.selectedTab = null }
+    }
   },
   beforeMount () {
     this.$axios.get('rate').then((r) => {
       this.amount = parseFloat(this.total / r.data).toFixed(8)
       this.$axios.post('invoices', { products: this.cart, amount: this.amount, buyer_email: this.userEmail, promocode: this.promocode }).then((res) => {
-        this.bitcoin_address = res.data.bitcoin_address
-        this.message = `Waiting for ${this.amount} BTC payment`
+        this.tabitem = res.data.payments
+        this.invoice = res.data
+        this.loading = false
         let url = this.combineURLs(`${this.$store.state.env.URL}`, `ws/invoices/${res.data.id}`)
         url = url.replace(`http://`, `ws://`).replace(`https://`, `wss://`)
         url += `?token=${Cookies.get('access_token')}`
@@ -60,18 +114,47 @@ export default {
         const websocket = new WebSocket(url)
         websocket.onmessage = function (event) {
           const status = JSON.parse(event.data).status
+          ref.status = status
           if (status === 'complete') {
+            ref.setSuccess(true)
+            ref.clearContents()
+            ref.clearCount()
             ref.showCheckout = false
-            ref.message = 'Thank you for paying!'
+          } else {
+            ref.setSuccess(false)
+            ref.showCheckout = false
           }
         }
       })
     })
   },
   methods: {
-    completedPayment () {
-      this.showCheckout = false
-      this.message = `Thank you for your payment.<br><a class="b green" href="${process.env.VUE_APP_CONTENT_URL}" target="_blank">Click here to download.</a>`
+    ...mapActions(['setSuccess', 'clearContents', 'clearCount', 'setActualStep']),
+    checkout (id) {
+      if (!id) { id = this.qrItem.id }
+      this.$router.replace({ path: `/i/${id}` })
+    },
+    copyToClipboard (text) {
+      const el = document.createElement('textarea')
+      el.addEventListener('focusin', e => e.stopPropagation())
+      el.value = text
+      el.setAttribute('readonly', '')
+      el.style.position = 'absolute'
+      el.style.left = '-9999px'
+      document.body.appendChild(el)
+      el.select()
+      document.execCommand('copy')
+      document.body.removeChild(el)
+    },
+    copyText (text, desc) {
+      this.copyToClipboard(text)
+      this.whatToCopy = desc || 'ID'
+      this.$buefy.snackbar.open({
+        message: `Successfully copied ${this.whatToCopy} to clipboard!`,
+        type: 'is-success',
+        duration: 2500,
+        position: 'is-bottom'
+      })
     },
     combineURLs (baseURL, relativeURL) {
       return relativeURL

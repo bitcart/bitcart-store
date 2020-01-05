@@ -12,7 +12,8 @@ export default {
       { hid: 'og:site_name', property: 'og:site_name', content: 'Bitcart' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css' }
     ]
   },
   /*
@@ -26,6 +27,7 @@ export default {
   ** Global CSS
   */
   css: [
+    '@/assets/scss/main.scss'
   ],
   router: {
     middleware: 'axiosRefresh'
@@ -35,6 +37,7 @@ export default {
   */
   plugins: [
     '~plugins/axios.js',
+    '~/plugins/buefy.js',
     '~/plugins/lazysizes.js',
     '~/plugins/veeValidate.js',
     '~/plugins/vueQr.js'
