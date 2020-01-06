@@ -24,11 +24,11 @@ export default {
     AppProductListItem: ProductListItem,
     AppSidebar: Sidebar
   },
-  computed: {
-    ...mapGetters(['products', 'highprice'])
-  },
   fetch ({ store }) {
     return store.dispatch('product/setProductsRef')
+  },
+  computed: {
+    ...mapGetters(['products', 'highprice'])
   }
 }
 </script>

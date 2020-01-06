@@ -22,12 +22,6 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('product')
 
 export default {
-  computed: {
-    ...mapGetters(['productFromSlugParamRoute']),
-    item () {
-      return this.productFromSlugParamRoute(this.$route.params.slug)
-    }
-  },
   fetch ({ store, req }) {
     let url = ''
     if (req) {
@@ -37,7 +31,12 @@ export default {
     store.commit('SET_CURRENT_URL', url)
     return store.dispatch('product/setProductsRef')
   },
-
+  computed: {
+    ...mapGetters(['productFromSlugParamRoute']),
+    item () {
+      return this.productFromSlugParamRoute(this.$route.params.slug)
+    }
+  },
   methods: {
     addItem (item) {
       return this.$store.dispatch('cart/addItem', item)
