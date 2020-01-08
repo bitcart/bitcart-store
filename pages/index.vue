@@ -2,12 +2,17 @@
   .container
     .section
       app-hero
-    .section.capsule.is-clearfix
-      app-sidebar(:pricerange.sync="highprice")
-      transition-group.content.is-pulled-right(name="items", tag="div")
-        app-product-list-item(v-for="product in products",
-                              :key="product['id']",
-                              :item="product")
+    .container
+      .columns
+        .column
+          .section.capsule.is-clearfix
+            app-sidebar(:pricerange.sync="highprice")
+            transition-group.content.is-pulled-right(name="items", tag="div")
+              app-product-list-item(v-for="product in products",
+                                    :key="product['id']",
+                                    :item="product")
+      .columns.is-centered
+        b-pagination.stick.is-marginless(:total="total" :current.sync="current" :per-page="6" order="is-centered")
 </template>
 
 <script>
@@ -28,7 +33,19 @@ export default {
     return store.dispatch('product/setProductsRef')
   },
   computed: {
-    ...mapGetters(['products', 'highprice'])
+    ...mapGetters(['products', 'highprice']),
+    total () {
+      return this.$store.state.product.count
+    },
+    current: {
+      get () {
+        return this.$store.state.currentPage
+      },
+      set (val) {
+        this.$store.commit('setCurrentPage', val)
+        this.$store.dispatch('product/setProductsRef')
+      }
+    }
   }
 }
 </script>
@@ -42,5 +59,10 @@ export default {
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 1rem;
   padding: 0;
+}
+
+.stick {
+  position: fixed !important;
+  bottom: 0 !important;
 }
 </style>

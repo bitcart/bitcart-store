@@ -18,7 +18,7 @@
           div(v-if="actualStep === 1")
             Checkout(:total="amount", v-on:pay="setActualStep(2)")
           div(v-if="actualStep === 2")
-            CheckoutModal(:total="amount", :cart="Object.keys(cart)", v-on:close="setActualStep(3)")
+            CheckoutModal(:total="amount", :cart="cart", v-on:close="setActualStep(3)")
 
         .empty.has-text-centered(v-else-if="!total && !success")
           h3 Your cart is empty.

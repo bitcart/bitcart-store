@@ -36,6 +36,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~plugins/localStorage.js',
     '~plugins/axios.js',
     '~/plugins/buefy.js',
     '~/plugins/lazysizes.js',

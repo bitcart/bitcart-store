@@ -21,7 +21,7 @@
               span.icon.is-small
                 i.fa.fa-retweet
             a.level-item
-              span.icon.is-small
+              span.icon.is-small.has-text-danger
                 i.fa.fa-heart
 </template>
 

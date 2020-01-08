@@ -1,6 +1,7 @@
 export const state = () => ({
   env: {},
   store: {},
+  currentPage: 1,
   url: ''
 })
 
@@ -10,6 +11,9 @@ export const mutations = {
   },
   store (state, val) {
     state.store = val
+  },
+  setCurrentPage (state, val) {
+    state.currentPage = val
   },
   SET_CURRENT_URL (state, val) {
     state.url = val
@@ -31,6 +35,7 @@ export const actions = {
   },
   syncStats ({ commit, dispatch }) {
     this.$axios.get(`/stores/${this.state.env.STORE}`).then(resp => commit('store', resp.data))
+    this.$axios.get(`/products/count?store=${this.state.env.STORE}`).then(resp => commit('product/count', resp.data))
     setTimeout(() => {
       dispatch('syncStats')
     }, 60000)

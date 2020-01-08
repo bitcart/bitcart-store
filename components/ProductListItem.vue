@@ -38,7 +38,7 @@ export default {
   },
   computed: {
     slug () {
-      return slug(this.item.name)
+      return `${slug(this.item.name)}-${this.item.id}`
     }
   },
   methods: {

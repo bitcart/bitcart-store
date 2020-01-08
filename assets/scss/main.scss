@@ -1,3 +1,9 @@
-@import 'bulma/sass/utilities/_all.sass';
-@import 'buefy/src/scss/utils/_all.scss';
-@import 'buefy/src/scss/components/_notices.scss';
+$blue: hsl(141, 53%, 53%);
+$link: $blue;
+$primary: $blue;
+$pagination-color: #48c774;
+
+@import "bulma/bulma.sass";
+@import "buefy/src/scss/utils/_all.scss";
+@import "buefy/src/scss/components/_notices.scss";
+@import "buefy/src/scss/components/_pagination.scss";

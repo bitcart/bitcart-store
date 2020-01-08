@@ -12,7 +12,7 @@
         p.is-size-6 ${{ item.amount*1 }}
         br
         p.has-text-centered
-          a.button.is-medium.is-info.is-outlined(@click="addItem(item)", aria-label="Add to cart") Add to cart
+          a.button.is-medium.is-success.is-outlined(@click="addItem(item)", aria-label="Add to cart") Add to cart
 </template>
 
 <script>
@@ -22,19 +22,20 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('product')
 
 export default {
-  fetch ({ store, req }) {
+  fetch ({ store, req, route }) {
     let url = ''
     if (req) {
       url = req.headers.host
       if (isHTTPS(req)) { url = 'https://' + url } else { url = 'http://' + url }
     } else { url = window.location.origin }
     store.commit('SET_CURRENT_URL', url)
-    return store.dispatch('product/setProductsRef')
+    store.commit('product/SET_PRODUCT_ID', parseInt(route.params.slug.split(/[- ]+/).pop()))
+    return store.dispatch('product/fetchProduct', store.state.product.productId)
   },
   computed: {
     ...mapGetters(['productFromSlugParamRoute']),
     item () {
-      return this.productFromSlugParamRoute(this.$route.params.slug)
+      return this.productFromSlugParamRoute
     }
   },
   methods: {

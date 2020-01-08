@@ -30,13 +30,6 @@ export default {
     isIndexRoute () {
       return this.$route.name === 'index'
     }
-  },
-  head () {
-    return {
-      htmlAttrs: {
-        class: this.isIndexRoute && 'has-navbar-fixed-top'
-      }
-    }
   }
 }
 </script>

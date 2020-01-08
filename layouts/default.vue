@@ -4,10 +4,9 @@
       app-header
     .hero-body
       nuxt
-    .hero-footer
+    .hero-foot
       .container
-        p © Bitcart 2018-2019
-    </nav>
+        p &copy; BitcartCC 2018-2020
 </template>
 
 <script>
@@ -22,7 +21,6 @@ export default {
 </script>
 
 <style lang="stylus">
-@require '../node_modules/bulma/css/bulma.min.css';
 @require '../node_modules/@fortawesome/fontawesome-free/css/all.css';
 @require './css/_transition';
 @require './css/_slider';

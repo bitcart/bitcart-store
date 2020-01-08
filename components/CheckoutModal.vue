@@ -49,7 +49,7 @@ export default {
       required: true
     },
     cart: {
-      type: Array,
+      type: Object,
       required: true
     }
   },
@@ -101,9 +101,10 @@ export default {
     }
   },
   beforeMount () {
+    const cart = Object.assign({}, ...Object.keys(this.cart).map(k => ({ [k]: this.cart[k].count })))
     this.$axios.get('rate').then((r) => {
       this.amount = parseFloat(this.total / r.data).toFixed(8)
-      this.$axios.post('invoices', { products: this.cart, amount: this.amount, buyer_email: this.userEmail, promocode: this.promocode }).then((res) => {
+      this.$axios.post('invoices', { products: cart, amount: this.amount, buyer_email: this.userEmail, promocode: this.promocode }).then((res) => {
         this.tabitem = res.data.payments
         this.invoice = res.data
         this.loading = false
