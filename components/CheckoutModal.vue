@@ -121,6 +121,7 @@ export default {
             ref.clearContents()
             ref.clearCount()
             ref.showCheckout = false
+            if (ref.invoice.redirect_url) { window.location = ref.invoice.redirect_url }
           } else {
             ref.setSuccess(false)
             ref.showCheckout = false
