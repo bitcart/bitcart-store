@@ -6,8 +6,10 @@ const updateStats = debounce(function (dispatch) {
 }, 250)
 
 export default {
-  switchSale: ({ commit }) =>
-    commit('SWITCH_SALE'),
+  switchSale: ({ commit, dispatch }) => {
+    commit('SWITCH_SALE')
+    updateStats(dispatch)
+  },
   updateHighprice: ({ commit, dispatch }, value) => {
     commit('UPDATE_HIGH_PRICE', value)
     updateStats(dispatch)
@@ -17,13 +19,13 @@ export default {
     updateStats(dispatch)
   },
   setProductsRef ({ commit }) {
-    return this.$axios.get(`/products?store=${this.state.env.STORE}&category=${this.state.product.categorySelected}&max_price=${this.state.product.highprice}&limit=6&offset=${(this.state.currentPage - 1) * 6}`).then((r) => {
+    return this.$axios.get(`/products?store=${this.state.env.STORE}&sale=${this.state.product.sale}&category=${this.state.product.categorySelected}&min_price=${this.state.product.highprice[0]}&max_price=${this.state.product.highprice[1]}&limit=6&offset=${(this.state.currentPage - 1) * 6}`).then((r) => {
       commit('SET_PRODUCTS', r.data.result)
       return this.$axios.get(`/categories?store=${this.state.env.STORE}`).then(resp => commit('SET_CATEGORIES', resp.data))
     })
   },
   fetchCount ({ commit }) {
-    return this.$axios.get(`/products/count?store=${this.state.env.STORE}&category=${this.state.product.categorySelected}&max_price=${this.state.product.highprice}`).then(resp => commit('count', resp.data))
+    return this.$axios.get(`/products/count?store=${this.state.env.STORE}&sale=${this.state.product.sale}&category=${this.state.product.categorySelected}&min_price=${this.state.product.highprice[0]}&max_price=${this.state.product.highprice[1]}`).then(resp => commit('count', resp.data))
   },
   fetchProduct ({ commit }, productId) {
     return this.$axios.get(`/products/${productId}`).then(r => commit('SET_PRODUCTS', [r.data]))

@@ -35,6 +35,7 @@ export const actions = {
   },
   syncStats ({ commit, dispatch }) {
     this.$axios.get(`/stores/${this.state.env.STORE}`).then(resp => commit('store', resp.data))
+    this.$axios.get(`/products/maxprice?store=${this.state.env.STORE}`).then(resp => commit('product/maxprice', resp.data))
     this.$axios.get(`/products/count?store=${this.state.env.STORE}`).then(resp => commit('product/count', resp.data))
     setTimeout(() => {
       dispatch('syncStats')

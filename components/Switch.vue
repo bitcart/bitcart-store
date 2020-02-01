@@ -1,7 +1,7 @@
 <template lang="pug">
   .sidearea
     .can-toggle.demo-rebrand-2.field
-      input#e.switch.is-rtl(type="checkbox", name="e", v-model="trigger")
+      input#e.switch(type="checkbox", name="e", v-model="trigger")
       label(for="e") Only Sale
 </template>
 

@@ -1,16 +1,17 @@
 <template lang="pug">
   aside.is-light.is-radius
     .sidearea
-      label.subtitle.is-5(for="pricerange") Highest Price:
-        span  ${{ pricerange }}
-      input.slider#pricerange(type="range"
-                              :value="pricerange"
-                              :min="min"
-                              :max="max"
-                              step="1"
-                              @input="updateHighprice($event.target.value)")
+      label.subtitle.is-5(for="pricerange") Price range:
+        span  ${{ pricerange[0] }}-{{ pricerange[1] }}
+      b-slider#pricerange(:value="pricerange",
+        :min="0",
+        :max="maxprice",
+        :step="1",
+        lazy,
+        @input="updateHighprice")
       span.min.is-pulled-left ${{ min }}
-      span.max.is-pulled-right ${{ max }}
+      span.max.is-pulled-right ${{ maxprice }}
+    app-switch(v-if="!sale")
     .sidearea
       label.subtitle.is-5(for="category") Categories
       .select
@@ -41,18 +42,17 @@ export default {
       default: false
     },
     pricerange: {
-      type: [Number, String],
+      type: [Number, String, Array],
       default: 300
     }
   },
   data () {
     return {
-      min: 0,
-      max: 4000
+      min: 0
     }
   },
   computed: {
-    ...mapGetters(['categories', 'categorySelected'])
+    ...mapGetters(['categories', 'categorySelected', 'maxprice'])
   },
   methods: {
     ...mapActions(['updateHighprice', 'setCategory'])
