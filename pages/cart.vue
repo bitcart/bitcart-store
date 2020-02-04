@@ -12,7 +12,7 @@
                                   :item="item")
 
             .is-clearfix
-              h3.total.is-pulled-left Total: {{ amount | usdollar }}
+              h3.total.is-pulled-left Total: {{ amount }} {{ currency }}
               button.button.is-success.is-pulled-right(@click="setActualStep(1)") > Next
 
           div(v-if="actualStep === 1")
@@ -49,14 +49,14 @@ export default {
     Checkout,
     CheckoutModal
   },
-  filters: {
-    usdollar: value => `$${value}`
-  },
   data: () => ({
     stepMenuContent
   }),
   computed: {
-    ...mapGetters(['cart', 'total', 'amount', 'success', 'actualStep', 'userEmail'])
+    ...mapGetters(['cart', 'total', 'amount', 'success', 'actualStep', 'userEmail']),
+    currency () {
+      return this.$store.state.store.default_currency
+    }
   },
   beforeDestroy () {
     this.success && this.setSuccess(false)

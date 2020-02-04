@@ -5,7 +5,7 @@ export default ({ store, isHMR }) => {
 
   process.client && window.onNuxtReady((nuxt) => {
     createPersistedState({
-      paths: ['cart']
+      paths: ['cart.total', 'cart.amount', 'cart.cart']
     })(store)
   })
 }

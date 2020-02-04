@@ -1,6 +1,6 @@
 const calculateAmount = obj =>
   Object.values(obj)
-    .reduce((acc, { count, amount }) => acc + (count * amount), 0)
+    .reduce((acc, { count, price }) => acc + (count * price), 0)
     .toFixed(2)
 
 export default {

@@ -10,7 +10,7 @@
         .media-content
           nuxt-link(exact, :to="{name: 'products-slug', params: { slug: `${slug}` } }")
             p.title.is-5 {{ item.name }}
-            p.item-price {{ item.amount*1 | usdollar }}
+            p.item-price {{ item.price*1 }} {{ currency }}
         .media-right
           p.field
             button.button.icon.is-large.add(@click="addItem(item)",
@@ -27,9 +27,6 @@ const { mapActions } = createNamespacedHelpers('cart')
 
 export default {
   name: 'Card',
-  filters: {
-    usdollar: value => `$${value}`
-  },
   props: {
     item: {
       type: Object,
@@ -39,6 +36,9 @@ export default {
   computed: {
     slug () {
       return `${slug(this.item.name)}-${this.item.id}`
+    },
+    currency () {
+      return this.$store.state.store.default_currency
     }
   },
   methods: {

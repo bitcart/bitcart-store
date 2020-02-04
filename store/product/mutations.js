@@ -7,7 +7,7 @@ export default {
   SET_PRODUCT_ID: (state, value) => { state.productId = value },
   maxprice: (state, value) => {
     state.maxprice = value
-    if (state.highprice[1] === 0) { state.highprice[1] = value }
+    if (state.highprice[1] === 0 || state.highprice[1] === -1) { state.highprice[1] = value }
   },
   count: (state, value) => { state.count = value }
 }

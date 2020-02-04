@@ -12,8 +12,9 @@
                 qrcode(:options="{width: 256}" :value="itemv.payment_url" tag="img")
             .columns
               .column.has-text-centered
+                p.mt-6.mb-0.title 1 {{ itemv.currency.toUpperCase() }} = {{ (invoice.price/itemv.amount).toFixed(8).replace(/0{0,7}$/, "") }} {{ invoice.currency }}
                 p.mt-6.mb-0.title.has-text-weight-bold {{ itemv.payment_address }}
-                p.mt-6.mb-0.title Waiting for {{ itemv.amount }} {{ itemv.currency.toUpperCase() }} payment
+                p.mt-6.mb-0.title Waiting for {{ itemv.amount.toFixed(8).replace(/0{0,7}$/, "") }} {{ itemv.currency.toUpperCase() }} payment
         .card-footer
           .card-footer-item
             button.button.is-primary(@click="copyText(itemv.payment_url, 'URL')")
@@ -58,7 +59,7 @@ export default {
       showCheckout: true,
       selectedTab: null,
       whatToCopy: 'ID',
-      amount: 0,
+      price: 0,
       invoice: {},
       tabitem: {},
       loading: true,
@@ -102,32 +103,30 @@ export default {
   },
   beforeMount () {
     const cart = Object.assign({}, ...Object.keys(this.cart).map(k => ({ [k]: this.cart[k].count })))
-    this.$axios.get('rate').then((r) => {
-      this.amount = parseFloat(this.total / r.data).toFixed(8)
-      this.$axios.post('invoices', { store_id: parseInt(this.$store.state.env.STORE), products: cart, amount: this.amount, buyer_email: this.userEmail, promocode: this.promocode }).then((res) => {
-        this.tabitem = res.data.payments
-        this.invoice = res.data
-        this.loading = false
-        let url = this.combineURLs(`${this.$store.state.env.URL}`, `ws/invoices/${res.data.id}`)
-        url = url.replace(`http://`, `ws://`).replace(`https://`, `wss://`)
-        url += `?token=${Cookies.get('access_token')}`
-        const ref = this
-        const websocket = new WebSocket(url)
-        websocket.onmessage = function (event) {
-          const status = JSON.parse(event.data).status
-          ref.status = status
-          if (status === 'complete') {
-            ref.setSuccess(true)
-            ref.clearContents()
-            ref.clearCount()
-            ref.showCheckout = false
-            if (ref.invoice.redirect_url) { window.location = ref.invoice.redirect_url }
-          } else {
-            ref.setSuccess(false)
-            ref.showCheckout = false
-          }
+    this.price = parseFloat(this.total).toFixed(8).replace(/0{0,7}$/, '')
+    this.$axios.post('invoices', { store_id: parseInt(this.$store.state.env.STORE), currency: this.$store.state.store.default_currency, products: cart, price: this.price, buyer_email: this.userEmail, promocode: this.promocode }).then((res) => {
+      this.tabitem = res.data.payments
+      this.invoice = res.data
+      this.loading = false
+      let url = this.combineURLs(`${this.$store.state.env.URL}`, `ws/invoices/${res.data.id}`)
+      url = url.replace(`http://`, `ws://`).replace(`https://`, `wss://`)
+      url += `?token=${Cookies.get('access_token')}`
+      const ref = this
+      const websocket = new WebSocket(url)
+      websocket.onmessage = function (event) {
+        const status = JSON.parse(event.data).status
+        ref.status = status
+        if (status === 'complete') {
+          ref.setSuccess(true)
+          ref.clearContents()
+          ref.clearCount()
+          ref.showCheckout = false
+          if (ref.invoice.redirect_url) { window.location = ref.invoice.redirect_url }
+        } else {
+          ref.setSuccess(false)
+          ref.showCheckout = false
         }
-      })
+      }
     })
   },
   methods: {

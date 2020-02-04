@@ -6,7 +6,7 @@
       .columns
         .column
           .section.capsule.is-clearfix
-            app-sidebar(:pricerange.sync="highprice")
+            app-sidebar
             transition-group.content.is-pulled-right(name="items", tag="div")
               app-product-list-item(v-for="product in products",
                                     :key="product['id']",

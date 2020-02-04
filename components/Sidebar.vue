@@ -2,15 +2,15 @@
   aside.is-light.is-radius
     .sidearea
       label.subtitle.is-5(for="pricerange") Price range:
-        span  ${{ pricerange[0] }}-{{ pricerange[1] }}
-      b-slider#pricerange(:value="pricerange",
+        span  {{ highprice[0] }}-{{ highprice[1] }} {{ currency }}
+      b-slider#pricerange(:value="highprice",
         :min="0",
         :max="maxprice",
         :step="1",
         lazy,
         @input="updateHighprice")
-      span.min.is-pulled-left ${{ min }}
-      span.max.is-pulled-right ${{ maxprice }}
+      span.min.is-pulled-left {{ min }} {{ currency }}
+      span.max.is-pulled-right {{ maxprice }} {{ currency }}
     app-switch(v-if="!sale")
     .sidearea
       label.subtitle.is-5(for="category") Categories
@@ -40,10 +40,6 @@ export default {
     sale: {
       type: Boolean,
       default: false
-    },
-    pricerange: {
-      type: [Number, String, Array],
-      default: 300
     }
   },
   data () {
@@ -52,7 +48,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['categories', 'categorySelected', 'maxprice'])
+    ...mapGetters(['categories', 'categorySelected', 'maxprice', 'highprice']),
+    currency () {
+      return this.$store.state.store.default_currency
+    }
   },
   methods: {
     ...mapActions(['updateHighprice', 'setCategory'])

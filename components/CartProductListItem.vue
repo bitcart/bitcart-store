@@ -11,7 +11,7 @@
             strong {{ item.name }}
             br
             span.itemCount {{ item.count }}
-            |  x {{ item.amount*1 | usdollar }} = ${{ item.count * item.amount }}
+            |  x {{ item.price*1 }} {{ currency }} = {{ item.count * item.price }} {{ currency }}
         nav.level.is-mobile
           .level-left
             a.level-item.removeItem(@click="removeItem(item)", title="Remove")
@@ -32,15 +32,15 @@ const { mapActions } = createNamespacedHelpers('cart')
 
 export default {
   name: 'CartProductListItem',
-  filters: {
-    usdollar (value) {
-      return `$${value}`
-    }
-  },
   props: {
     item: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    currency () {
+      return this.$store.state.store.default_currency
     }
   },
   methods: {
