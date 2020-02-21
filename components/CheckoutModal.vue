@@ -12,9 +12,9 @@
                 qrcode(:options="{width: 256}" :value="itemv.payment_url" tag="img")
             .columns
               .column.has-text-centered
-                p.mt-6.mb-0.title 1 {{ itemv.currency.toUpperCase() }} = {{ (invoice.price/itemv.amount).toFixed(8).replace(/0{0,7}$/, "") }} {{ invoice.currency }}
+                p.mt-6.mb-0.title(v-if="itemv.currency.toUpperCase() !== invoice.currency") 1 {{ itemv.currency.toUpperCase() }} = {{ decimalStr(invoice.price/itemv.amount) }} {{ invoice.currency }}
                 p.mt-6.mb-0.title.has-text-weight-bold {{ itemv.payment_address }}
-                p.mt-6.mb-0.title Waiting for {{ itemv.amount.toFixed(8).replace(/0{0,7}$/, "") }} {{ itemv.currency.toUpperCase() }} payment
+                p.mt-6.mb-0.title Waiting for {{ decimalStr(itemv.amount) }} {{ itemv.currency.toUpperCase() }} payment
         .card-footer
           .card-footer-item
             button.button.is-primary(@click="copyText(itemv.payment_url, 'URL')")
@@ -40,10 +40,13 @@
 <script>
 import Cookies from 'js-cookie'
 import { createNamespacedHelpers } from 'vuex'
+import { decimalStr } from '@/helpers'
+import mixins from '@/helpers/mixins'
 
 const { mapActions, mapGetters } = createNamespacedHelpers('cart')
 
 export default {
+  mixins: [mixins],
   props: {
     total: {
       type: [Number, String],
@@ -103,7 +106,7 @@ export default {
   },
   beforeMount () {
     const cart = Object.assign({}, ...Object.keys(this.cart).map(k => ({ [k]: this.cart[k].count })))
-    this.price = parseFloat(this.total).toFixed(8).replace(/0{0,7}$/, '')
+    this.price = decimalStr(parseFloat(this.total))
     this.$axios.post('invoices', { store_id: parseInt(this.$store.state.env.STORE), currency: this.$store.state.store.default_currency, products: cart, price: this.price, buyer_email: this.userEmail, promocode: this.promocode }).then((res) => {
       this.tabitem = res.data.payments
       this.invoice = res.data

@@ -10,7 +10,7 @@
         .media-content
           nuxt-link(exact, :to="{name: 'products-slug', params: { slug: `${slug}` } }")
             p.title.is-5 {{ item.name }}
-            p.item-price {{ item.price*1 }} {{ currency }}
+            p.item-price {{ decimalStr(item.price) }} {{ currency }}
         .media-right
           p.field
             button.button.icon.is-large.add(@click="addItem(item)",
@@ -23,10 +23,12 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 import { slug } from '@/helpers'
+import mixins from '@/helpers/mixins'
 const { mapActions } = createNamespacedHelpers('cart')
 
 export default {
   name: 'Card',
+  mixins: [mixins],
   props: {
     item: {
       type: Object,

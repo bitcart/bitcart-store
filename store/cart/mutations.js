@@ -1,7 +1,7 @@
+import { decimalStr } from '@/helpers'
 const calculateAmount = obj =>
-  Object.values(obj)
-    .reduce((acc, { count, price }) => acc + (count * price), 0)
-    .toFixed(2)
+  decimalStr(Object.values(obj)
+    .reduce((acc, { count, price }) => acc + (count * price), 0))
 
 export default {
   ADD_ITEM: (state, item) => {

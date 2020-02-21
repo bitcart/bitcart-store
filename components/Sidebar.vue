@@ -2,15 +2,15 @@
   aside.is-light.is-radius
     .sidearea
       label.subtitle.is-5(for="pricerange") Price range:
-        span  {{ highprice[0] }}-{{ highprice[1] }} {{ currency }}
+        span  {{ decimalStr(highprice[0]) }}-{{ decimalStr(highprice[1]) }} {{ currency }}
       b-slider#pricerange(:value="highprice",
         :min="0",
         :max="maxprice",
         :step="1",
         lazy,
         @input="updateHighprice")
-      span.min.is-pulled-left {{ min }} {{ currency }}
-      span.max.is-pulled-right {{ maxprice }} {{ currency }}
+      span.min.is-pulled-left {{ decimalStr(min) }} {{ currency }}
+      span.max.is-pulled-right {{ decimalStr(maxprice) }} {{ currency }}
     app-switch(v-if="!sale")
     .sidearea
       label.subtitle.is-5(for="category") Categories
@@ -28,6 +28,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 import Switch from '@/components/Switch'
+import mixins from '@/helpers/mixins'
 
 const { mapActions, mapGetters } = createNamespacedHelpers('product')
 
@@ -36,6 +37,7 @@ export default {
   components: {
     AppSwitch: Switch
   },
+  mixins: [mixins],
   props: {
     sale: {
       type: Boolean,

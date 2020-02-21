@@ -11,7 +11,7 @@
             strong {{ item.name }}
             br
             span.itemCount {{ item.count }}
-            |  x {{ item.price*1 }} {{ currency }} = {{ item.count * item.price }} {{ currency }}
+            |  x {{ decimalStr(item.price) }} {{ currency }} = {{ decimalStr(item.count * item.price) }} {{ currency }}
         nav.level.is-mobile
           .level-left
             a.level-item.removeItem(@click="removeItem(item)", title="Remove")
@@ -27,11 +27,13 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
+import mixins from '@/helpers/mixins'
 
 const { mapActions } = createNamespacedHelpers('cart')
 
 export default {
   name: 'CartProductListItem',
+  mixins: [mixins],
   props: {
     item: {
       type: Object,
