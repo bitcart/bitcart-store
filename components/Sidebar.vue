@@ -22,7 +22,7 @@
             :value="category") {{ category }}
     .sidearea
       h4.subtitle.is-5 Contact Us
-      p {{$store.state.store.email}}
+      p.subtitle.is-6 {{$store.state.store.email}}
 </template>
 
 <script>
