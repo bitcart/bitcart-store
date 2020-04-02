@@ -24,7 +24,7 @@ export default {
   },
   computed: {
     title () {
-      return this.error.statusCode === 404 ? this.pageNotFound : this.otherError
+      return this.error.text ? this.error.text : (this.error.statusCode === 404 ? this.pageNotFound : this.otherError)
     }
   },
   head () {

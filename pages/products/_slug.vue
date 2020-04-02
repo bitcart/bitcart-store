@@ -31,12 +31,16 @@ export default {
       if (isHTTPS(req)) { url = 'https://' + url } else { url = 'http://' + url }
     } else { url = window.location.origin }
     store.commit('SET_CURRENT_URL', url)
+    if (!route.params.slug) {
+      return error({ statusCode: 404 })
+    }
     const params = route.params.slug.split(/[- ]+/)
-    if (params.length !== 2) { return error({ statusCode: 404, message: 'Product not found' }) }
+    if (params.length < 2) { return error({ statusCode: 404, text: 'Product not found' }) }
     const productId = parseInt(params.pop())
-    if (Number.isNaN(productId)) { return error({ statusCode: 404, message: 'Product not found' }) }
+    store.commit('product/SET_PRODUCT_ID', productId)
+    if (Number.isNaN(productId)) { return error({ statusCode: 404, text: 'Product not found' }) }
     return app.$axios.get(`/products/${productId}`).then(r => store.commit('product/SET_PRODUCTS', [r.data])).catch((e) => {
-      error({ statusCode: 404, message: 'Product not found' })
+      error({ statusCode: 404, text: 'Product not found' })
     })
   },
   computed: {
