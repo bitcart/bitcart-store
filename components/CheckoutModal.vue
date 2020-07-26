@@ -111,7 +111,7 @@ export default {
       this.tabitem = res.data.payments
       this.invoice = res.data
       this.loading = false
-      let url = this.combineURLs(`${this.$store.state.env.URL}`, `ws/invoices/${res.data.id}`)
+      let url = this.combineURLs(`${this.$store.getters.apiURL}`, `ws/invoices/${res.data.id}`)
       url = url.replace(`http://`, `ws://`).replace(`https://`, `wss://`)
       url += `?token=${Cookies.get('access_token')}`
       const ref = this

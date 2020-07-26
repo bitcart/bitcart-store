@@ -16,17 +16,23 @@
                   .cartcount(v-if="total > 0") {{ total }}
                   i.fa.fa-shopping-cart
                 span.is-hidden-mobile Cart
+        .navbar-item(v-if="onionURL")
+            button.button.is-light
+              a(:href="onionURL")
+                figure.image.is-32x32
+                  img.lazyload(src="/onion.svg")
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
+import { createNamespacedHelpers, mapGetters } from 'vuex'
 
-const { mapGetters } = createNamespacedHelpers('cart')
+const { mapGetters: cartGetters } = createNamespacedHelpers('cart')
 
 export default {
   name: 'AppHeader',
   computed: {
-    ...mapGetters(['total']),
+    ...cartGetters(['total']),
+    ...mapGetters(['onionURL']),
     isIndexRoute () {
       return this.$route.name === 'index'
     }

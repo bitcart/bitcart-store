@@ -51,7 +51,7 @@ export default {
         : baseURL
     },
     productURL (url) {
-      return this.combineURLs(`${this.$store.state.env.URL}`, url)
+      return this.combineURLs(`${this.$store.getters.apiURL}`, url)
     }
   }
 }

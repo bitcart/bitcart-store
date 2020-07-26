@@ -29,6 +29,9 @@ export default {
   css: [
     '@/assets/scss/main.scss'
   ],
+  router: {
+    middleware: ['onion']
+  },
   /*
   ** Plugins to load before mounting the App
   */

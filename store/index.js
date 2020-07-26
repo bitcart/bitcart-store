@@ -2,7 +2,10 @@ export const state = () => ({
   env: {},
   store: {},
   currentPage: 1,
-  url: ''
+  url: '',
+  services: {},
+  path: '/',
+  onion: false
 })
 
 export const mutations = {
@@ -17,23 +20,46 @@ export const mutations = {
   },
   SET_CURRENT_URL (state, val) {
     state.url = val
+  },
+  services (state, val) {
+    state.services = val
+  },
+  path (state, val) {
+    state.path = val
+  },
+  onion (state, val) {
+    state.onion = val
   }
 }
 export const getters = {
-  url: ({ url }) => url
+  url: ({ url }) => url,
+  onionURL ({ services, path }) {
+    const service = services['BitcartCC Store']
+    return service ? service.hostname + path : ''
+  },
+  apiOnionURL ({ services, env }) {
+    const service = services['BitcartCC Merchants API']
+    return env.ONION_URL ? env.ONION_URL : (service ? service.hostname : '')
+  },
+  apiURL ({ onion, env }, { apiOnionURL }) {
+    return (onion && apiOnionURL) ? apiOnionURL : env.URL
+  }
 }
 export const actions = {
-  async nuxtServerInit ({ commit, state }) {
+  async nuxtServerInit ({ commit, state, getters }) {
     if (process.server) {
       commit('setEnv', {
-        URL: process.env.BITCART_FRONTEND_URL || 'http://localhost:8000'
+        URL: process.env.BITCART_FRONTEND_URL || 'http://localhost:8000',
+        ONION_URL: process.env.BITCART_FRONTEND_ONION_URL
       })
     }
     const env = state.env
-    this.$axios.defaults.baseURL = state.env.URL
+    this.$axios.defaults.baseURL = getters.apiURL
     const { data } = await this.$axios.get('/manage/stores')
     env.STORE = data.pos_id || 1
     commit('setEnv', env)
+    const { data: services } = await this.$axios.get('/services')
+    commit('services', services)
   },
   syncStats ({ commit, dispatch }) {
     if (process.client) {
