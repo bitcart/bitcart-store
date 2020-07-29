@@ -107,7 +107,7 @@ export default {
   beforeMount () {
     const cart = Object.assign({}, ...Object.keys(this.cart).map(k => ({ [k]: this.cart[k].count })))
     this.price = decimalStr(parseFloat(this.total))
-    this.$axios.post('invoices', { store_id: parseInt(this.$store.state.env.STORE), currency: this.$store.state.store.default_currency, products: cart, price: this.price, buyer_email: this.userEmail, promocode: this.promocode }).then((res) => {
+    this.$axios.post('invoices', { store_id: parseInt(this.$store.state.storeID), currency: this.$store.state.store.default_currency, products: cart, price: this.price, buyer_email: this.userEmail, promocode: this.promocode }).then((res) => {
       this.tabitem = res.data.payments
       this.invoice = res.data
       this.loading = false

@@ -1,13 +1,10 @@
-import axios from 'axios'
-
-export default ({ store }, inject) => {
-  const instance = axios.create({ baseURL: store.getters.apiURL })
-  inject('axios', instance)
-  instance.interceptors.request.use(
-    (config) => {
-      config.baseURL = store.getters.apiURL
-      return config
-    },
-    err => Promise.reject(err)
-  )
+export default async ({ store, $axios, $config, req }) => {
+  await store.dispatch('loadEnv', { env: $config, req })
+  if (process.server && store.state.onion && $config.SOCKS_PROXY) {
+    const SocksProxyAgent = require('socks-proxy-agent')
+    const agent = new SocksProxyAgent($config.SOCKS_PROXY)
+    $axios.defaults.httpsAgent = agent
+    $axios.defaults.httpAgent = agent
+  }
+  $axios.defaults.baseURL = store.getters.apiURL
 }

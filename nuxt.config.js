@@ -33,6 +33,14 @@ export default {
     middleware: ['onion']
   },
   /*
+  ** Runtime config
+  */
+  publicRuntimeConfig: {
+    URL: process.env.BITCART_FRONTEND_URL || 'http://localhost:8000',
+    ONION_URL: process.env.BITCART_FRONTEND_ONION_URL,
+    SOCKS_PROXY: process.env.BITCART_FRONTEND_SOCKS_PROXY
+  },
+  /*
   ** Plugins to load before mounting the App
   */
   plugins: [
@@ -48,9 +56,14 @@ export default {
   */
   modules: [
     '@nuxtjs/pwa',
+    '@nuxtjs/axios',
     '@nuxtjs/eslint-module'
 
   ],
+  /*
+  ** @nuxt/telemetry settings
+  */
+  telemetry: false,
   /*
   ** Build configuration
   */

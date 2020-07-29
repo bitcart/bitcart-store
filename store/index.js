@@ -5,12 +5,16 @@ export const state = () => ({
   url: '',
   services: {},
   path: '/',
-  onion: false
+  onion: false,
+  storeID: 1
 })
 
 export const mutations = {
   setEnv (state, env) {
     state.env = env
+  },
+  storeID (state, val) {
+    state.storeID = val || 1
   },
   store (state, val) {
     state.store = val
@@ -46,26 +50,28 @@ export const getters = {
   }
 }
 export const actions = {
-  async nuxtServerInit ({ commit, state, getters }) {
-    if (process.server) {
-      commit('setEnv', {
-        URL: process.env.BITCART_FRONTEND_URL || 'http://localhost:8000',
-        ONION_URL: process.env.BITCART_FRONTEND_ONION_URL
-      })
-    }
-    const env = state.env
-    this.$axios.defaults.baseURL = getters.apiURL
-    const { data } = await this.$axios.get('/manage/stores')
-    env.STORE = data.pos_id || 1
-    commit('setEnv', env)
-    const { data: services } = await this.$axios.get('/services')
+  async nuxtServerInit ({ commit, dispatch }, { req, $axios }) {
+    await dispatch('loadEnv', { env: this.$config, req })
+    const { data } = await $axios.get('/manage/stores')
+    commit('storeID', data.pos_id)
+    const { data: services } = await $axios.get('/services')
     commit('services', services)
+  },
+  loadEnv ({ commit }, { env, req }) {
+    commit('setEnv', {
+      URL: env.URL,
+      ONION_URL: env.ONION_URL,
+      SOCKS_PROXY: env.SOCKS_PROXY
+    })
+    if (req) {
+      commit('onion', req.headers.host.toLowerCase().endsWith('.onion'))
+    }
   },
   syncStats ({ commit, dispatch }) {
     if (process.client) {
-      this.$axios.get(`/stores/${this.state.env.STORE}`).then(resp => commit('store', resp.data)).catch(() => {})
-      this.$axios.get(`/products/maxprice?store=${this.state.env.STORE}`).then(resp => commit('product/maxprice', resp.data))
-      this.$axios.get(`/products/count?store=${this.state.env.STORE}`).then(resp => commit('product/count', resp.data))
+      this.$axios.get(`/stores/${this.state.storeID}`).then(resp => commit('store', resp.data)).catch(() => {})
+      this.$axios.get(`/products/maxprice?store=${this.state.storeID}`).then(resp => commit('product/maxprice', resp.data))
+      this.$axios.get(`/products/count?store=${this.state.storeID}`).then(resp => commit('product/count', resp.data))
       setTimeout(() => {
         dispatch('syncStats')
       }, 60000)
