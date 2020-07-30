@@ -19,13 +19,13 @@ export default {
     updateStats(dispatch)
   },
   setProductsRef ({ commit }) {
-    return this.$axios.get(`/products?store=${this.state.env.STORE}&sale=${this.state.product.sale}&category=${this.state.product.categorySelected}&min_price=${this.state.product.highprice[0]}&max_price=${this.state.product.highprice[1]}&limit=6&offset=${(this.state.currentPage - 1) * 6}`).then((r) => {
+    return this.$axios.get(`/products?store=${this.state.storeID}&sale=${this.state.product.sale}&category=${this.state.product.categorySelected}&min_price=${this.state.product.highprice[0]}&max_price=${this.state.product.highprice[1]}&limit=6&offset=${(this.state.currentPage - 1) * 6}`).then((r) => {
       commit('SET_PRODUCTS', r.data.result)
-      return this.$axios.get(`/categories?store=${this.state.env.STORE}`).then(resp => commit('SET_CATEGORIES', resp.data))
+      return this.$axios.get(`/categories?store=${this.state.storeID}`).then(resp => commit('SET_CATEGORIES', resp.data))
     })
   },
   fetchCount ({ commit }) {
-    return this.$axios.get(`/products/count?store=${this.state.env.STORE}&sale=${this.state.product.sale}&category=${this.state.product.categorySelected}&min_price=${this.state.product.highprice[0]}&max_price=${this.state.product.highprice[1]}`).then(resp => commit('count', resp.data))
+    return this.$axios.get(`/products/count?store=${this.state.storeID}&sale=${this.state.product.sale}&category=${this.state.product.categorySelected}&min_price=${this.state.product.highprice[0]}&max_price=${this.state.product.highprice[1]}`).then(resp => commit('count', resp.data))
   },
   fetchProduct ({ commit }, productId) {
     return this.$axios.get(`/products/${productId}`).then(r => commit('SET_PRODUCTS', [r.data]))

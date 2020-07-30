@@ -107,11 +107,11 @@ export default {
   beforeMount () {
     const cart = Object.assign({}, ...Object.keys(this.cart).map(k => ({ [k]: this.cart[k].count })))
     this.price = decimalStr(parseFloat(this.total))
-    this.$axios.post('invoices', { store_id: parseInt(this.$store.state.env.STORE), currency: this.$store.state.store.default_currency, products: cart, price: this.price, buyer_email: this.userEmail, promocode: this.promocode }).then((res) => {
+    this.$axios.post('invoices', { store_id: parseInt(this.$store.state.storeID), currency: this.$store.state.store.default_currency, products: cart, price: this.price, buyer_email: this.userEmail, promocode: this.promocode }).then((res) => {
       this.tabitem = res.data.payments
       this.invoice = res.data
       this.loading = false
-      let url = this.combineURLs(`${this.$store.state.env.URL}`, `ws/invoices/${res.data.id}`)
+      let url = this.combineURLs(`${this.$store.getters.apiURL}`, `ws/invoices/${res.data.id}`)
       url = url.replace(`http://`, `ws://`).replace(`https://`, `wss://`)
       url += `?token=${Cookies.get('access_token')}`
       const ref = this
