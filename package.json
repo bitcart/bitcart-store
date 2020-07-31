@@ -46,7 +46,7 @@
     "eslint-plugin-standard": ">=4.0.1",
     "eslint-plugin-vue": "^6.1.2",
     "is-https": "^1.0.0",
-    "jest": "^24.9.0",
+    "jest": "^26.2.2",
     "js-cookie": "^2.2.1",
     "lodash.debounce": "^4.0.8",
     "node-sass": "^4.13.0",
