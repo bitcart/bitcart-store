@@ -55,10 +55,11 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/axios'
+  ],
+  buildModules: [
     '@nuxtjs/pwa',
-    '@nuxtjs/axios',
     '@nuxtjs/eslint-module'
-
   ],
   /*
   ** @nuxt/telemetry settings
