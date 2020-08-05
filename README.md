@@ -1,22 +1,17 @@
-# bitcart
+# BitcartCC Store
 
-> A project to simplify cryptocurrencies integration
+[![CircleCI](https://circleci.com/gh/MrNaif2018/bitcart-frontend.svg?style=svg)](https://circleci.com/gh/MrNaif2018/bitcart-frontend)
 
-## Build Setup
+This is the BitcartCC Store.
 
-``` bash
-# install dependencies
-$ yarn install
+It is created to provide a ready solution for merchants who need to bootstrap their stores quickly.
 
-# serve with hot reload at localhost:3000
-$ yarn dev
+It is light and fast, always covering 100% of the Merchants API.
 
-# build for production and launch server
-$ yarn build
-$ yarn start
+[Live demo](https://store.bitcartcc.com)
 
-# generate static project
-$ yarn generate
-```
+![](screenshot.png)
 
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
