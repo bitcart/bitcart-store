@@ -57,6 +57,6 @@
     "sass-loader": "^8.0.0",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
-    "vue-jest": "^3.0.5"
+    "vue-jest": "^3.0.6"
   }
 }
