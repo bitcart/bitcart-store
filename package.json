@@ -51,7 +51,7 @@
     "lodash.debounce": "^4.0.8",
     "node-sass": "^4.13.0",
     "nodemon": "^2.0.2",
-    "nuxt": "^2.11.0",
+    "nuxt": "^2.14.3",
     "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^8.0.0",
