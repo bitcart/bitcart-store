@@ -1,6 +1,6 @@
 # BitcartCC Store
 
-[![CircleCI](https://circleci.com/gh/MrNaif2018/bitcart-frontend.svg?style=svg)](https://circleci.com/gh/MrNaif2018/bitcart-frontend)
+[![CircleCI](https://circleci.com/gh/bitcartcc/bitcart-store.svg?style=svg)](https://circleci.com/gh/bitcartcc/bitcart-store)
 
 This is the BitcartCC Store.
 
