@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie'
 import { createNamespacedHelpers } from 'vuex'
 import { decimalStr } from '@/helpers'
 import mixins from '@/helpers/mixins'
@@ -113,7 +112,6 @@ export default {
       this.loading = false
       let url = this.combineURLs(`${this.$store.getters.apiURL}`, `ws/invoices/${res.data.id}`)
       url = url.replace(`http://`, `ws://`).replace(`https://`, `wss://`)
-      url += `?token=${Cookies.get('access_token')}`
       const ref = this
       const websocket = new WebSocket(url)
       websocket.onmessage = function (event) {
