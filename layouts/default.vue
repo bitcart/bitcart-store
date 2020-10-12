@@ -10,13 +10,13 @@
 </template>
 
 <script>
-import Header from '@/components/Header'
+import Header from "@/components/Header"
 
 export default {
   components: { AppHeader: Header },
-  beforeCreate () {
-    this.$store.dispatch('syncStats')
-  }
+  beforeCreate() {
+    this.$store.dispatch("syncStats")
+  },
 }
 </script>
 

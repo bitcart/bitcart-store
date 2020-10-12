@@ -3,5 +3,5 @@ export default {
   isStripeCardCompleted: ({ isStripeCardCompleted }) => isStripeCardCompleted,
   isLoading: ({ isLoading }) => isLoading,
   status: ({ status }) => status,
-  response: ({ response }) => response
+  response: ({ response }) => response,
 }

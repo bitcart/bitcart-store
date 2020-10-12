@@ -33,38 +33,44 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-import Checkout from '@/components/Checkout'
-import CheckoutModal from '@/components/CheckoutModal'
-import CartProductListItem from '@/components/CartProductListItem'
-import StepMenu from '@/components/StepMenu'
-import stepMenuContent from '@/components/StepMenu/stepMenuContent.json'
+import { createNamespacedHelpers } from "vuex"
+import Checkout from "@/components/Checkout"
+import CheckoutModal from "@/components/CheckoutModal"
+import CartProductListItem from "@/components/CartProductListItem"
+import StepMenu from "@/components/StepMenu"
+import stepMenuContent from "@/components/StepMenu/stepMenuContent.json"
 
-const { mapGetters, mapActions } = createNamespacedHelpers('cart')
+const { mapGetters, mapActions } = createNamespacedHelpers("cart")
 
 export default {
   components: {
     StepMenu,
     CartProductListItem,
     Checkout,
-    CheckoutModal
+    CheckoutModal,
   },
   data: () => ({
-    stepMenuContent
+    stepMenuContent,
   }),
   computed: {
-    ...mapGetters(['cart', 'total', 'amount', 'success', 'actualStep', 'userEmail']),
-    currency () {
+    ...mapGetters([
+      "cart",
+      "total",
+      "amount",
+      "success",
+      "actualStep",
+      "userEmail",
+    ]),
+    currency() {
       return this.$store.state.store.default_currency
-    }
+    },
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.success && this.setSuccess(false)
     this.setActualStep(0)
   },
   methods: {
-    ...mapActions(['setSuccess', 'setActualStep'])
-  }
-
+    ...mapActions(["setSuccess", "setActualStep"]),
+  },
 }
 </script>

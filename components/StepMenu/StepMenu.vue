@@ -13,17 +13,17 @@
 
 <script>
 export default {
-  name: 'StepMenu',
+  name: "StepMenu",
   props: {
     actualStep: {
       type: Number,
-      default: 0
+      default: 0,
     },
     menu: {
       type: Array,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>
 

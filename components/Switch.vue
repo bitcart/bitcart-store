@@ -7,13 +7,17 @@
 
 <script>
 export default {
-  name: 'AppSwitch',
+  name: "AppSwitch",
   computed: {
     trigger: {
-      get () { return this.$store.state.product.sale },
-      set () { return this.$store.dispatch('product/switchSale') }
-    }
-  }
+      get() {
+        return this.$store.state.product.sale
+      },
+      set() {
+        return this.$store.dispatch("product/switchSale")
+      },
+    },
+  },
 }
 </script>
 

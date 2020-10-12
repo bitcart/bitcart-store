@@ -38,132 +38,159 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-import { decimalStr } from '@/helpers'
-import mixins from '@/helpers/mixins'
+import { createNamespacedHelpers } from "vuex"
+import { decimalStr } from "@/helpers"
+import mixins from "@/helpers/mixins"
 
-const { mapActions, mapGetters } = createNamespacedHelpers('cart')
+const { mapActions, mapGetters } = createNamespacedHelpers("cart")
 
 export default {
   mixins: [mixins],
   props: {
     total: {
       type: [Number, String],
-      required: true
+      required: true,
     },
     cart: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
       showCheckout: true,
       selectedTab: null,
-      whatToCopy: 'ID',
+      whatToCopy: "ID",
       price: 0,
       invoice: {},
       tabitem: {},
       loading: true,
-      status: 'Pending',
+      status: "Pending",
       texts: {
         expired: {
-          icon: 'mdi-close',
-          text: 'This invoice has expired'
+          icon: "mdi-close",
+          text: "This invoice has expired",
         },
         complete: {
-          icon: 'mdi-check',
-          text: 'This invoice has been paid'
+          icon: "mdi-check",
+          text: "This invoice has been paid",
         },
-        Failed:
-        {
-          icon: 'mdi-close',
-          text: 'This invoice has failed'
+        Failed: {
+          icon: "mdi-close",
+          text: "This invoice has failed",
         },
-        Invalid:
-        {
-          icon: 'mdi-close',
-          text: 'This invoice is invalid'
+        Invalid: {
+          icon: "mdi-close",
+          text: "This invoice is invalid",
         },
-        '': {
-          icon: 'mdi-close',
-          text: 'This invoice is invalid'
-        }
-      }
+        "": {
+          icon: "mdi-close",
+          text: "This invoice is invalid",
+        },
+      },
     }
   },
   computed: {
-    ...mapGetters(['userEmail', 'promocode', 'success']),
-    noTabs () {
-      return Object.entries(this.tabitem).length === 0 && this.tabitem.constructor === Object
-    }
+    ...mapGetters(["userEmail", "promocode", "success"]),
+    noTabs() {
+      return (
+        Object.entries(this.tabitem).length === 0 &&
+        this.tabitem.constructor === Object
+      )
+    },
   },
   watch: {
-    showCheckout (val) {
-      if (!val) { this.selectedTab = null }
-    }
-  },
-  beforeMount () {
-    const cart = Object.assign({}, ...Object.keys(this.cart).map(k => ({ [k]: this.cart[k].count })))
-    this.price = decimalStr(parseFloat(this.total))
-    this.$axios.post('invoices', { store_id: parseInt(this.$store.state.storeID), currency: this.$store.state.store.default_currency, products: cart, price: this.price, buyer_email: this.userEmail, promocode: this.promocode }).then((res) => {
-      this.tabitem = res.data.payments
-      this.invoice = res.data
-      this.loading = false
-      let url = this.combineURLs(`${this.$store.getters.apiURL}`, `ws/invoices/${res.data.id}`)
-      url = url.replace(`http://`, `ws://`).replace(`https://`, `wss://`)
-      const ref = this
-      const websocket = new WebSocket(url)
-      websocket.onmessage = function (event) {
-        const status = JSON.parse(event.data).status
-        ref.status = status
-        if (status === 'complete') {
-          ref.setSuccess(true)
-          ref.clearContents()
-          ref.clearCount()
-          ref.showCheckout = false
-          if (ref.invoice.redirect_url) { window.location = ref.invoice.redirect_url }
-        } else {
-          ref.setSuccess(false)
-          ref.showCheckout = false
-        }
+    showCheckout(val) {
+      if (!val) {
+        this.selectedTab = null
       }
-    })
+    },
+  },
+  beforeMount() {
+    const cart = Object.assign(
+      {},
+      ...Object.keys(this.cart).map((k) => ({ [k]: this.cart[k].count }))
+    )
+    this.price = decimalStr(parseFloat(this.total))
+    this.$axios
+      .post("invoices", {
+        store_id: parseInt(this.$store.state.storeID),
+        currency: this.$store.state.store.default_currency,
+        products: cart,
+        price: this.price,
+        buyer_email: this.userEmail,
+        promocode: this.promocode,
+      })
+      .then((res) => {
+        this.tabitem = res.data.payments
+        this.invoice = res.data
+        this.loading = false
+        let url = this.combineURLs(
+          `${this.$store.getters.apiURL}`,
+          `ws/invoices/${res.data.id}`
+        )
+        url = url.replace(`http://`, `ws://`).replace(`https://`, `wss://`)
+        const ref = this
+        const websocket = new WebSocket(url)
+        websocket.onmessage = function (event) {
+          const status = JSON.parse(event.data).status
+          ref.status = status
+          if (status === "complete") {
+            ref.setSuccess(true)
+            ref.clearContents()
+            ref.clearCount()
+            ref.showCheckout = false
+            if (ref.invoice.redirect_url) {
+              window.location = ref.invoice.redirect_url
+            }
+          } else {
+            ref.setSuccess(false)
+            ref.showCheckout = false
+          }
+        }
+      })
   },
   methods: {
-    ...mapActions(['setSuccess', 'clearContents', 'clearCount', 'setActualStep']),
-    checkout (id) {
-      if (!id) { id = this.qrItem.id }
+    ...mapActions([
+      "setSuccess",
+      "clearContents",
+      "clearCount",
+      "setActualStep",
+    ]),
+    checkout(id) {
+      if (!id) {
+        id = this.qrItem.id
+      }
       this.$router.replace({ path: `/i/${id}` })
     },
-    copyToClipboard (text) {
-      const el = document.createElement('textarea')
-      el.addEventListener('focusin', e => e.stopPropagation())
+    copyToClipboard(text) {
+      const el = document.createElement("textarea")
+      el.addEventListener("focusin", (e) => e.stopPropagation())
       el.value = text
-      el.setAttribute('readonly', '')
-      el.style.position = 'absolute'
-      el.style.left = '-9999px'
+      el.setAttribute("readonly", "")
+      el.style.position = "absolute"
+      el.style.left = "-9999px"
       document.body.appendChild(el)
       el.select()
-      document.execCommand('copy')
+      document.execCommand("copy")
       document.body.removeChild(el)
     },
-    copyText (text, desc) {
+    copyText(text, desc) {
       this.copyToClipboard(text)
-      this.whatToCopy = desc || 'ID'
+      this.whatToCopy = desc || "ID"
       this.$buefy.snackbar.open({
         message: `Successfully copied ${this.whatToCopy} to clipboard!`,
-        type: 'is-success',
+        type: "is-success",
         duration: 2500,
-        position: 'is-bottom'
+        position: "is-bottom",
       })
     },
-    combineURLs (baseURL, relativeURL) {
+    combineURLs(baseURL, relativeURL) {
       return relativeURL
-        ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+        ? baseURL.replace(/\/+$/, "") + "/" + relativeURL.replace(/^\/+/, "")
         : baseURL
-    }
-  }
+    },
+  },
 }
 </script>
 

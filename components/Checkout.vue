@@ -41,51 +41,51 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from "vuex"
 
 const STRIPE_URL = process.env.STRIPE_URL
 
 export default {
-  name: 'Checkout',
+  name: "Checkout",
 
   props: {
     total: {
       type: [Number, String],
-      required: true
+      required: true,
     },
     stripeUrl: {
       type: String,
-      default: STRIPE_URL
-    }
+      default: STRIPE_URL,
+    },
   },
-  data () {
+  data() {
     return {
-      stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY
+      stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
     }
   },
   computed: {
-    ...mapGetters('checkout', ['isStripeCardCompleted', 'status', 'isLoading']),
-    ...mapGetters('cart', ['userEmail'])
+    ...mapGetters("checkout", ["isStripeCardCompleted", "status", "isLoading"]),
+    ...mapGetters("cart", ["userEmail"]),
   },
   methods: {
-    ...mapActions('cart', [
-      'clearCheckout',
-      'pay',
-      'setIsStripeCardCompleted',
-      'setStatus',
-      'setUserEmail',
-      'setPromocode'
+    ...mapActions("cart", [
+      "clearCheckout",
+      "pay",
+      "setIsStripeCardCompleted",
+      "setStatus",
+      "setUserEmail",
+      "setPromocode",
     ]),
 
-    async beforePay () {
+    async beforePay() {
       const isAllFieldsValid = await this.$validator.validateAll()
       if (!isAllFieldsValid) {
-        this.setStatus('failure')
+        this.setStatus("failure")
         return
       }
-      await this.$emit('pay')
-    }
-  }
+      await this.$emit("pay")
+    },
+  },
 }
 </script>
 

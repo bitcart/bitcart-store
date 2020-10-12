@@ -21,39 +21,39 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-import { slug } from '@/helpers'
-import mixins from '@/helpers/mixins'
-const { mapActions } = createNamespacedHelpers('cart')
+import { createNamespacedHelpers } from "vuex"
+import { slug } from "@/helpers"
+import mixins from "@/helpers/mixins"
+const { mapActions } = createNamespacedHelpers("cart")
 
 export default {
-  name: 'Card',
+  name: "Card",
   mixins: [mixins],
   props: {
     item: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
-    slug () {
+    slug() {
       return `${slug(this.item.name)}-${this.item.id}`
     },
-    currency () {
+    currency() {
       return this.$store.state.store.default_currency
-    }
+    },
   },
   methods: {
-    ...mapActions(['addItem']),
-    combineURLs (baseURL, relativeURL) {
+    ...mapActions(["addItem"]),
+    combineURLs(baseURL, relativeURL) {
       return relativeURL
-        ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+        ? baseURL.replace(/\/+$/, "") + "/" + relativeURL.replace(/^\/+/, "")
         : baseURL
     },
-    productURL (url) {
+    productURL(url) {
       return this.combineURLs(`${this.$store.getters.apiURL}`, url)
-    }
-  }
+    },
+  },
 }
 </script>
 

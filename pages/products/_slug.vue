@@ -16,73 +16,102 @@
 </template>
 
 <script>
-import isHTTPS from 'is-https'
-import { createNamespacedHelpers } from 'vuex'
-import mixins from '@/helpers/mixins'
+import isHTTPS from "is-https"
+import { createNamespacedHelpers } from "vuex"
+import mixins from "@/helpers/mixins"
 
-const { mapGetters } = createNamespacedHelpers('product')
+const { mapGetters } = createNamespacedHelpers("product")
 
 export default {
   mixins: [mixins],
-  asyncData ({ store, req, route, error, redirect, app }) {
-    let url = ''
+  asyncData({ store, req, route, error, redirect, app }) {
+    let url = ""
     if (req) {
       url = req.headers.host
-      if (isHTTPS(req)) { url = 'https://' + url } else { url = 'http://' + url }
-    } else { url = window.location.origin }
-    store.commit('SET_CURRENT_URL', url)
+      if (isHTTPS(req)) {
+        url = "https://" + url
+      } else {
+        url = "http://" + url
+      }
+    } else {
+      url = window.location.origin
+    }
+    store.commit("SET_CURRENT_URL", url)
     if (!route.params.slug) {
       return error({ statusCode: 404 })
     }
     const params = route.params.slug.split(/[- ]+/)
-    if (params.length < 2) { return error({ statusCode: 404, text: 'Product not found' }) }
+    if (params.length < 2) {
+      return error({ statusCode: 404, text: "Product not found" })
+    }
     const productId = parseInt(params.pop())
-    store.commit('product/SET_PRODUCT_ID', productId)
-    if (Number.isNaN(productId)) { return error({ statusCode: 404, text: 'Product not found' }) }
-    return app.$axios.get(`/products/${productId}`).then(r => store.commit('product/SET_PRODUCTS', [r.data])).catch((e) => {
-      error({ statusCode: 404, text: 'Product not found' })
-    })
+    store.commit("product/SET_PRODUCT_ID", productId)
+    if (Number.isNaN(productId)) {
+      return error({ statusCode: 404, text: "Product not found" })
+    }
+    return app.$axios
+      .get(`/products/${productId}`)
+      .then((r) => store.commit("product/SET_PRODUCTS", [r.data]))
+      .catch((e) => {
+        error({ statusCode: 404, text: "Product not found" })
+      })
   },
   computed: {
-    ...mapGetters(['productFromSlugParamRoute']),
-    item () {
+    ...mapGetters(["productFromSlugParamRoute"]),
+    item() {
       return this.productFromSlugParamRoute
     },
-    currency () {
+    currency() {
       return this.$store.state.store.default_currency
-    }
+    },
   },
   methods: {
-    addItem (item) {
-      return this.$store.dispatch('cart/addItem', item)
+    addItem(item) {
+      return this.$store.dispatch("cart/addItem", item)
     },
-    combineURLs (baseURL, relativeURL) {
+    combineURLs(baseURL, relativeURL) {
       return relativeURL
-        ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+        ? baseURL.replace(/\/+$/, "") + "/" + relativeURL.replace(/^\/+/, "")
         : baseURL
     },
-    productURL (url) {
+    productURL(url) {
       return this.combineURLs(`${this.$store.getters.apiURL}`, url)
-    }
+    },
   },
-  head () {
-    let url = ''
-    if (process.server) { const URL = require('url').URL; url = new URL(this.$route.path, this.$store.getters.url).href } else { url = new URL(this.$route.path, this.$store.getters.url).href }
+  head() {
+    let url = ""
+    if (process.server) {
+      const URL = require("url").URL
+      url = new URL(this.$route.path, this.$store.getters.url).href
+    } else {
+      url = new URL(this.$route.path, this.$store.getters.url).href
+    }
     if (this.item) {
       const headData = {
-        title: `${this.item.name} | ${this.$store.getters['package/name']}`,
+        title: `${this.item.name} | ${this.$store.getters["package/name"]}`,
         meta: [
-          { hid: 'og:title', property: 'og:title', content: this.item.name },
-          { hid: 'og:type', property: 'og:type', content: 'article' },
-          { hid: 'og:url', property: 'og:url', content: url }
-
-        ]
+          { hid: "og:title", property: "og:title", content: this.item.name },
+          { hid: "og:type", property: "og:type", content: "article" },
+          { hid: "og:url", property: "og:url", content: url },
+        ],
       }
-      if (this.item.description) { headData.meta.push({ hid: 'og:description', property: 'og:description', content: this.item.description }) }
-      if (this.item.image) { headData.meta.push({ hid: 'og:image', property: 'og:image', content: this.productURL(this.item.image) }) }
+      if (this.item.description) {
+        headData.meta.push({
+          hid: "og:description",
+          property: "og:description",
+          content: this.item.description,
+        })
+      }
+      if (this.item.image) {
+        headData.meta.push({
+          hid: "og:image",
+          property: "og:image",
+          content: this.productURL(this.item.image),
+        })
+      }
       return headData
     }
     return false
-  }
+  },
 }
 </script>
