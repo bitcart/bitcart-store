@@ -26,35 +26,35 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-import mixins from '@/helpers/mixins'
+import { createNamespacedHelpers } from "vuex"
+import mixins from "@/helpers/mixins"
 
-const { mapActions } = createNamespacedHelpers('cart')
+const { mapActions } = createNamespacedHelpers("cart")
 
 export default {
-  name: 'CartProductListItem',
+  name: "CartProductListItem",
   mixins: [mixins],
   props: {
     item: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
-    currency () {
+    currency() {
       return this.$store.state.store.default_currency
-    }
+    },
   },
   methods: {
-    ...mapActions(['removeItem']),
-    combineURLs (baseURL, relativeURL) {
+    ...mapActions(["removeItem"]),
+    combineURLs(baseURL, relativeURL) {
       return relativeURL
-        ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+        ? baseURL.replace(/\/+$/, "") + "/" + relativeURL.replace(/^\/+/, "")
         : baseURL
     },
-    productURL (url) {
+    productURL(url) {
       return this.combineURLs(`${this.$store.getters.apiURL}`, url)
-    }
-  }
+    },
+  },
 }
 </script>

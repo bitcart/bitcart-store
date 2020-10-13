@@ -1,17 +1,17 @@
-import { version, name } from '@/package.json'
+import { version, name } from "@/package.json"
 
 const state = () => ({
   version,
-  name
+  name,
 })
 
 const getters = {
   version: ({ version }) => version,
-  name: ({ name }) => name
+  name: ({ name }) => name,
 }
 
 export default {
   namespaced: true,
   state,
-  getters
+  getters,
 }

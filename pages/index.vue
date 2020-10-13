@@ -16,37 +16,37 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-import Hero from '@/components/Hero'
-import ProductListItem from '@/components/ProductListItem'
-import Sidebar from '@/components/Sidebar'
+import { createNamespacedHelpers } from "vuex"
+import Hero from "@/components/Hero"
+import ProductListItem from "@/components/ProductListItem"
+import Sidebar from "@/components/Sidebar"
 
-const { mapGetters } = createNamespacedHelpers('product')
+const { mapGetters } = createNamespacedHelpers("product")
 
 export default {
   components: {
     AppHero: Hero,
     AppProductListItem: ProductListItem,
-    AppSidebar: Sidebar
+    AppSidebar: Sidebar,
   },
-  fetch ({ store }) {
-    return store.dispatch('product/setProductsRef')
+  fetch({ store }) {
+    return store.dispatch("product/setProductsRef")
   },
   computed: {
-    ...mapGetters(['products', 'highprice']),
-    total () {
+    ...mapGetters(["products", "highprice"]),
+    total() {
       return this.$store.state.product.count
     },
     current: {
-      get () {
+      get() {
         return this.$store.state.currentPage
       },
-      set (val) {
-        this.$store.commit('setCurrentPage', val)
-        this.$store.dispatch('product/setProductsRef')
-      }
-    }
-  }
+      set(val) {
+        this.$store.commit("setCurrentPage", val)
+        this.$store.dispatch("product/setProductsRef")
+      },
+    },
+  },
 }
 </script>
 

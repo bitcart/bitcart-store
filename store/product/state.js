@@ -6,5 +6,5 @@ export default () => ({
   categories: [],
   count: 0,
   productId: 1,
-  categorySelected: 'all'
+  categorySelected: "all",
 })

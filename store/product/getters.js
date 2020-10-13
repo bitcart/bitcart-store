@@ -4,7 +4,8 @@ export default {
   showSale: ({ sale }) => sale,
   allProducts: ({ products }) => products,
   products: ({ products }) => products,
-  productFromSlugParamRoute: ({ products, productId }) => products.find(({ id }) => id === productId),
+  productFromSlugParamRoute: ({ products, productId }) =>
+    products.find(({ id }) => id === productId),
   categories: ({ categories }) => categories,
-  categorySelected: ({ categorySelected }) => categorySelected
+  categorySelected: ({ categorySelected }) => categorySelected,
 }

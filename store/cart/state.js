@@ -5,5 +5,5 @@ export default () => ({
   cart: {},
   userEmail: undefined,
   promocode: null,
-  success: false
+  success: false,
 })

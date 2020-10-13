@@ -1,3 +1,3 @@
-import StepMenu from './StepMenu.vue'
+import StepMenu from "./StepMenu.vue"
 
 export default StepMenu

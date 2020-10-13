@@ -26,39 +26,38 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-import Switch from '@/components/Switch'
-import mixins from '@/helpers/mixins'
+import { createNamespacedHelpers } from "vuex"
+import Switch from "@/components/Switch"
+import mixins from "@/helpers/mixins"
 
-const { mapActions, mapGetters } = createNamespacedHelpers('product')
+const { mapActions, mapGetters } = createNamespacedHelpers("product")
 
 export default {
-  name: 'Sidebar',
+  name: "Sidebar",
   components: {
-    AppSwitch: Switch
+    AppSwitch: Switch,
   },
   mixins: [mixins],
   props: {
     sale: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  data () {
+  data() {
     return {
-      min: 0
+      min: 0,
     }
   },
   computed: {
-    ...mapGetters(['categories', 'categorySelected', 'maxprice', 'highprice']),
-    currency () {
+    ...mapGetters(["categories", "categorySelected", "maxprice", "highprice"]),
+    currency() {
       return this.$store.state.store.default_currency
-    }
+    },
   },
   methods: {
-    ...mapActions(['updateHighprice', 'setCategory'])
-  }
-
+    ...mapActions(["updateHighprice", "setCategory"]),
+  },
 }
 </script>
 

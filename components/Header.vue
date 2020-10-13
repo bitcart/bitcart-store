@@ -24,19 +24,19 @@
 </template>
 
 <script>
-import { createNamespacedHelpers, mapGetters } from 'vuex'
+import { createNamespacedHelpers, mapGetters } from "vuex"
 
-const { mapGetters: cartGetters } = createNamespacedHelpers('cart')
+const { mapGetters: cartGetters } = createNamespacedHelpers("cart")
 
 export default {
-  name: 'AppHeader',
+  name: "AppHeader",
   computed: {
-    ...cartGetters(['total']),
-    ...mapGetters(['onionURL']),
-    isIndexRoute () {
-      return this.$route.name === 'index'
-    }
-  }
+    ...cartGetters(["total"]),
+    ...mapGetters(["onionURL"]),
+    isIndexRoute() {
+      return this.$route.name === "index"
+    },
+  },
 }
 </script>
 

@@ -3,5 +3,5 @@ export default () => ({
   isStripeCardCompleted: false,
   isLoading: false,
   status: undefined,
-  response: undefined
+  response: undefined,
 })
