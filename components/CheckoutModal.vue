@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       showCheckout: true,
-      selectedTab: null,
+      selectedTab: 0,
       whatToCopy: "ID",
       price: 0,
       invoice: {},
