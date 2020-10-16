@@ -6,14 +6,20 @@
       nuxt
     .hero-foot
       .container
-        p &copy; BitcartCC 2018-2020
+        p &copy; BitcartCC v{{VERSION}}
 </template>
 
 <script>
 import Header from "@/components/Header"
+import VERSION from "@/version"
 
 export default {
   components: { AppHeader: Header },
+  data() {
+    return {
+      VERSION,
+    }
+  },
   beforeCreate() {
     this.$store.dispatch("syncStats")
   },
