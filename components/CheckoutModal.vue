@@ -1,20 +1,26 @@
 <template lang="pug">
 .container(v-if="!loading")
   b-tabs(v-if="showCheckout && !noTabs" type="is-boxed" :animated="false" v-model="selectedTab")
-    b-tab-item(v-for="(itemv, key) in tabitem" :key="key" :label="key.toUpperCase()")
+    b-tab-item(v-for="(item, index) in tabitem" :key="index" :label="getPaymentMethodName(item)")
       .card
         header.card-header.has-text-centered
           p.card-header-title.is-centered Checkout
         .card-content
           .container
+            .columns(v-if="itemv.lightning")
+              .column
+                b-tabs(type="is-toggle" position="is-centered" :animated="false" v-model="selectedToCopy")
+                  b-tab-item(label="Invoice")
+                  b-tab-item(label="Node Info")
             .columns
               .column.has-text-centered
-                qrcode(:options="{width: 256}" :value="itemv.payment_url" tag="img")
+                qrcode(:options="{width: 256}" :value="qrValue" tag="img")
             .columns
               .column.has-text-centered
-                p.mt-6.mb-0.title(v-if="itemv.currency.toUpperCase() !== invoice.currency") 1 {{ itemv.currency.toUpperCase() }} = {{ decimalStr(invoice.price/itemv.amount) }} {{ invoice.currency }}
-                p.mt-6.mb-0.title.has-text-weight-bold {{ itemv.payment_address }}
-                p.mt-6.mb-0.title Waiting for {{ decimalStr(itemv.amount) }} {{ itemv.currency.toUpperCase() }} payment
+                p.mt-6.mb-0.title(v-if="itemv.currency.toUpperCase() !== invoice.currency") 1 {{ itemv.currency.toUpperCase() }} = {{ itemv.rate_str }}
+                CopyText(:text="itemv.node_id" v-if="itemv.lightning && selectedToCopy === 1")
+                CopyText(:text="itemv.payment_address" v-else)
+                p.mt-6.mb-0.title Waiting for {{ itemv.amount }} {{ itemv.currency.toUpperCase() }} payment
         .card-footer
           .card-footer-item
             button.button.is-primary(@click="copyText(itemv.payment_url, 'URL')")
@@ -39,12 +45,16 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex"
-import { decimalStr } from "@/helpers"
+import { decimalStr, copyToClipboard } from "@/helpers"
 import mixins from "@/helpers/mixins"
+import CopyText from "@/components/CopyText"
 
 const { mapActions, mapGetters } = createNamespacedHelpers("cart")
 
 export default {
+  components: {
+    CopyText,
+  },
   mixins: [mixins],
   props: {
     total: {
@@ -60,6 +70,7 @@ export default {
     return {
       showCheckout: true,
       selectedTab: 0,
+      selectedToCopy: 0,
       whatToCopy: "ID",
       price: 0,
       invoice: {},
@@ -98,12 +109,23 @@ export default {
         this.tabitem.constructor === Object
       )
     },
+    itemv() {
+      return this.tabitem[this.selectedTab]
+    },
+    qrValue() {
+      return this.itemv.lightning && this.selectedToCopy === 1
+        ? this.itemv.node_id
+        : this.itemv.payment_url
+    },
   },
   watch: {
     showCheckout(val) {
       if (!val) {
         this.selectedTab = null
       }
+    },
+    selectedTab(val) {
+      this.selectedToCopy = 0
     },
   },
   beforeMount() {
@@ -157,26 +179,19 @@ export default {
       "clearCount",
       "setActualStep",
     ]),
+    getPaymentMethodName(method) {
+      return method.lightning
+        ? `${method.currency.toUpperCase()} (⚡)`
+        : method.currency.toUpperCase()
+    },
     checkout(id) {
       if (!id) {
         id = this.qrItem.id
       }
       this.$router.replace({ path: `/i/${id}` })
     },
-    copyToClipboard(text) {
-      const el = document.createElement("textarea")
-      el.addEventListener("focusin", (e) => e.stopPropagation())
-      el.value = text
-      el.setAttribute("readonly", "")
-      el.style.position = "absolute"
-      el.style.left = "-9999px"
-      document.body.appendChild(el)
-      el.select()
-      document.execCommand("copy")
-      document.body.removeChild(el)
-    },
     copyText(text, desc) {
-      this.copyToClipboard(text)
+      copyToClipboard(text)
       this.whatToCopy = desc || "ID"
       this.$buefy.snackbar.open({
         message: `Successfully copied ${this.whatToCopy} to clipboard!`,
