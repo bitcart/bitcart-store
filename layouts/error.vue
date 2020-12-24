@@ -22,6 +22,9 @@ export default {
       otherError: "An error occurred",
     }
   },
+  head() {
+    return { title: this.title }
+  },
   computed: {
     title() {
       return this.error.text
@@ -30,9 +33,6 @@ export default {
         ? this.pageNotFound
         : this.otherError
     },
-  },
-  head() {
-    return { title: this.title }
   },
 }
 </script>

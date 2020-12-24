@@ -56,28 +56,6 @@ export default {
         error({ statusCode: 404, text: "Product not found" })
       })
   },
-  computed: {
-    ...mapGetters(["productFromSlugParamRoute"]),
-    item() {
-      return this.productFromSlugParamRoute
-    },
-    currency() {
-      return this.$store.state.store.default_currency
-    },
-  },
-  methods: {
-    addItem(item) {
-      return this.$store.dispatch("cart/addItem", item)
-    },
-    combineURLs(baseURL, relativeURL) {
-      return relativeURL
-        ? baseURL.replace(/\/+$/, "") + "/" + relativeURL.replace(/^\/+/, "")
-        : baseURL
-    },
-    productURL(url) {
-      return this.combineURLs(`${this.$store.getters.apiURL}`, url)
-    },
-  },
   head() {
     let url = ""
     if (process.server) {
@@ -112,6 +90,28 @@ export default {
       return headData
     }
     return false
+  },
+  computed: {
+    ...mapGetters(["productFromSlugParamRoute"]),
+    item() {
+      return this.productFromSlugParamRoute
+    },
+    currency() {
+      return this.$store.state.store.default_currency
+    },
+  },
+  methods: {
+    addItem(item) {
+      return this.$store.dispatch("cart/addItem", item)
+    },
+    combineURLs(baseURL, relativeURL) {
+      return relativeURL
+        ? baseURL.replace(/\/+$/, "") + "/" + relativeURL.replace(/^\/+/, "")
+        : baseURL
+    },
+    productURL(url) {
+      return this.combineURLs(`${this.$store.getters.apiURL}`, url)
+    },
   },
 }
 </script>

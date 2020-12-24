@@ -1,5 +1,5 @@
-import { decimalStr } from "@/helpers"
+import { copyToClipboard, decimalStr } from "@/helpers"
 
 export default {
-  methods: { decimalStr },
+  methods: { decimalStr, copyToClipboard },
 }
