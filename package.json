@@ -24,7 +24,7 @@
     "slugify": "^1.4.6",
     "socks-proxy-agent": "^5.0.0",
     "vee-validate": "^2.2.15",
-    "vuex-persistedstate": "^3.0.1"
+    "vuex-persistedstate": "^3.2.0"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.12.0",
