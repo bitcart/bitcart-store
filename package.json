@@ -54,7 +54,7 @@
     "node-sass": "^5.0.0",
     "nodemon": "^2.0.6",
     "nuxt": "^2.14.12",
-    "prettier": "^2.1.2",
+    "prettier": "^2.2.1",
     "pug": "^3.0.0",
     "pug-plain-loader": "^1.1.0",
     "sass-loader": "^10.1.0",
