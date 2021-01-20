@@ -1,7 +1,7 @@
 <template lang="pug">
 .container(v-if="!loading")
   b-tabs(v-if="showCheckout && !noTabs" type="is-boxed" :animated="false" v-model="selectedTab")
-    b-tab-item(v-for="(item, index) in tabitem" :key="index" :label="getPaymentMethodName(item)")
+    b-tab-item(v-for="(item, index) in tabitem" :key="index" :label="item.name")
       .card
         header.card-header.has-text-centered
           p.card-header-title.is-centered Checkout
@@ -179,11 +179,6 @@ export default {
       "clearCount",
       "setActualStep",
     ]),
-    getPaymentMethodName(method) {
-      return method.lightning
-        ? `${method.currency.toUpperCase()} (⚡)`
-        : method.currency.toUpperCase()
-    },
     checkout(id) {
       if (!id) {
         id = this.qrItem.id
