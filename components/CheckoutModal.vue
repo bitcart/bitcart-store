@@ -76,23 +76,27 @@ export default {
       invoice: {},
       tabitem: {},
       loading: true,
-      status: "Pending",
+      status: "pending",
       texts: {
         expired: {
           icon: "mdi-close",
           text: "This invoice has expired",
         },
-        complete: {
+        invalid: {
+          icon: "mdi-close",
+          text: "This invoice has been marked as invalid",
+        },
+        paid: {
           icon: "mdi-check",
           text: "This invoice has been paid",
         },
-        Failed: {
-          icon: "mdi-close",
-          text: "This invoice has failed",
+        confirmed: {
+          icon: "mdi-check",
+          text: "This invoice has been paid",
         },
-        Invalid: {
-          icon: "mdi-close",
-          text: "This invoice is invalid",
+        complete: {
+          icon: "mdi-check",
+          text: "This invoice has been paid",
         },
         "": {
           icon: "mdi-close",
@@ -157,7 +161,7 @@ export default {
         websocket.onmessage = function (event) {
           const status = JSON.parse(event.data).status
           ref.status = status
-          if (status === "complete") {
+          if (["paid", "confirmed", "complete"].includes(status)) {
             ref.setSuccess(true)
             ref.clearContents()
             ref.clearCount()
