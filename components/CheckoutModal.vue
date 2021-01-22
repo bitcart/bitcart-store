@@ -21,6 +21,9 @@
                 CopyText(:text="itemv.node_id" v-if="itemv.lightning && selectedToCopy === 1")
                 CopyText(:text="itemv.payment_address" v-else)
                 p.mt-6.mb-0.title Waiting for {{ itemv.amount }} {{ itemv.currency.toUpperCase() }} payment
+            .columns(v-show="showRecommendedFee")
+              .column.has-text-centered
+                p.mt-3.mb-0.subtitle Recommended fee: {{ itemv.recommended_fee }} sat/byte
         .card-footer
           .card-footer-item
             button.button.is-primary(@click="copyText(itemv.payment_url, 'URL')")
@@ -120,6 +123,13 @@ export default {
       return this.itemv.lightning && this.selectedToCopy === 1
         ? this.itemv.node_id
         : this.itemv.payment_url
+    },
+    showRecommendedFee() {
+      return (
+        this.$store.state.store.checkout_settings &&
+        this.$store.state.store.checkout_settings.show_recommended_fee &&
+        this.itemv.recommended_fee !== 0
+      )
     },
   },
   watch: {
