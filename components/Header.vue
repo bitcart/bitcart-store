@@ -4,14 +4,14 @@
                         aria-label="main navigation")
     .container.is-flex-touch
       .navbar-brand
-        nuxt-link.navbar-item(exact, :to="{name: 'index'}")
+        nuxt-link.navbar-item(exact, :to="getHomeURL")
           strong
             i {{$store.state.store.name}}
       .navbar-end.is-flex-touch
         .navbar-item
           .field
             p.control
-              nuxt-link.button.is-light(exact, :to="{name: 'cart'}")
+              nuxt-link.button.is-light(exact, :to="getCartURL")
                 span.icon.cartitem
                   .cartcount(v-if="total > 0") {{ total }}
                   i.fa.fa-shopping-cart
@@ -35,6 +35,18 @@ export default {
     ...mapGetters(["onionURL"]),
     isIndexRoute() {
       return this.$route.name === "index"
+    },
+    getHomeURL() {
+      const storeID = this.$route.params.id
+      return storeID
+        ? { name: "store-id", params: { id: storeID } }
+        : { name: "index" }
+    },
+    getCartURL() {
+      const storeID = this.$route.params.id
+      return storeID
+        ? { name: "store-id-cart", params: { id: storeID } }
+        : { name: "cart" }
     },
   },
 }

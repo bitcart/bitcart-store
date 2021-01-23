@@ -22,13 +22,13 @@
 
         .empty.has-text-centered(v-else-if="!total && !success")
           h3 Your cart is empty.
-          nuxt-link(exact to="/")
+          nuxt-link(exact :to="getHomeURL")
             button.button Fill er up!
 
         .has-text-centered(v-else)
           h2 Success!
           p Your order has been processed, it will be delivered shortly.
-          nuxt-link(exact to="/")
+          nuxt-link(exact :to="getHomeURL")
             button.button Fill again your cart
 </template>
 
@@ -63,6 +63,12 @@ export default {
     ]),
     currency() {
       return this.$store.state.store.default_currency
+    },
+    getHomeURL() {
+      const storeID = this.$route.params.id
+      return storeID
+        ? { name: "store-id", params: { id: storeID } }
+        : { name: "index" }
     },
   },
   beforeDestroy() {

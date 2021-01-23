@@ -1,14 +1,14 @@
 <template lang="pug">
   .card.is-radius
     .card-image
-      nuxt-link(exact, :to="{name: 'products-slug', params: { slug: `${slug}` } }")
+      nuxt-link(exact, :to="productRedirectURL")
         picture.image.image-preview
           img.lazyload(:data-srcset="`${productURL(item.image)}`",
                        :alt="`Image of ${item.name}`")
     .card-content
       .media
         .media-content
-          nuxt-link(exact, :to="{name: 'products-slug', params: { slug: `${slug}` } }")
+          nuxt-link(exact, :to="productRedirectURL")
             p.title.is-5 {{ item.name }}
             p.item-price {{ decimalStr(item.price) }} {{ currency }}
         .media-right
@@ -41,6 +41,15 @@ export default {
     },
     currency() {
       return this.$store.state.store.default_currency
+    },
+    productRedirectURL() {
+      const storeID = this.$route.params.id
+      return storeID
+        ? {
+            name: "store-id-products-slug",
+            params: { id: storeID, slug: `${this.slug}` },
+          }
+        : { name: "products-slug", params: { slug: `${this.slug}` } }
     },
   },
   methods: {

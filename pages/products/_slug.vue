@@ -50,7 +50,7 @@ export default {
       return error({ statusCode: 404, text: "Product not found" })
     }
     return app.$axios
-      .get(`/products/${productId}`)
+      .get(`/products/${productId}?store=${store.state.storeID}`)
       .then((r) => store.commit("product/SET_PRODUCTS", [r.data]))
       .catch((e) => {
         error({ statusCode: 404, text: "Product not found" })
