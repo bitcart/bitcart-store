@@ -50,10 +50,15 @@ export const getters = {
   },
 }
 export const actions = {
-  async nuxtServerInit({ commit, dispatch }, { req, $axios }) {
+  async nuxtServerInit({ commit, dispatch }, { req, $axios, params }) {
     await dispatch("loadEnv", { env: this.$config, req })
-    const { data } = await $axios.get("/manage/stores")
-    commit("storeID", data.pos_id)
+    let storeID
+    if (params.id) storeID = params.id
+    else {
+      const { data } = await $axios.get("/manage/stores")
+      storeID = data.pos_id
+    }
+    commit("storeID", storeID)
     const { data: services } = await $axios.get("/services")
     commit("services", services)
   },
