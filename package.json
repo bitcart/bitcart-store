@@ -57,7 +57,7 @@
     "prettier": "^2.2.1",
     "pug": "^3.0.0",
     "pug-plain-loader": "^1.1.0",
-    "sass-loader": "^10.1.1",
+    "sass-loader": "^11.0.0",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "vue-jest": "^3.0.5"
