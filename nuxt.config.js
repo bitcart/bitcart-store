@@ -36,6 +36,7 @@ export default {
   css: ["@/assets/scss/main.scss"],
   router: {
     middleware: ["onion"],
+    base: process.env.BITCART_STORE_ROOTPATH || "/",
   },
   /*
    ** Runtime config
