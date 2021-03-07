@@ -9,11 +9,11 @@
           label.label(for="email") Email
           .control.has-icons-left.has-icons-right
             input.input#email(type="email",
-                              required,
+                              :required="emailRequired",
                               placeholder="name@example.com",
                               name="email",
                               @input="setUserEmail($event.target.value)"
-                              v-validate="'required|email'",
+                              v-validate="'email'",
                               :class="{ 'is-danger': errors.has('email') }")
             span.icon.is-small.is-left
               i.fa.fa-envelope
@@ -66,6 +66,7 @@ export default {
   computed: {
     ...mapGetters("checkout", ["isStripeCardCompleted", "status", "isLoading"]),
     ...mapGetters("cart", ["userEmail"]),
+    ...mapGetters(["emailRequired"]),
   },
   methods: {
     ...mapActions("cart", [

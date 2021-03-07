@@ -4,6 +4,7 @@ export const state = () => ({
   currentPage: 1,
   url: "",
   services: {},
+  policies: {},
   path: "/",
   onion: false,
   storeID: 1,
@@ -34,6 +35,9 @@ export const mutations = {
   onion(state, val) {
     state.onion = val
   },
+  policies(state, val) {
+    state.policies = val
+  },
 }
 export const getters = {
   url: ({ url }) => url,
@@ -48,16 +52,14 @@ export const getters = {
   apiURL({ onion, env }, { apiOnionURL }) {
     return onion && apiOnionURL ? apiOnionURL : env.URL
   },
+  emailRequired: ({ policies }) => policies.email_required,
 }
 export const actions = {
   async nuxtServerInit({ commit, dispatch }, { req, $axios, params }) {
     await dispatch("loadEnv", { env: this.$config, req })
-    let storeID
-    if (params.id) storeID = params.id
-    else {
-      const { data } = await $axios.get("/manage/stores")
-      storeID = data.pos_id
-    }
+    const { data } = await $axios.get("/manage/stores")
+    commit("policies", data)
+    const storeID = params.id ? params.id : data.pos_id
     commit("storeID", storeID)
     const { data: services } = await $axios.get("/services")
     commit("services", services)
