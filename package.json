@@ -38,7 +38,7 @@
     "bulma": "^0.9.1",
     "bulma-steps": "^2.2.1",
     "bulma-switch": "^2.0.0",
-    "eslint": "^7.18.0",
+    "eslint": "^7.22.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-config-standard": ">=12.0.0",
     "eslint-plugin-import": ">=2.22.1",
