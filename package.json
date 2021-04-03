@@ -17,7 +17,7 @@
   "dependencies": {
     "@chenfengyuan/vue-qrcode": "^1.0.1",
     "@nuxtjs/axios": "^5.12.5",
-    "buefy": "^0.9.3",
+    "buefy": "0.9.4",
     "is-https": "^3.0.2",
     "lazysizes": "^5.3.0",
     "nuxt-start": "^2.15.1",
@@ -35,7 +35,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^26.6.3",
-    "bulma": "^0.9.1",
+    "bulma": "0.9.1",
     "bulma-steps": "^2.2.1",
     "bulma-switch": "^2.0.0",
     "eslint": "^7.18.0",
