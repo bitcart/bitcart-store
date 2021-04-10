@@ -32,7 +32,7 @@ export default {
       .then((r) => {
         commit("SET_PRODUCTS", r.data.result)
         return this.$axios
-          .get(`/categories?store=${this.state.storeID}`)
+          .get(`/products/categories?store=${this.state.storeID}`)
           .then((resp) => commit("SET_CATEGORIES", resp.data))
       })
   },

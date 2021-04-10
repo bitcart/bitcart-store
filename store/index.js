@@ -61,7 +61,7 @@ export const actions = {
     commit("policies", data)
     const storeID = params.id ? params.id : data.pos_id
     commit("storeID", storeID)
-    const { data: services } = await $axios.get("/services")
+    const { data: services } = await $axios.get("/tor/services")
     commit("services", services)
   },
   loadEnv({ commit }, { env, req }) {
