@@ -44,7 +44,7 @@ export default {
     if (params.length < 2) {
       return error({ statusCode: 404, text: "Product not found" })
     }
-    const productId = parseInt(params.pop())
+    const productId = params.pop()
     store.commit("product/SET_PRODUCT_ID", productId)
     if (Number.isNaN(productId)) {
       return error({ statusCode: 404, text: "Product not found" })

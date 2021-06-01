@@ -150,7 +150,7 @@ export default {
     this.price = decimalStr(parseFloat(this.total))
     this.$axios
       .post("invoices", {
-        store_id: parseInt(this.$store.state.storeID),
+        store_id: this.$store.state.storeID,
         currency: this.$store.state.store.default_currency,
         products: cart,
         price: this.price,
