@@ -2319,12 +2319,12 @@ browserslist@^4.0.0, browserslist@^4.12.0, browserslist@^4.16.6, browserslist@^4
     escalade "^3.1.1"
     node-releases "^1.1.71"
 
-buefy@0.9.7:
-  version "0.9.7"
-  resolved "https://registry.yarnpkg.com/buefy/-/buefy-0.9.7.tgz#694e73fe0b32632a53d94c5ba9cfa4468363badd"
-  integrity sha512-Fli0ZjNDgtFtHm0LItWmfhNJ1oLjDwPzUWccvwXXoo2mADXaH8JQxyhY+drUuUV5/GMu5PtwqQSqPgZy942VZg==
+buefy@0.9.8:
+  version "0.9.8"
+  resolved "https://registry.yarnpkg.com/buefy/-/buefy-0.9.8.tgz#51fb52bf3bcf4b8db7668f0ca17f1a5e8cf7f499"
+  integrity sha512-VBGAD6WtmgpPdiRnBXaTleS3ifpNu9rbInAr54YL8KJw1RhCb8JtGYYYVRjllnDQmN0jQjC5lYoPR9KpfTe+Cw==
   dependencies:
-    bulma "0.9.2"
+    bulma "0.9.3"
 
 buffer-alloc-unsafe@^1.1.0:
   version "1.1.0"
@@ -2391,10 +2391,10 @@ bulma-switch@^2.0.0:
   resolved "https://registry.yarnpkg.com/bulma-switch/-/bulma-switch-2.0.0.tgz#7a187cd1bb8073e9a542478d936b89315f1ffcd8"
   integrity sha512-myD38zeUfjmdduq+pXabhJEe3x2hQP48l/OI+Y0fO3HdDynZUY/VJygucvEAJKRjr4HxD5DnEm4yx+oDOBXpAA==
 
-bulma@0.9.2:
-  version "0.9.2"
-  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.9.2.tgz#340011e119c605f19b8ca886bfea595f1deaf23c"
-  integrity sha512-e14EF+3VSZ488yL/lJH0tR8mFWiEQVCMi/BQUMi2TGMBOk+zrDg4wryuwm/+dRSHJw0gMawp2tsW7X1JYUCE3A==
+bulma@0.9.3:
+  version "0.9.3"
+  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.9.3.tgz#ddccb7436ebe3e21bf47afe01d3c43a296b70243"
+  integrity sha512-0d7GNW1PY4ud8TWxdNcP6Cc8Bu7MxcntD/RRLGWuiw/s0a9P+XlH/6QoOIrmbj6o8WWJzJYhytiu9nFjTszk1g==
 
 bytes@3.0.0:
   version "3.0.0"
@@ -7939,10 +7939,10 @@ sass-loader@^10.1.1:
     schema-utils "^3.0.0"
     semver "^7.3.2"
 
-sass@~1.32:
-  version "1.32.13"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.32.13.tgz#8d29c849e625a415bce71609c7cf95e15f74ed00"
-  integrity sha512-dEgI9nShraqP7cXQH+lEXVf73WOPCse0QlFzSD8k+1TcOxCMwVXfQlr0jtoluZysQOyJGnfr21dLvYKDJq8HkA==
+sass@~1.35.0:
+  version "1.35.1"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.35.1.tgz#90ecf774dfe68f07b6193077e3b42fb154b9e1cd"
+  integrity sha512-oCisuQJstxMcacOPmxLNiLlj4cUyN2+8xJnG7VanRoh2GOLr9RqkvI4AxA4a6LHVg/rsu+PmxXeGhrdSF9jCiQ==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
 
