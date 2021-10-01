@@ -28,7 +28,7 @@ appColors["pagination-color"] = "#48c774"
 module.exports = {
   jsOutputFile: "assets/bulma-generated/bulma-colors.js",
   sassOutputFile: "assets/bulma-generated/generated-bulma-vars.sass",
-  cssFallbackOutputFile: "assets/bulma-generated/generated-fallback.css",
+  cssFallbackOutputFile: null, // we rely on sass to do it for us to not store css files in the repo
   colorDefs: appColors,
   sassEntryFile: "assets/scss/main.scss",
   transition: "0.5s ease",
