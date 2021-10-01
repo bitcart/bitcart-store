@@ -1,11 +1,8 @@
-$blue: hsl(141, 53%, 53%);
-$link: $blue;
-$primary: $blue;
-$pagination-color: #48c774;
-
-@import "bulma/bulma.sass";
-@import "buefy/src/scss/utils/_all.scss";
-@import "buefy/src/scss/components/_notices.scss";
-@import "buefy/src/scss/components/_pagination.scss";
-@import "buefy/src/scss/components/_slider.scss";
-@import "buefy/src/scss/components/_tooltip.scss";
+@import "../bulma-generated/generated-fallback.css";
+@import "../bulma-generated/generated-bulma-vars.sass";
+@import "node_modules/bulma-css-vars/bulma-cv-lib";
+@import "node_modules/buefy/src/scss/utils/_all.scss";
+@import "node_modules/buefy/src/scss/components/_notices.scss";
+@import "node_modules/buefy/src/scss/components/_pagination.scss";
+@import "node_modules/buefy/src/scss/components/_slider.scss";
+@import "node_modules/buefy/src/scss/components/_tooltip.scss";
