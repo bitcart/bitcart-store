@@ -61,7 +61,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="scss" scoped>
 aside {
   float: left;
   width: 19.1489%;

@@ -50,7 +50,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="scss" scoped>
 .content {
   /* no grid support */
   width: 79.7872%;
