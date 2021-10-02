@@ -53,6 +53,7 @@ export default {
 </script>
 
 <style lang="scss">
+$cartcount-size: 18px;
 .hero-head {
   .navbar {
     &.is-light {
@@ -77,8 +78,8 @@ export default {
     color: white;
     text-align: center;
     padding-top: 2px;
-    height: 18px;
-    width: 18px;
+    height: $cartcount-size;
+    width: $cartcount-size;
     font-size: 10px;
     margin: -8px 0 0 8px;
     border-radius: 50%;

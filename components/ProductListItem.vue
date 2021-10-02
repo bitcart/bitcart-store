@@ -84,6 +84,10 @@ export default {
   .card-content {
     width: 100%;
   }
+  .title,
+  .subtitle {
+    color: inherit;
+  }
   .title {
     margin-bottom: 0.5rem;
   }
@@ -111,10 +115,6 @@ export default {
       color: #3273dc;
     }
   }
-}
-.card .title,
-.card .subtitle {
-  color: inherit;
 }
 .lazyload,
 .lazyloading {
