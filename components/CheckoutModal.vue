@@ -218,7 +218,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .modal-mask {
   position: fixed;
   z-index: 9998;
