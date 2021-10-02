@@ -90,7 +90,7 @@ export default {
 }
 </script>
 
-<style scoped lang="stylus">
+<style lang="scss" scoped>
 .payment {
   border: 1px solid #ccc;
   max-width: 500px;
@@ -99,21 +99,18 @@ export default {
   flex-direction: column;
   margin: 0 auto;
 }
-
 .stripe-card {
   margin-bottom: 10px;
-
   &.input {
     display: block;
   }
 }
-
-/* -- transition -- */
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 0.25s ease-out;
 }
-
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>

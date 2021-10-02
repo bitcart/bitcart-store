@@ -61,7 +61,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="scss" scoped>
 aside {
   float: left;
   width: 19.1489%;
@@ -91,10 +91,11 @@ aside {
 }
 
 span {
-  font-family: 'Barlow', sans-serif;
+  font-family: "Barlow", sans-serif;
 }
 
-.min, .max {
+.min,
+.max {
   font-size: 12px;
   color: #565656;
 }

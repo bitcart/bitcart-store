@@ -27,10 +27,11 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-@require '../../node_modules/bulma-steps/dist/css/bulma-steps.min.css';
+<style lang="scss">
+@import "../../node_modules/bulma-steps/dist/css/bulma-steps.min.css";
 
-$colorGreen = #00d1b2;
+$color-green: #00d1b2;
+$color-white: white;
 
 .steps {
   &.is-large {
@@ -38,25 +39,27 @@ $colorGreen = #00d1b2;
     margin-bottom: 4rem;
 
     .step-item {
-      .step-marker .icon *, .step-details .step-title {
+      .step-marker .icon *,
+      .step-details .step-title {
         font-size: 1.2rem;
       }
     }
   }
 
-  .is-active::before, .is-completed::before {
+  .is-active::before,
+  .is-completed::before {
     background-position: left bottom;
   }
 
   .is-active .step-marker {
-    background-color: white;
-    border-color: $colorGreen;
-    color: $colorGreen;
+    background-color: $color-white;
+    border-color: $color-green;
+    color: $color-green;
   }
 
   .is-completed .step-marker {
-    color: white;
-    background-color: $colorGreen;
+    color: $color-white;
+    background-color: $color-green;
   }
 }
 </style>

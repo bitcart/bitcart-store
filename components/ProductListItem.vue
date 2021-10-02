@@ -66,13 +66,12 @@ export default {
 }
 </script>
 
-<style scoped lang="stylus">
+<style lang="scss" scoped>
 .card {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   .image {
     img {
       padding-top: 1.5rem;
@@ -82,55 +81,45 @@ export default {
       height: 200px;
     }
   }
-
   .card-content {
     width: 100%;
   }
-
-  .title, .subtitle {
+  .title,
+  .subtitle {
     color: inherit;
   }
-
   .title {
     margin-bottom: 0.5rem;
   }
-
   .button {
     border: 0;
     padding: 0;
-
     .fa-circle {
       transition: color 0.5s;
     }
-
     .fa-cart-plus {
       font-size: 1.4rem;
     }
-
     &:hover {
       .fa-circle {
         color: #209cee;
       }
     }
-
     &.icon {
       cursor: pointer;
     }
   }
-
   a {
     color: inherit;
-
     &:hover {
       color: #3273dc;
     }
   }
 }
-
-.lazyload, .lazyloading {
+.lazyload,
+.lazyloading {
   opacity: 0;
 }
-
 .lazyloaded {
   opacity: 1;
   transition: opacity 150ms;

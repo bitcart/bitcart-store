@@ -26,10 +26,10 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-@require '../node_modules/@fortawesome/fontawesome-free/css/all.css';
-@require './css/_transition';
-@require './css/_slider';
+<style lang="scss">
+@import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
+@import "./css/_transition";
+@import "./css/_slider";
 
 html {
   overflow-y: auto;
@@ -64,7 +64,7 @@ html {
   color: #363636;
 }
 
-$card-radius = 5px;
+$card-radius: 5px;
 
 .is-radius {
   border-radius: $card-radius;

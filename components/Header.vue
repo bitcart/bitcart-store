@@ -52,7 +52,8 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="scss">
+$cartcount-size: 18px;
 .hero-head {
   .navbar {
     &.is-light {
@@ -71,14 +72,14 @@ export default {
   }
 
   .cartcount {
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow", sans-serif;
     position: absolute;
     background: #ff2211;
     color: white;
     text-align: center;
     padding-top: 2px;
-    height: 18px;
-    width: @height;
+    height: $cartcount-size;
+    width: $cartcount-size;
     font-size: 10px;
     margin: -8px 0 0 8px;
     border-radius: 50%;
@@ -87,8 +88,7 @@ export default {
 
   @media (max-width: 600px) {
     .button {
-      padding-left: 0.2rem;
-      padding-right: @padding-left;
+      padding: 0 0.2rem;
 
       .icon {
         &:first-child {
@@ -101,8 +101,7 @@ export default {
     }
 
     .navbar-item {
-      padding-left: 0.5rem;
-      padding-right: @padding-left;
+      padding: 0 0.5rem;
     }
   }
 }

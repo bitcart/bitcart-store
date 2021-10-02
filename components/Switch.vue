@@ -21,6 +21,6 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-@require '../node_modules/bulma-switch/dist/css/bulma-switch.min.css';
+<style lang="scss" scoped>
+@import "../node_modules/bulma-switch/dist/css/bulma-switch.min.css";
 </style>
