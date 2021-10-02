@@ -1,18 +1,23 @@
 .items-leave-active {
   transition: all 0.2s ease-in;
-}.items-move {
+}
+.items-move {
   transition: all 0.2s ease-in-out;
-}.items-enter-active {
+}
+.items-enter-active {
   transition: all 0.2s ease-out;
-}.items-enter, 
+}
+.items-enter,
 .items-leave-to {
   opacity: 0;
   transform: scale(0.9);
   transform-origin: 50% 50%;
-}.page-enter-active, 
+}
+.page-enter-active,
 .page-leave-active {
   transition: opacity 0.5s;
-}.page-enter, 
+}
+.page-enter,
 .page-leave-active {
   opacity: 0;
 }
