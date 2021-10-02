@@ -28,7 +28,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../node_modules/bulma-steps/dist/css/bulma-steps.min.css';
+@import "../../node_modules/bulma-steps/dist/css/bulma-steps.min.css";
 
 $color-green: #00d1b2;
 $color-white: white;
@@ -39,13 +39,15 @@ $color-white: white;
     margin-bottom: 4rem;
 
     .step-item {
-      .step-marker .icon *, .step-details .step-title {
+      .step-marker .icon *,
+      .step-details .step-title {
         font-size: 1.2rem;
       }
     }
   }
 
-  .is-active::before, .is-completed::before {
+  .is-active::before,
+  .is-completed::before {
     background-position: left bottom;
   }
 

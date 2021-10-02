@@ -27,9 +27,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../node_modules/@fortawesome/fontawesome-free/css/all.css';
-@import './css/_transition';
-@import './css/_slider';
+@import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
+@import "./css/_transition";
+@import "./css/_slider";
 
 html {
   overflow-y: auto;

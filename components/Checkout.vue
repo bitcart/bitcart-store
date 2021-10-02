@@ -92,25 +92,25 @@ export default {
 
 <style lang="scss" scoped>
 .payment {
-	border: 1px solid #ccc;
-	max-width: 500px;
-	padding: 50px;
-	display: flex;
-	flex-direction: column;
-	margin: 0 auto;
+  border: 1px solid #ccc;
+  max-width: 500px;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
 }
 .stripe-card {
-	margin-bottom: 10px;
-	&.input {
-		display: block;
-	}
+  margin-bottom: 10px;
+  &.input {
+    display: block;
+  }
 }
 .fade-enter-active,
 .fade-leave-active {
-	transition: opacity 0.25s ease-out;
+  transition: opacity 0.25s ease-out;
 }
 .fade-enter,
 .fade-leave-to {
-	opacity: 0;
+  opacity: 0;
 }
 </style>

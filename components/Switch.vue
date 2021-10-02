@@ -22,5 +22,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../node_modules/bulma-switch/dist/css/bulma-switch.min.css';
+@import "../node_modules/bulma-switch/dist/css/bulma-switch.min.css";
 </style>

@@ -91,10 +91,11 @@ aside {
 }
 
 span {
-  font-family: 'Barlow', sans-serif;
+  font-family: "Barlow", sans-serif;
 }
 
-.min, .max {
+.min,
+.max {
   font-size: 12px;
   color: #565656;
 }

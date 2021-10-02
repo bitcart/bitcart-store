@@ -71,7 +71,7 @@ export default {
   }
 
   .cartcount {
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow", sans-serif;
     position: absolute;
     background: #ff2211;
     color: white;
