@@ -66,7 +66,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .card {
 	display: flex;
 	flex-direction: column;

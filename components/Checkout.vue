@@ -90,7 +90,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .payment {
 	border: 1px solid #ccc;
 	max-width: 500px;

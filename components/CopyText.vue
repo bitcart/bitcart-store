@@ -27,7 +27,7 @@ export default {
   },
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .copytext {
   cursor: copy;
   display: block;
