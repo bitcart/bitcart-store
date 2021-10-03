@@ -11,7 +11,7 @@
         .navbar-item
           .field
             p.control
-              nuxt-link.button.is-light(exact, :to="getCartURL")
+              a.button.is-light(@click="openSidebarCart()")
                 span.icon.cartitem
                   .cartcount(v-if="total > 0") {{ total }}
                   i.fa.fa-shopping-cart
@@ -49,6 +49,11 @@ export default {
         : { name: "cart" }
     },
   },
+  methods: {
+    openSidebarCart() {
+      return this.$store.dispatch("cart/openSidebarCart", true)
+    }
+  }
 }
 </script>
 

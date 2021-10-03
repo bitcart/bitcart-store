@@ -43,4 +43,8 @@ export default {
   SET_PROMOCODE: (state, value) => {
     state.promocode = value
   },
+  OPEN_SIDEBAR_CART: (state, value) => {
+    state.openSidebarCart = value
+    // this.$emit('openSidebarCart')
+  }
 }

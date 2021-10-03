@@ -8,4 +8,5 @@ export default {
   setTotal: ({ commit }, value) => commit("SET_TOTAL", value),
   setUserEmail: ({ commit }, value) => commit("SET_USER_EMAIL", value),
   setPromocode: ({ commit }, value) => commit("SET_PROMOCODE", value),
+  openSidebarCart: ({ commit }, value) => commit("OPEN_SIDEBAR_CART", value),
 }
