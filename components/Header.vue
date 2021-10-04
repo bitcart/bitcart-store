@@ -52,8 +52,8 @@ export default {
   methods: {
     openSidebarCart() {
       return this.$store.dispatch("cart/openSidebarCart", true)
-    }
-  }
+    },
+  },
 }
 </script>
 

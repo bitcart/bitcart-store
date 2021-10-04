@@ -13,12 +13,12 @@
 <script>
 import Header from "@/components/Header"
 import VERSION from "@/version"
-import CartSidebar from '@/components/CartSidebar'
+import CartSidebar from "@/components/CartSidebar"
 
 export default {
-  components: { 
+  components: {
     AppHeader: Header,
-    AppCartSidebar: CartSidebar
+    AppCartSidebar: CartSidebar,
   },
   data() {
     return {

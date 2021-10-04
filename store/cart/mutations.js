@@ -45,6 +45,5 @@ export default {
   },
   OPEN_SIDEBAR_CART: (state, value) => {
     state.openSidebarCart = value
-    // this.$emit('openSidebarCart')
-  }
+  },
 }
