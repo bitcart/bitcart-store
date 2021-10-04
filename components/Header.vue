@@ -11,7 +11,7 @@
         .navbar-item
           .field
             p.control
-              a.button.is-light(@click="openSidebarCart()")
+              a.button.is-light(@click="openSidebarCart(true)")
                 span.icon.cartitem
                   .cartcount(v-if="total > 0") {{ total }}
                   i.fa.fa-shopping-cart
@@ -26,7 +26,7 @@
 <script>
 import { createNamespacedHelpers, mapGetters } from "vuex"
 
-const { mapGetters: cartGetters } = createNamespacedHelpers("cart")
+const { mapGetters: cartGetters, mapActions } = createNamespacedHelpers("cart")
 
 export default {
   name: "AppHeader",
@@ -50,9 +50,7 @@ export default {
     },
   },
   methods: {
-    openSidebarCart() {
-      return this.$store.dispatch("cart/openSidebarCart", true)
-    },
+    ...mapActions(["openSidebarCart"]),
   },
 }
 </script>
