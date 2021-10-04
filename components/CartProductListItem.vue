@@ -52,7 +52,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["removeItem"]),
+    ...mapActions(["removeItem", "addItem", "decreaseItem"]),
     combineURLs(baseURL, relativeURL) {
       return relativeURL
         ? baseURL.replace(/\/+$/, "") + "/" + relativeURL.replace(/^\/+/, "")
@@ -60,12 +60,6 @@ export default {
     },
     productURL(url) {
       return this.combineURLs(`${this.$store.getters.apiURL}`, url)
-    },
-    addItem(item) {
-      return this.$store.dispatch("cart/addItem", item)
-    },
-    decreaseItem(item) {
-      return this.$store.dispatch("cart/decreaseItem", item)
     },
   },
 }
