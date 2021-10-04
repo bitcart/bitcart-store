@@ -66,30 +66,52 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 1000;
-  display: none;
+  transition: all 0.5s ease;
+  visibility: hidden;
 }
 
 .cart-sidebar-wrapper.active {
-  display: block;
+  visibility: visible;
 }
 
 .overlay-cart-sidebar {
-  position: fixed;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
   height: 100%;
   background-color: #000000b3;
   z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.cart-sidebar-wrapper.active .overlay-cart-sidebar {
+  opacity: 1;
 }
 
 .cart-sidebar {
   position: absolute;
-  right: 0;
+  right: -300px;
   height: 100%;
   width: 300px;
   background-color: #fff;
   z-index: 1100;
   display: flex;
   flex-direction: column;
+  transition: right 0.5s ease;
+}
+
+.cart-sidebar-wrapper.active .cart-sidebar {
+  right: 0;
+}
+
+@media (max-width: 600px) {
+  .cart-sidebar {
+    right: -100%;
+  }
 }
 
 .cart-sidebar-header {
