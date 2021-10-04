@@ -14,7 +14,7 @@
             h3 Your cart is empty.
             nuxt-link(exact, :to="getHomeURL")
               button.button(@click="closeSidebarCart()") Fill er up!
-        div.cart-sidebar-footer
+        div.cart-sidebar-footer(v-if="total > 0")
           p
             b Total: {{ amount }} {{ currency }}
           nuxt-link(exact, :to="getCartURL")
