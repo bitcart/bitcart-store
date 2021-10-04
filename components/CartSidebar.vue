@@ -13,11 +13,12 @@
           .empty.has-text-centered(v-else-if="!total")
             h3 Your cart is empty.
             nuxt-link(exact, :to="getHomeURL")
-              button.button Fill er up!
+              button.button(@click="closeSidebarCart()") Fill er up!
         div.cart-sidebar-footer
           p
             b Total: {{ amount }} {{ currency }}
-          nuxt-link.button.is-primary(exact, :to="getCartURL") Checkout
+          nuxt-link(exact, :to="getCartURL")
+            .button.is-primary(@click="closeSidebarCart()") Checkout
 </template>
 
 <script>
@@ -120,7 +121,7 @@ export default {
   border-top: 1px solid var(--grey);
 }
 
-.cart-sidebar-footer a {
+.cart-sidebar-footer a div {
   margin-top: 10px;
 }
 </style>
