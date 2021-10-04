@@ -52,7 +52,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["removeItem", "addItem", "decreaseItem"]),
+    ...mapActions(["removeItem"]),
     combineURLs(baseURL, relativeURL) {
       return relativeURL
         ? baseURL.replace(/\/+$/, "") + "/" + relativeURL.replace(/^\/+/, "")
