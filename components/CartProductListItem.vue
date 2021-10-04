@@ -23,6 +23,12 @@
             a.level-item
               span.icon.is-small.has-text-danger
                 i.fa.fa-heart
+            a.level-item.addItem(@click="addItem(item)", title="Add")
+              span.icon.is-small
+                i.fa.fa-plus
+            a.level-item.decreaseItem(@click="decreaseItem(item)", title="Add")
+              span.icon.is-small
+                i.fa.fa-minus
 </template>
 
 <script>
@@ -46,7 +52,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["removeItem"]),
+    ...mapActions(["removeItem", "addItem", "decreaseItem"]),
     combineURLs(baseURL, relativeURL) {
       return relativeURL
         ? baseURL.replace(/\/+$/, "") + "/" + relativeURL.replace(/^\/+/, "")
@@ -54,6 +60,12 @@ export default {
     },
     productURL(url) {
       return this.combineURLs(`${this.$store.getters.apiURL}`, url)
+    },
+    addItem(item) {
+      return this.$store.dispatch("cart/addItem", item)
+    },
+    decreaseItem(item) {
+      return this.$store.dispatch("cart/decreaseItem", item)
     },
   },
 }

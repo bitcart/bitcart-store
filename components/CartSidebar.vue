@@ -112,6 +112,7 @@ export default {
 .cart-sidebar-body {
   max-height: 70vh;
   overflow-y: auto;
+  padding: 20px 0;
 }
 
 .cart-sidebar-footer {

@@ -16,6 +16,16 @@ export default {
     }
     state.amount = calculateAmount(state.cart)
   },
+  DECREASE_ITEM: (state, item) => {
+    state.total--
+    if (item.id in state.cart) {
+      state.cart[item.id].count--
+      if (state.cart[item.id].count === 0) {
+        delete state.cart[item.id]
+      }
+    }
+    state.amount = calculateAmount(state.cart)
+  },
   REMOVE_ITEM: (state, item) => {
     state.total = state.total - item.count
     delete state.cart[item.id]
