@@ -3,20 +3,27 @@
     div.overlay-cart-sidebar(@click="closeSidebarCart()")
     aside.cart-sidebar
         div.cart-sidebar-header
-            h4 Cart
+            h4.title.is-3 Cart
             img.lazyload(src="/cross.svg")(@click="closeSidebarCart()")
         div.cart-sidebar-body
+          div(v-if="total > 0")
             CartProductListItem(v-for="item in cart",
                 :key="item.name",
                 :item="item")
+          .empty.has-text-centered(v-else-if="!total")
+            h3 Your cart is empty.
+            nuxt-link(exact, :to="getHomeURL")
+              button.button Fill er up!
         div.cart-sidebar-footer
-            nuxt-link.button.is-light(exact, :to="getCartURL") Checkout
+          p
+            b Total: {{ amount }} {{ currency }}
+          nuxt-link.button.is-primary(exact, :to="getCartURL") Checkout
 </template>
 
 <script>
 import { createNamespacedHelpers } from "vuex"
 import Switch from "@/components/Switch"
-import CartProductListItem from '@/components/CartProductListItem';
+import CartProductListItem from "@/components/CartProductListItem"
 
 const { mapGetters: cartGetters } = createNamespacedHelpers("cart")
 
@@ -24,28 +31,25 @@ export default {
   name: "CartSidebar",
   components: {
     AppSwitch: Switch,
-    CartProductListItem
+    CartProductListItem,
   },
   computed: {
-    ...cartGetters([
-        "openSidebarCart",
-        "cart",
-        "total",
-        "amount"
-    ]),
+    ...cartGetters(["openSidebarCart", "cart", "total", "amount"]),
     getCartURL() {
       const storeID = this.$route.params.id
       return storeID
         ? { name: "store-id-cart", params: { id: storeID } }
         : { name: "cart" }
     },
-  },
-  created() {
-    /* this.$store.subscribe((mutation, state) => {
-            if(mutation.type == 'cart/OPEN_SIDEBAR_CART') {
-                this.sidebarCartOpen = mutation.payload;
-            }
-        }) */
+    currency() {
+      return this.$store.state.store.default_currency
+    },
+    getHomeURL() {
+      const storeID = this.$route.params.id
+      return storeID
+        ? { name: "store-id", params: { id: storeID } }
+        : { name: "index" }
+    },
   },
   methods: {
     closeSidebarCart() {
@@ -85,5 +89,38 @@ export default {
   z-index: 1100;
   display: flex;
   flex-direction: column;
+}
+
+.cart-sidebar-header {
+  text-align: center;
+  padding: 10px 30px;
+  border-bottom: 1px solid var(--grey);
+}
+
+.cart-sidebar-header h4 {
+  margin: 0;
+}
+
+.cart-sidebar-header img {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.cart-sidebar-body {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.cart-sidebar-footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid var(--grey);
+}
+
+.cart-sidebar-footer a {
+  margin-top: 10px;
 }
 </style>
