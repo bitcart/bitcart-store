@@ -4,7 +4,7 @@
     aside.cart-sidebar
         div.cart-sidebar-header
             h4.title.is-3 Cart
-            i.fa.fa-times.fa-lg(src="/cross.svg" @click="closeSidebarCart()")
+            i.fa.fa-times.fa-lg(@click="closeSidebarCart()")
         div.cart-sidebar-body
           div(v-if="total > 0")
             CartProductListItem(v-for="item in cart",
