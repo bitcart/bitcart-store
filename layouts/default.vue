@@ -7,14 +7,19 @@
     .hero-foot
       .container
         p &copy; BitcartCC v{{VERSION}}
+    app-cart-sidebar
 </template>
 
 <script>
 import Header from "@/components/Header"
 import VERSION from "@/version"
+import CartSidebar from "@/components/CartSidebar"
 
 export default {
-  components: { AppHeader: Header },
+  components: {
+    AppHeader: Header,
+    AppCartSidebar: CartSidebar,
+  },
   data() {
     return {
       VERSION,

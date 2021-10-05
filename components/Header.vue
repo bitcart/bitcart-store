@@ -11,7 +11,7 @@
         .navbar-item
           .field
             p.control
-              nuxt-link.button.is-light(exact, :to="getCartURL")
+              a.button.is-light(@click="openSidebarCart(true)")
                 span.icon.cartitem
                   .cartcount(v-if="total > 0") {{ total }}
                   i.fa.fa-shopping-cart
@@ -26,7 +26,7 @@
 <script>
 import { createNamespacedHelpers, mapGetters } from "vuex"
 
-const { mapGetters: cartGetters } = createNamespacedHelpers("cart")
+const { mapGetters: cartGetters, mapActions } = createNamespacedHelpers("cart")
 
 export default {
   name: "AppHeader",
@@ -48,6 +48,9 @@ export default {
         ? { name: "store-id-cart", params: { id: storeID } }
         : { name: "cart" }
     },
+  },
+  methods: {
+    ...mapActions(["openSidebarCart"]),
   },
 }
 </script>

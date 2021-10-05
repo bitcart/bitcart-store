@@ -6,4 +6,5 @@ export default () => ({
   userEmail: undefined,
   promocode: null,
   success: false,
+  openSidebarCart: false,
 })

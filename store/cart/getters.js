@@ -6,4 +6,5 @@ export default {
   amount: ({ amount }) => amount,
   actualStep: ({ actualStep }) => actualStep,
   success: ({ success }) => success,
+  openSidebarCart: ({ openSidebarCart }) => openSidebarCart,
 }

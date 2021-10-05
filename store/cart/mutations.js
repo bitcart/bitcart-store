@@ -1,4 +1,6 @@
+import Vue from "vue"
 import { decimalStr } from "@/helpers"
+
 const calculateAmount = (obj) =>
   decimalStr(
     Object.values(obj).reduce((acc, { count, price }) => acc + count * price, 0)
@@ -12,13 +14,23 @@ export default {
     } else {
       const stateItem = { ...item }
       stateItem.count = 1
-      state.cart[item.id] = stateItem
+      Vue.set(state.cart, item.id, stateItem)
+    }
+    state.amount = calculateAmount(state.cart)
+  },
+  DECREASE_ITEM: (state, item) => {
+    state.total--
+    if (item.id in state.cart) {
+      state.cart[item.id].count--
+      if (state.cart[item.id].count === 0) {
+        Vue.delete(state.cart, item.id)
+      }
     }
     state.amount = calculateAmount(state.cart)
   },
   REMOVE_ITEM: (state, item) => {
     state.total = state.total - item.count
-    delete state.cart[item.id]
+    Vue.delete(state.cart, item.id)
     state.amount = calculateAmount(state.cart)
   },
   CLEAR_CONTENTS: (state) => {
@@ -42,5 +54,8 @@ export default {
   },
   SET_PROMOCODE: (state, value) => {
     state.promocode = value
+  },
+  OPEN_SIDEBAR_CART: (state, value) => {
+    state.openSidebarCart = value
   },
 }
