@@ -1,5 +1,5 @@
-import { decimalStr } from "@/helpers"
 import Vue from "vue"
+import { decimalStr } from "@/helpers"
 
 const calculateAmount = (obj) =>
   decimalStr(
