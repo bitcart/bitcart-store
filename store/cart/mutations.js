@@ -1,4 +1,5 @@
 import { decimalStr } from "@/helpers"
+
 const calculateAmount = (obj) =>
   decimalStr(
     Object.values(obj).reduce((acc, { count, price }) => acc + count * price, 0)
@@ -8,27 +9,35 @@ export default {
   ADD_ITEM: (state, item) => {
     state.total++
     if (item.id in state.cart) {
-      state.cart[item.id].count++
+      const cart = state.cart
+      cart[item.id].count++
+      state.cart = { ...cart }
     } else {
       const stateItem = { ...item }
       stateItem.count = 1
-      state.cart[item.id] = stateItem
+      const cart = state.cart
+      cart[item.id] = stateItem
+      state.cart = { ...cart }
     }
     state.amount = calculateAmount(state.cart)
   },
   DECREASE_ITEM: (state, item) => {
     state.total--
+    const cart = state.cart
     if (item.id in state.cart) {
-      state.cart[item.id].count--
+      cart[item.id].count--
       if (state.cart[item.id].count === 0) {
-        delete state.cart[item.id]
+        delete cart[item.id]
       }
+      state.cart = { ...cart }
     }
     state.amount = calculateAmount(state.cart)
   },
   REMOVE_ITEM: (state, item) => {
     state.total = state.total - item.count
-    delete state.cart[item.id]
+    const cart = state.cart
+    delete cart[item.id]
+    state.cart = { ...cart }
     state.amount = calculateAmount(state.cart)
   },
   CLEAR_CONTENTS: (state) => {
