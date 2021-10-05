@@ -8,7 +8,7 @@
           div(v-if="actualStep === 0")
             transition-group.content(name="items", tag="div")
               CartProductListItem(v-for="item in cart",
-                                  :key="item.name",
+                                  :key="item.id",
                                   :item="item")
 
             .is-clearfix

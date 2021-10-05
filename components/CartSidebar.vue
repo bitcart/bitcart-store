@@ -8,7 +8,7 @@
         div.cart-sidebar-body
           div(v-if="total > 0")
             CartProductListItem(v-for="item in cart",
-                :key="item.name",
+                :key="item.id",
                 :item="item")
           .empty.has-text-centered(v-else-if="!total")
             h3 Your cart is empty.
