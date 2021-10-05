@@ -23,7 +23,6 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex"
-import Switch from "@/components/Switch"
 import CartProductListItem from "@/components/CartProductListItem"
 
 const { mapGetters: cartGetters } = createNamespacedHelpers("cart")
@@ -31,7 +30,6 @@ const { mapGetters: cartGetters } = createNamespacedHelpers("cart")
 export default {
   name: "CartSidebar",
   components: {
-    AppSwitch: Switch,
     CartProductListItem,
   },
   computed: {
