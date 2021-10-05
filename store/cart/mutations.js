@@ -1,4 +1,5 @@
 import { decimalStr } from "@/helpers"
+import Vue from "vue"
 
 const calculateAmount = (obj) =>
   decimalStr(
@@ -9,35 +10,27 @@ export default {
   ADD_ITEM: (state, item) => {
     state.total++
     if (item.id in state.cart) {
-      const cart = state.cart
-      cart[item.id].count++
-      state.cart = { ...cart }
+      state.cart[item.id].count++
     } else {
       const stateItem = { ...item }
       stateItem.count = 1
-      const cart = state.cart
-      cart[item.id] = stateItem
-      state.cart = { ...cart }
+      Vue.set(state.cart, item.id, stateItem)
     }
     state.amount = calculateAmount(state.cart)
   },
   DECREASE_ITEM: (state, item) => {
     state.total--
-    const cart = state.cart
     if (item.id in state.cart) {
-      cart[item.id].count--
+      state.cart[item.id].count--
       if (state.cart[item.id].count === 0) {
-        delete cart[item.id]
+        Vue.delete(state.cart, item.id)
       }
-      state.cart = { ...cart }
     }
     state.amount = calculateAmount(state.cart)
   },
   REMOVE_ITEM: (state, item) => {
     state.total = state.total - item.count
-    const cart = state.cart
-    delete cart[item.id]
-    state.cart = { ...cart }
+    Vue.delete(state.cart, item.id)
     state.amount = calculateAmount(state.cart)
   },
   CLEAR_CONTENTS: (state) => {
