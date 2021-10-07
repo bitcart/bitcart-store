@@ -12,7 +12,7 @@
                                     :key="product['id']",
                                     :item="product")
       .columns.is-centered
-        b-pagination.stick.is-marginless(:total="total" :current.sync="current" :per-page="6" order="is-centered")
+        b-pagination.stick.is-marginless(:total="total" :current.sync="current" :per-page="6" order="is-centered" aria-label="pagination")
 </template>
 
 <script>
