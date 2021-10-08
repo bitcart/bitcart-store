@@ -17,10 +17,10 @@
                   i.fa.fa-shopping-cart
                 span.is-hidden-mobile Cart
         .navbar-item(v-if="onionURL")
-            button.button.is-light
-              a(:href="onionURL")
+            button.button.is-light(aria-label="onion")
+              a(:href="onionURL" aria-label="onion")
                 figure.image.is-32x32
-                  img.lazyload(src="/onion.svg")
+                  img.lazyload(src="/onion.svg" alt="onion")
 </template>
 
 <script>
@@ -77,7 +77,7 @@ $cartcount-size: 18px;
   .cartcount {
     font-family: "Barlow", sans-serif;
     position: absolute;
-    background: #ff2211;
+    background: #db1e0f;
     color: white;
     text-align: center;
     padding-top: 2px;

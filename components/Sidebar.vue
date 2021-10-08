@@ -8,6 +8,7 @@
         :max="maxprice",
         :step="1",
         lazy,
+        :aria-label="['slider thumb min', 'slider thumb max']",
         @input="updateHighprice")
       span.min.is-pulled-left {{ decimalStr(min) }} {{ currency }}
       span.max.is-pulled-right {{ decimalStr(maxprice) }} {{ currency }}
