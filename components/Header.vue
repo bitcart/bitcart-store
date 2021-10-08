@@ -77,7 +77,7 @@ $cartcount-size: 18px;
   .cartcount {
     font-family: "Barlow", sans-serif;
     position: absolute;
-    background: #ff2211;
+    background: #db1e0f;
     color: white;
     text-align: center;
     padding-top: 2px;
