@@ -73,18 +73,24 @@ export const actions = {
       commit("onion", req.headers.host.toLowerCase().endsWith(".onion"))
     }
   },
-  syncStats({ commit, dispatch }) {
+  async syncStats({ commit, dispatch }) {
+    try {
+      const resp = await this.$axios.get(`/stores/${this.state.storeID}`)
+      commit("store", resp.data)
+    } catch {}
+    try {
+      const resp = await this.$axios.get(
+        `/products/maxprice?store=${this.state.storeID}`
+      )
+      commit("product/maxprice", resp.data)
+    } catch {}
+    try {
+      const resp = await this.$axios.get(
+        `/products/count?store=${this.state.storeID}`
+      )
+      commit("product/count", resp.data)
+    } catch {}
     if (process.client) {
-      this.$axios
-        .get(`/stores/${this.state.storeID}`)
-        .then((resp) => commit("store", resp.data))
-        .catch(() => {})
-      this.$axios
-        .get(`/products/maxprice?store=${this.state.storeID}`)
-        .then((resp) => commit("product/maxprice", resp.data))
-      this.$axios
-        .get(`/products/count?store=${this.state.storeID}`)
-        .then((resp) => commit("product/count", resp.data))
       setTimeout(() => {
         dispatch("syncStats")
       }, 60000)

@@ -25,6 +25,22 @@ export default {
       VERSION,
     }
   },
+  async fetch() {
+    await this.$store.dispatch("syncStats")
+  },
+  head() {
+    const themeURL = this.$store.state.store?.theme_settings?.store_theme_url
+    return themeURL
+      ? {
+          link: [
+            {
+              rel: "stylesheet",
+              href: themeURL,
+            },
+          ],
+        }
+      : {}
+  },
   beforeCreate() {
     this.$store.dispatch("syncStats")
   },
