@@ -14,6 +14,13 @@
       span.max.is-pulled-right {{ decimalStr(maxprice) }} {{ currency }}
     app-switch(v-if="!sale")
     .sidearea
+      label.subtitle.is-5(for="perpage") Items per page:
+      b-select#perpage(type="number" :value="perPage" @input="setPerPage")
+        option(value="6") 6
+        option(value="12") 12
+        option(value="18") 18
+        option(value="-1") All
+    .sidearea
       label.subtitle.is-5(for="category") Categories
       .select
         select#category(@input="setCategory($event.target.value)")
@@ -51,13 +58,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["categories", "categorySelected", "maxprice", "highprice"]),
+    ...mapGetters([
+      "categories",
+      "categorySelected",
+      "maxprice",
+      "highprice",
+      "perPage",
+    ]),
     currency() {
       return this.$store.state.store.default_currency
     },
   },
   methods: {
-    ...mapActions(["updateHighprice", "setCategory"]),
+    ...mapActions(["updateHighprice", "setCategory", "setPerPage"]),
   },
 }
 </script>

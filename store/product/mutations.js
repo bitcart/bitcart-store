@@ -24,4 +24,7 @@ export default {
   count: (state, value) => {
     state.count = value
   },
+  SET_PER_PAGE: (state, value) => {
+    state.perPage = value
+  },
 }

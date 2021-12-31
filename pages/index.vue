@@ -14,7 +14,7 @@
       .columns.is-centered
         b-pagination.stick.is-marginless(:total="total" 
           :current.sync="current"
-          :per-page="6"
+          :per-page="perPage"
           order="is-centered"
           aria-next-label="Next page"
           aria-previous-label="Previous page"
@@ -40,7 +40,7 @@ export default {
     return store.dispatch("product/setProductsRef")
   },
   computed: {
-    ...mapGetters(["products", "highprice"]),
+    ...mapGetters(["products", "highprice", "perPage"]),
     total() {
       return this.$store.state.product.count
     },

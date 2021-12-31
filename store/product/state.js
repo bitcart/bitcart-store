@@ -1,5 +1,6 @@
 export default () => ({
   sale: false,
+  perPage: 6,
   products: [],
   highprice: [0, -1],
   maxprice: 0,

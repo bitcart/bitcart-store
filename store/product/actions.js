@@ -18,6 +18,11 @@ export default {
     commit("SET_CATEGORY", value)
     updateStats(dispatch)
   },
+  setPerPage({ commit, dispatch }, value) {
+    commit("SET_PER_PAGE", value)
+    commit("setCurrentPage", 1, { root: true })
+    updateStats(dispatch)
+  },
   setProductsRef({ commit }) {
     return this.$axios
       .get(
@@ -26,8 +31,8 @@ export default {
         }&category=${this.state.product.categorySelected}&min_price=${
           this.state.product.highprice[0]
         }&max_price=${this.state.product.highprice[1]}&limit=6&offset=${
-          (this.state.currentPage - 1) * 6
-        }`
+          (this.state.currentPage - 1) * this.state.product.perPage
+        }&limit=${this.state.product.perPage}`
       )
       .then((r) => {
         commit("SET_PRODUCTS", r.data.result)

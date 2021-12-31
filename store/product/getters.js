@@ -8,4 +8,5 @@ export default {
     products.find(({ id }) => id === productId),
   categories: ({ categories }) => categories,
   categorySelected: ({ categorySelected }) => categorySelected,
+  perPage: ({ perPage }) => perPage,
 }
