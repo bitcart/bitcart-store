@@ -5,7 +5,8 @@ module.exports = {
     node: true,
   },
   parserOptions: {
-    parser: "babel-eslint",
+    parser: "@babel/eslint-parser",
+    requireConfigFile: false,
   },
   extends: [
     "@nuxtjs",
@@ -21,6 +22,7 @@ module.exports = {
     "vue/html-self-closing": 0,
     "vue/html-indent": 0,
     "vue/singleline-html-element-content-newline": 0,
+    "vue/multi-word-component-names": "off",
   },
   ignorePatterns: ["assets/bulma-generated/*"],
 }
