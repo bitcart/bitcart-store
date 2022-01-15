@@ -20,14 +20,14 @@
   "dependencies": {
     "@chenfengyuan/vue-qrcode": "^1.0.1",
     "@nuxtjs/axios": "^5.12.5",
-    "buefy": "0.9.8",
+    "buefy": "^0.9.0",
     "is-https": "^4.0.0",
     "lazysizes": "^5.3.2",
     "nuxt-start": "^2.15.1",
     "slugify": "^1.4.6",
     "socks-proxy-agent": "^6.0.0",
     "vee-validate": "^2.2.15",
-    "vuex-persistedstate": "^3.2.0"
+    "vuex-persistedstate": "^4.0.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.5",
@@ -50,7 +50,7 @@
     "prettier": "^2.2.1",
     "pug": "^3.0.1",
     "pug-plain-loader": "^1.1.0",
-    "sass": "~1.35.0",
+    "sass": "^1.38.0",
     "sass-loader": "^10.1.1"
   }
 }
