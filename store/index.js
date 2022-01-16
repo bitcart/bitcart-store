@@ -52,7 +52,8 @@ export const getters = {
   apiURL({ onion, env }, { apiOnionURL }) {
     return onion && apiOnionURL ? apiOnionURL : env.URL
   },
-  emailRequired: ({ policies }) => policies.email_required,
+  emailRequired: ({ store }) =>
+    store.checkout_settings && store.checkout_settings.email_required,
 }
 export const actions = {
   async nuxtServerInit({ commit, dispatch }, { req, $axios, params }) {
