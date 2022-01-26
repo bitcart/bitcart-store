@@ -10,7 +10,7 @@
         .media-content
           nuxt-link(exact, :to="productRedirectURL")
             p.title.is-5 {{ item.name }}
-            p.item-price {{ decimalStr(item.price) }} {{ currency }}
+            p.item-price {{ item.price }} {{ currency }}
         .media-right
           p.field
             button.button.icon.is-large.add(@click="addItem(item)",

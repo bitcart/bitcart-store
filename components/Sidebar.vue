@@ -2,7 +2,7 @@
   aside.is-light.is-radius
     .sidearea
       label.subtitle.is-5(for="pricerange") Price range:
-        span  {{ decimalStr(highprice[0]) }}-{{ decimalStr(highprice[1]) }} {{ currency }}
+        span  {{ highprice[0] }}-{{ highprice[1] }} {{ currency }}
       b-slider#pricerange(:value="highprice",
         :min="0",
         :max="maxprice",

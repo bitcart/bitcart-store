@@ -54,6 +54,8 @@ export const getters = {
   },
   emailRequired: ({ store }) =>
     store.checkout_settings && store.checkout_settings.email_required,
+  divisibility: ({ store }) =>
+    store.currency_data && store.currency_data.divisibility,
 }
 export const actions = {
   async nuxtServerInit({ commit, dispatch }, { req, $axios, params }) {

@@ -9,7 +9,7 @@
       .column.is-6.is-offset-1
         h1.title.is-2 {{ item.name }}
         h2.subtitle.is-4 {{item.description}}
-        p.is-size-6 {{ decimalStr(item.price) }} {{ currency }}
+        p.is-size-6 {{ item.price }} {{ currency }}
         br
         p.has-text-centered
           a.button.is-medium.is-success.is-outlined(@click="addItem(item)", aria-label="Add to cart") Add to cart
