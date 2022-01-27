@@ -11,7 +11,7 @@
             strong {{ item.name }}
             br
             span.itemCount {{ item.count }}
-            |  x {{ decimalStr(item.price) }} {{ currency }} = {{ decimalStr(item.count * item.price) }} {{ currency }}
+            |  x {{ item.price }} {{ currency }} = {{ decimalStr(item.count * item.price) }} {{ currency }}
         nav.level.is-mobile
           .level-left
             a.level-item.removeItem(@click="removeItem(item)", title="Remove")

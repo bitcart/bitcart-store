@@ -48,7 +48,7 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex"
-import { decimalStr, copyToClipboard } from "@/helpers"
+import { copyToClipboard } from "@/helpers"
 import mixins from "@/helpers/mixins"
 import CopyText from "@/components/CopyText"
 
@@ -147,7 +147,7 @@ export default {
       {},
       ...Object.keys(this.cart).map((k) => ({ [k]: this.cart[k].count }))
     )
-    this.price = decimalStr(parseFloat(this.total))
+    this.price = this.total
     this.$axios
       .post("invoices", {
         store_id: this.$store.state.storeID,

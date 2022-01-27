@@ -1,13 +1,18 @@
 import Vue from "vue"
 import { decimalStr } from "@/helpers"
 
-const calculateAmount = (obj) =>
-  decimalStr(
-    Object.values(obj).reduce((acc, { count, price }) => acc + count * price, 0)
+const calculateAmount = (state, rootState) => {
+  state.amount = decimalStr(
+    Object.values(state.cart).reduce(
+      (acc, { count, price }) => acc + count * price,
+      0
+    ),
+    rootState.store?.currency_data?.divisibility
   )
+}
 
 export default {
-  ADD_ITEM: (state, item) => {
+  ADD_ITEM(state, item) {
     state.total++
     if (item.id in state.cart) {
       state.cart[item.id].count++
@@ -16,9 +21,9 @@ export default {
       stateItem.count = 1
       Vue.set(state.cart, item.id, stateItem)
     }
-    state.amount = calculateAmount(state.cart)
+    calculateAmount(state, this.state)
   },
-  DECREASE_ITEM: (state, item) => {
+  DECREASE_ITEM(state, item) {
     state.total--
     if (item.id in state.cart) {
       state.cart[item.id].count--
@@ -26,12 +31,12 @@ export default {
         Vue.delete(state.cart, item.id)
       }
     }
-    state.amount = calculateAmount(state.cart)
+    calculateAmount(state, this.state)
   },
-  REMOVE_ITEM: (state, item) => {
+  REMOVE_ITEM(state, item) {
     state.total = state.total - item.count
     Vue.delete(state.cart, item.id)
-    state.amount = calculateAmount(state.cart)
+    calculateAmount(state, this.state)
   },
   CLEAR_CONTENTS: (state) => {
     state.cart = {}

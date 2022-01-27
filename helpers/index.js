@@ -1,21 +1,15 @@
 import slugify from "slugify"
 
 export const slug = (str) => slugify(str, { lower: true })
-export function decimalStr(value) {
-  value = value.toFixed(8)
-  if (!value.includes(".")) {
-    return value
-  }
-  let cutFrom = value.length - 1
-  do {
-    if (value[cutFrom] === "0") {
-      cutFrom--
-    }
-  } while (value[cutFrom] === "0")
-  if (value[cutFrom] === ".") {
-    cutFrom--
-  }
-  return value.substr(0, cutFrom + 1)
+export function decimalStr(value, divisibility) {
+  if (typeof divisibility === "undefined")
+    divisibility = this.$store.getters.divisibility
+  const parsedAmount = parseFloat(value).toFixed(divisibility)
+  const [wholeAmount, fractionAmount] = parsedAmount.split(".")
+  const formattedWholeAmount = new Intl.NumberFormat().format(
+    parseInt(wholeAmount, 10)
+  )
+  return formattedWholeAmount + (fractionAmount ? "." + fractionAmount : "")
 }
 
 export function copyToClipboard(text) {
