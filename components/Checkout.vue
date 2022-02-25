@@ -2,7 +2,7 @@
   .content
     transition(name="fade")
 
-      form.payment(v-if="status !== 'failure'", @submit.prevent="beforePay")
+      form.payment(@submit.prevent="beforePay")
         h3 Please enter your payment details:
 
         .field
@@ -43,21 +43,13 @@
                             :class="{ 'is-danger': errors.has('notes') }")
 
         .field
-          button.button.is-success.pay-with-stripe(:disabled="errors.any()",
-                                                   :class="{ 'is-loading': isLoading }")
+          button.button.is-success(:disabled="errors.any()")
             | Generate invoice
-
-      .statusFailure.has-text-centered(v-if="status === 'failure'")
-        h3 Oh No!
-        p Something went wrong!
-        button.button(@click="clearCheckout") Please try again
 
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex"
-
-const STRIPE_URL = process.env.STRIPE_URL
+import { mapGetters } from "vuex"
 
 export default {
   name: "Checkout",
@@ -66,10 +58,6 @@ export default {
     total: {
       type: [Number, String],
       required: true,
-    },
-    stripeUrl: {
-      type: String,
-      default: STRIPE_URL,
     },
     promocode: {
       type: String,
@@ -84,27 +72,13 @@ export default {
       default: "",
     },
   },
-  data() {
-    return {
-      stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
-    }
-  },
   computed: {
-    ...mapGetters("checkout", ["isStripeCardCompleted", "status", "isLoading"]),
     ...mapGetters(["emailRequired"]),
   },
   methods: {
-    ...mapActions("cart", [
-      "clearCheckout",
-      "pay",
-      "setIsStripeCardCompleted",
-      "setStatus",
-    ]),
-
     async beforePay() {
       const isAllFieldsValid = await this.$validator.validateAll()
       if (!isAllFieldsValid) {
-        this.setStatus("failure")
         return
       }
       await this.$emit("pay")
@@ -121,19 +95,5 @@ export default {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-}
-.stripe-card {
-  margin-bottom: 10px;
-  &.input {
-    display: block;
-  }
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.25s ease-out;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>
