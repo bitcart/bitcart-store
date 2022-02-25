@@ -12,7 +12,7 @@
                               :required="emailRequired",
                               placeholder="name@example.com",
                               name="email",
-                              @input="setUserEmail($event.target.value)"
+                              @input="$emit('update:email', $event.target.value)"
                               v-validate="'email'",
                               :class="{ 'is-danger': errors.has('email') }")
             span.icon.is-small.is-left
@@ -25,8 +25,22 @@
           input.input#promocode(type="text",
                             label="Promocode",
                             name="promocode",
-                            @input="setPromocode($event.target.value)"
+                            @input="$emit('update:promocode', $event.target.value)"
                             :class="{ 'is-danger': errors.has('promocode') }")
+        .field
+          label.label(for="shippingAddress") Shipping address
+          textarea.textarea#shippingAddress(type="text",
+                            label="Shipping address",
+                            name="shippingAddress",
+                            @input="$emit('update:shippingAddress', $event.target.value)"
+                            :class="{ 'is-danger': errors.has('shippingAddress') }")
+        .field
+          label.label(for="notes") Notes
+          textarea.textarea#notes(type="text",
+                            label="Notes",
+                            name="notes",
+                            @input="$emit('update:notes', $event.target.value)"
+                            :class="{ 'is-danger': errors.has('notes') }")
 
         .field
           button.button.is-success.pay-with-stripe(:disabled="errors.any()",
@@ -57,6 +71,18 @@ export default {
       type: String,
       default: STRIPE_URL,
     },
+    promocode: {
+      type: String,
+      default: null,
+    },
+    shippingAddress: {
+      type: String,
+      default: "",
+    },
+    notes: {
+      type: String,
+      default: "",
+    },
   },
   data() {
     return {
@@ -65,7 +91,6 @@ export default {
   },
   computed: {
     ...mapGetters("checkout", ["isStripeCardCompleted", "status", "isLoading"]),
-    ...mapGetters("cart", ["userEmail"]),
     ...mapGetters(["emailRequired"]),
   },
   methods: {
@@ -74,8 +99,6 @@ export default {
       "pay",
       "setIsStripeCardCompleted",
       "setStatus",
-      "setUserEmail",
-      "setPromocode",
     ]),
 
     async beforePay() {

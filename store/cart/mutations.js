@@ -54,12 +54,6 @@ export default {
   SET_TOTAL: (state, value) => {
     state.total = value
   },
-  SET_USER_EMAIL: (state, value) => {
-    state.userEmail = value
-  },
-  SET_PROMOCODE: (state, value) => {
-    state.promocode = value
-  },
   OPEN_SIDEBAR_CART: (state, value) => {
     state.openSidebarCart = value
   },

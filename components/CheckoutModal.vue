@@ -68,6 +68,22 @@ export default {
       type: Object,
       required: true,
     },
+    email: {
+      type: String,
+      default: "",
+    },
+    promocode: {
+      type: String,
+      default: null,
+    },
+    shippingAddress: {
+      type: String,
+      default: "",
+    },
+    notes: {
+      type: String,
+      default: "",
+    },
   },
   data() {
     return {
@@ -109,7 +125,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["userEmail", "promocode", "success"]),
+    ...mapGetters(["success"]),
     noTabs() {
       return (
         Object.entries(this.tabitem).length === 0 &&
@@ -154,8 +170,10 @@ export default {
         currency: this.$store.state.store.default_currency,
         products: cart,
         price: this.price,
-        buyer_email: this.userEmail,
+        buyer_email: this.email,
         promocode: this.promocode,
+        shipping_address: this.shippingAddress,
+        notes: this.notes,
       })
       .then((res) => {
         this.tabitem = res.data.payments

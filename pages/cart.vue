@@ -16,9 +16,9 @@
               button.button.is-success.is-pulled-right(@click="setActualStep(1)") > Next
 
           div(v-if="actualStep === 1")
-            Checkout(:total="amount", v-on:pay="setActualStep(2)")
+            Checkout(:total="amount", :email.sync="email" :promocode.sync="promocode", :shipping-address.sync="shippingAddress", :notes.sync="notes", v-on:pay="setActualStep(2)")
           div(v-if="actualStep === 2")
-            CheckoutModal(:total="amount", :cart="cart", v-on:close="setActualStep(3)")
+            CheckoutModal(:total="amount", :cart="cart", :email="email" :promocode="promocode", :shipping-address="shippingAddress", :notes="notes", v-on:close="setActualStep(3)")
 
         .empty.has-text-centered(v-else-if="!total && !success")
           h3 Your cart is empty.
@@ -51,16 +51,13 @@ export default {
   },
   data: () => ({
     stepMenuContent,
+    email: undefined,
+    promocode: null,
+    shippingAddress: "",
+    notes: "",
   }),
   computed: {
-    ...mapGetters([
-      "cart",
-      "total",
-      "amount",
-      "success",
-      "actualStep",
-      "userEmail",
-    ]),
+    ...mapGetters(["cart", "total", "amount", "success", "actualStep"]),
     currency() {
       return this.$store.state.store.default_currency
     },
