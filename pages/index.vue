@@ -12,7 +12,7 @@
                                     :key="product['id']",
                                     :item="product")
       .columns.is-centered
-        b-pagination.stick.is-marginless(:total="total" 
+        b-pagination.stick.is-marginless(:total="total"
           :current.sync="current"
           :per-page="perPage"
           order="is-centered"
