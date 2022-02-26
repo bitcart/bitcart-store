@@ -31,6 +31,13 @@ yarn start
 
 From now on, development environment is ready.
 
+**Note**: we use pre-commit hooks for development, you can install pre-commit and it's hooks like so:
+
+```bash
+curl https://pre-commit.com/install-local.py | python3 -
+pre-commit install
+```
+
 Make sure to follow [our coding guidelines](https://github.com/bitcartcc/bitcart/blob/master/CODING_STANDARDS.md) when developing.
 
 # Thank You!
