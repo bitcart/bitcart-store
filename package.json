@@ -16,7 +16,7 @@
     "update-bulma-colors": "bulma-css-vars"
   },
   "dependencies": {
-    "@chenfengyuan/vue-qrcode": "^1.0.1",
+    "@chenfengyuan/vue-qrcode": "^2.0.0",
     "@nuxtjs/axios": "^5.12.5",
     "buefy": "^0.9.0",
     "is-https": "^4.0.0",
