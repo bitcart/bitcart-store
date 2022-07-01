@@ -30,7 +30,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.5",
     "@fortawesome/fontawesome-free": "^5.15.2",
-    "@nuxtjs/eslint-config": "^8.0.0",
+    "@nuxtjs/eslint-config": "^10.0.0",
     "@nuxtjs/eslint-module": "^3.0.0",
     "@nuxtjs/pwa": "^3.3.4",
     "bulma": "0.9.4",
