@@ -24,7 +24,7 @@
     "nuxt-start": "^2.15.1",
     "slugify": "^1.4.6",
     "socks-proxy-agent": "^7.0.0",
-    "vee-validate": "^2.2.15",
+    "vee-validate": "^4.0.0",
     "vuex-persistedstate": "^4.0.0"
   },
   "devDependencies": {
