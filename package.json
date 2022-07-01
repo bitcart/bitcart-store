@@ -47,6 +47,6 @@
     "pug": "^3.0.1",
     "pug-plain-loader": "^1.1.0",
     "sass": "^1.38.0",
-    "sass-loader": "^10.1.1"
+    "sass-loader": "^13.0.0"
   }
 }
