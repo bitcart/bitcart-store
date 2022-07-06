@@ -17,10 +17,10 @@
                 qrcode(:options="{width: 256}" :value="qrValue" tag="img")
             .columns
               .column.has-text-centered
-                p.mt-6.mb-0.title(v-if="itemv.currency.toUpperCase() !== invoice.currency") 1 {{ itemv.currency.toUpperCase() }} = {{ itemv.rate_str }}
+                p.mt-6.mb-0.title(v-if="itemv.symbol.toUpperCase() !== invoice.currency") 1 {{ itemv.symbol.toUpperCase() }} = {{ itemv.rate_str }}
                 CopyText(:text="itemv.node_id" v-if="itemv.lightning && selectedToCopy === 1")
                 CopyText(:text="itemv.payment_address" v-else)
-                p.mt-6.mb-0.title Waiting for {{ itemv.amount }} {{ itemv.currency.toUpperCase() }} payment
+                p.mt-6.mb-0.title Waiting for {{ itemv.amount }} {{ itemv.symbol.toUpperCase() }} payment
             .columns(v-show="showRecommendedFee")
               .column.has-text-centered
                 p.mt-3.mb-0.subtitle Recommended fee: {{ itemv.recommended_fee }} sat/byte
