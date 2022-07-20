@@ -71,15 +71,17 @@ export const actions = {
     commit("services", services)
   },
   async loadEnv({ commit }, { env, req }) {
-    const fs = require("fs").promises
     let onionURL = null
-    try {
-      onionURL =
-        "http://" +
-        (await fs.readFile(
-          "/var/lib/tor/hidden_services/BitcartCC-Merchants-API/hostname"
-        ))
-    } catch {}
+    if (process.server) {
+      const fs = require("fs").promises
+      try {
+        onionURL =
+          "http://" +
+          (await fs.readFile(
+            "/var/lib/tor/hidden_services/BitcartCC-Merchants-API/hostname"
+          ))
+      } catch {}
+    }
     commit("setEnv", {
       URL: env.URL,
       SOCKS_PROXY: env.SOCKS_PROXY,
