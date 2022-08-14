@@ -45,6 +45,7 @@ export default {
     SOCKS_PROXY: process.env.BITCART_STORE_SOCKS_PROXY || "",
     ONION_API_URL: process.env.BITCART_STORE_ONION_API_URL || "",
     ONION_HOST: process.env.BITCART_STORE_ONION_HOST || "",
+    ROOTPATH: process.env.BITCART_STORE_ROOTPATH || "/",
   },
   /*
    ** Plugins to load before mounting the App
