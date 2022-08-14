@@ -41,14 +41,17 @@ export const mutations = {
 }
 export const getters = {
   url: ({ url }) => url,
-  onionURL({ services, path }) {
+  onionHost({ services, env }) {
+    if (env.onionHost) return env.onionHost
     const service = services["BitcartCC Store"]
-    return service ? service.hostname + path : ""
+    return service ? service.hostname : ""
+  },
+  onionURL({ env, path }, { onionHost }) {
+    const rootPath = env.rootPath === "/" ? "" : env.rootPath
+    return onionHost ? onionHost + rootPath + path : ""
   },
   apiOnionURL({ services, env }) {
-    if (env.onionURL) {
-      return env.onionURL
-    }
+    if (env.onionURL) return env.onionURL
     const service = services["BitcartCC Merchants API"]
     return service ? service.hostname : ""
   },
@@ -85,7 +88,9 @@ export const actions = {
     commit("setEnv", {
       URL: env.URL,
       SOCKS_PROXY: env.SOCKS_PROXY,
-      onionURL: onionURL ? onionURL.trim() : null,
+      onionURL: env.ONION_API_URL || (onionURL ? onionURL.trim() : null),
+      onionHost: env.ONION_HOST,
+      rootPath: env.ROOTPATH,
     })
     if (req) {
       commit("onion", req.headers.host.toLowerCase().endsWith(".onion"))

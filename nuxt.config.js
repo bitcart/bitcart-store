@@ -42,7 +42,9 @@ export default {
    */
   publicRuntimeConfig: {
     URL: process.env.BITCART_STORE_API_URL || "http://localhost:8000",
-    SOCKS_PROXY: process.env.BITCART_STORE_SOCKS_PROXY,
+    SOCKS_PROXY: process.env.BITCART_STORE_SOCKS_PROXY || "",
+    ONION_API_URL: process.env.BITCART_STORE_ONION_API_URL || "",
+    ONION_HOST: process.env.BITCART_STORE_ONION_HOST || "",
   },
   /*
    ** Plugins to load before mounting the App
