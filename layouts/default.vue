@@ -14,6 +14,7 @@
 import Header from "@/components/Header"
 import VERSION from "@/version"
 import CartSidebar from "@/components/CartSidebar"
+import { isEmpty } from "@/helpers"
 
 export default {
   components: {
@@ -30,6 +31,9 @@ export default {
   },
   head() {
     const themeURL = this.$store.state.store?.theme_settings?.store_theme_url
+    const commonHead = !isEmpty(this.$store.state.store)
+      ? { title: `${this.$store.state.store.name} | bitcart-store` }
+      : {}
     return themeURL
       ? {
           link: [
@@ -38,8 +42,9 @@ export default {
               href: themeURL,
             },
           ],
+          ...commonHead,
         }
-      : {}
+      : commonHead
   },
   beforeCreate() {
     this.$store.dispatch("syncStats")
