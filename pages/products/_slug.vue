@@ -11,7 +11,7 @@
         .column.is-6.is-offset-1
           UIExtensionSlot(name="product_description" :item="item")
             h1.title.is-2 {{ item.name }}
-            h2.subtitle.is-4 {{item.description}}
+            p.subtitle.is-4(style="white-space: pre-wrap" v-text="item.description")
             p.is-size-6 {{ item.price }} {{ currency }}
             br
             p.has-text-centered

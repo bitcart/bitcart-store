@@ -20,6 +20,7 @@ export default {
     } else {
       const stateItem = { ...item }
       stateItem.count = 1
+      // eslint-disable-next-line import/no-named-as-default-member
       Vue.set(state.cart, item.id, stateItem)
     }
     calculateAmount(state, this.state)
