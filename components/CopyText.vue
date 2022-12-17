@@ -5,7 +5,6 @@ transition(name="fade" mode="out-in")
 </template>
 
 <script>
-import { copyToClipboard } from "@/helpers"
 export default {
   props: {
     text: {
@@ -20,7 +19,7 @@ export default {
   },
   methods: {
     copyText() {
-      copyToClipboard(this.text)
+      this.$utils.copyToClipboard(this.text)
       this.show = false
       setTimeout(() => (this.show = true), 1000)
     },

@@ -10,10 +10,11 @@
             CartProductListItem(v-for="item in cart",
                 :key="item.id",
                 :item="item")
-          .empty.has-text-centered(v-else-if="!total")
-            h3 Your cart is empty.
-            nuxt-link(exact, :to="getHomeURL")
-              button.button(@click="closeSidebarCart()") Fill er up!
+          UIExtensionSlot(name="empty_cart" v-else-if="!total" :homeURL="getHomeURL" :closeSidebarCart="closeSidebarCart")
+            .empty.has-text-centered
+              h3 Your cart is empty.
+              nuxt-link(exact, :to="getHomeURL")
+                button.button(@click="closeSidebarCart()") Fill er up!
         div.cart-sidebar-footer(v-if="total > 0")
           p
             b Total: {{ amount }} {{ currency }}
@@ -24,12 +25,14 @@
 <script>
 import { createNamespacedHelpers } from "vuex"
 import CartProductListItem from "@/components/CartProductListItem"
+import UIExtensionSlot from "@/components/UIExtensionSlot"
 
 const { mapGetters: cartGetters } = createNamespacedHelpers("cart")
 
 export default {
   name: "CartSidebar",
   components: {
+    UIExtensionSlot,
     CartProductListItem,
   },
   computed: {

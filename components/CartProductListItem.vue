@@ -14,31 +14,36 @@
             |  x {{ item.price }} {{ currency }} = {{ decimalStr(item.count * item.price) }} {{ currency }}
         nav.level.is-mobile
           .level-left
-            a.level-item.removeItem(@click="removeItem(item)", title="Remove")
-              span.icon.is-small
-                i.fa.fa-trash-alt
-            a.level-item
-              span.icon.is-small
-                i.fa.fa-retweet
-            a.level-item
-              span.icon.is-small.has-text-danger
-                i.fa.fa-heart
-            a.level-item.addItem(@click="addItem(item)", title="Add")
-              span.icon.is-small
-                i.fa.fa-plus
-            a.level-item.decreaseItem(@click="decreaseItem(item)", title="Add")
-              span.icon.is-small
-                i.fa.fa-minus
+            UIExtensionSlot(name="cart_product_actions" :item="item")
+              a.level-item.removeItem(@click="removeItem(item)", title="Remove")
+                span.icon.is-small
+                  i.fa.fa-trash-alt
+              a.level-item
+                span.icon.is-small
+                  i.fa.fa-retweet
+              a.level-item
+                span.icon.is-small.has-text-danger
+                  i.fa.fa-heart
+              a.level-item.addItem(@click="addItem(item)", title="Add")
+                span.icon.is-small
+                  i.fa.fa-plus
+              a.level-item.decreaseItem(@click="decreaseItem(item)", title="Add")
+                span.icon.is-small
+                  i.fa.fa-minus
 </template>
 
 <script>
 import { createNamespacedHelpers } from "vuex"
-import mixins from "@/helpers/mixins"
+import mixins from "@/utils/mixins"
+import UIExtensionSlot from "@/components/UIExtensionSlot"
 
 const { mapActions } = createNamespacedHelpers("cart")
 
 export default {
   name: "CartProductListItem",
+  components: {
+    UIExtensionSlot,
+  },
   mixins: [mixins],
   props: {
     item: {

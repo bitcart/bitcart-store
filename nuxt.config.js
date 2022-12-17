@@ -1,3 +1,32 @@
+import path from "path"
+import globby from "globby"
+
+const packages = globby
+  .sync(["modules/*/package.json", "modules/*/*/package.json"])
+  .map((dir) => {
+    return dir.replace("modules/", "").replace("/package.json", "")
+  })
+
+const transpileDeps = [
+  ...new Set(
+    packages
+      .map((name) => {
+        const pkg = require(path.join(
+          __dirname,
+          "modules",
+          name,
+          "package.json"
+        ))
+        return Object.keys(pkg.dependencies || {}).concat(
+          Object.keys(pkg.devDependencies || {})
+        )
+      })
+      .flat()
+  ),
+]
+console.log("Modules", packages)
+console.log("Transpiling dependencies", transpileDeps)
+
 export default {
   /*
    ** Headers of the page
@@ -51,6 +80,7 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
+    "~/plugins/utils.js",
     "~plugins/localStorage.js",
     "~plugins/axios.js",
     "~/plugins/buefy.js",
@@ -62,7 +92,22 @@ export default {
    ** Nuxt.js modules
    */
   modules: ["@nuxtjs/axios"],
-  buildModules: ["@nuxtjs/pwa", "@nuxtjs/eslint-module"],
+  buildModules: [
+    "@nuxtjs/pwa",
+    "@nuxtjs/eslint-module",
+    "@ergonode/vuems",
+    "@nuxtjs/router",
+  ],
+  modulesDir: ["node_modules", "modules"],
+  vuems: {
+    required: [],
+    modules: { local: packages },
+    vuex: true,
+    isDev: process.env.NODE_ENV !== "production",
+  },
+  routerModule: {
+    keepDefaultRouter: true,
+  },
   /*
    ** @nuxt/telemetry settings
    */
@@ -79,5 +124,6 @@ export default {
         config.externals = ["fs"]
       }
     },
+    transpile: transpileDeps,
   },
 }

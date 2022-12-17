@@ -1,23 +1,29 @@
 <template lang="pug">
-  section.hero
-    .hero-head
-      app-header
-    .hero-body
-      nuxt
-    .hero-foot
-      .container
-        p &copy; BitcartCC v{{VERSION}}
-    app-cart-sidebar
+  UIExtensionSlot(name="app")
+    section.hero
+      .hero-head
+        UIExtensionSlot(name="header")
+          app-header
+      .hero-body
+        nuxt
+        UIExtensionSlot(name="body")
+      .hero-foot
+        UIExtensionSlot(name="footer")
+          .container
+            p &copy; BitcartCC v{{VERSION}}
+      UIExtensionSlot(name="cart_sidebar")
+        app-cart-sidebar
 </template>
 
 <script>
+import UIExtensionSlot from "@/components/UIExtensionSlot"
 import Header from "@/components/Header"
 import VERSION from "@/version"
 import CartSidebar from "@/components/CartSidebar"
-import { isEmpty } from "@/helpers"
 
 export default {
   components: {
+    UIExtensionSlot,
     AppHeader: Header,
     AppCartSidebar: CartSidebar,
   },
@@ -31,20 +37,24 @@ export default {
   },
   head() {
     const themeURL = this.$store.state.store?.theme_settings?.store_theme_url
-    const commonHead = !isEmpty(this.$store.state.store)
+    const commonHead = !this.$utils.isEmpty(this.$store.state.store)
       ? { title: `${this.$store.state.store.name} | bitcart-store` }
       : {}
-    return themeURL
-      ? {
-          link: [
-            {
-              rel: "stylesheet",
-              href: themeURL,
-            },
-          ],
-          ...commonHead,
-        }
-      : commonHead
+    return this.$utils.getExtendSetting.call(
+      this,
+      "head",
+      themeURL
+        ? {
+            link: [
+              {
+                rel: "stylesheet",
+                href: themeURL,
+              },
+            ],
+            ...commonHead,
+          }
+        : commonHead
+    )
   },
   beforeCreate() {
     this.$store.dispatch("syncStats")

@@ -36,7 +36,7 @@
 <script>
 import { createNamespacedHelpers } from "vuex"
 import Switch from "@/components/Switch"
-import mixins from "@/helpers/mixins"
+import mixins from "@/utils/mixins"
 
 const { mapActions, mapGetters } = createNamespacedHelpers("product")
 

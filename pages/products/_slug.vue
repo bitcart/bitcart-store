@@ -1,29 +1,34 @@
 <template lang="pug">
-  .container.has-text-centered(v-if="item")
-    .columns.is-vcentered
-      .column.is-5
-        picture.image.is_square
-          img.lazyload(:data-srcset="`${productURL(item.image)}`",
-                       :alt="`Image of ${item.name}`")
+  UIExtensionSlot(name="product" :item="item")
+    .container.has-text-centered(v-if="item")
+      .columns.is-vcentered
+        .column.is-5
+          UIExtensionSlot(name="product_image")
+          picture.image.is_square
+            img.lazyload(:data-srcset="`${productURL(item.image)}`",
+                        :alt="`Image of ${item.name}`")
 
-      .column.is-6.is-offset-1
-        h1.title.is-2 {{ item.name }}
-        h2.subtitle.is-4 {{item.description}}
-        p.is-size-6 {{ item.price }} {{ currency }}
-        br
-        p.has-text-centered
-          a.button.is-medium.is-success.is-outlined(@click="addItem(item)", aria-label="Add to cart") Add to cart
+        .column.is-6.is-offset-1
+          UIExtensionSlot(name="product_description" :item="item")
+            h1.title.is-2 {{ item.name }}
+            h2.subtitle.is-4 {{item.description}}
+            p.is-size-6 {{ item.price }} {{ currency }}
+            br
+            p.has-text-centered
+              a.button.is-medium.is-success.is-outlined(@click="addItem(item)", aria-label="Add to cart") Add to cart
 </template>
 
 <script>
 import isHTTPS from "is-https"
 import { createNamespacedHelpers } from "vuex"
-import mixins from "@/helpers/mixins"
+import UIExtensionSlot from "@/components/UIExtensionSlot"
 
 const { mapGetters } = createNamespacedHelpers("product")
 
 export default {
-  mixins: [mixins],
+  components: {
+    UIExtensionSlot,
+  },
   asyncData({ store, req, route, error, redirect, app }) {
     let url = ""
     if (req) {
@@ -87,7 +92,7 @@ export default {
           content: this.productURL(this.item.image),
         })
       }
-      return headData
+      return this.$utils.getExtendSetting.call(this, "product_head", headData)
     }
     return false
   },

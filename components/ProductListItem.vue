@@ -22,13 +22,10 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex"
-import { slug as slugf } from "@/helpers"
-import mixins from "@/helpers/mixins"
 const { mapActions } = createNamespacedHelpers("cart")
 
 export default {
   name: "Card",
-  mixins: [mixins],
   props: {
     item: {
       type: Object,
@@ -37,7 +34,7 @@ export default {
   },
   computed: {
     slug() {
-      return `${slugf(this.item.name)}-${this.item.id}`
+      return `${this.$utils.slug(this.item.name)}-${this.item.id}`
     },
     currency() {
       return this.$store.state.store.default_currency

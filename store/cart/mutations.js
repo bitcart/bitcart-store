@@ -1,8 +1,9 @@
 import Vue from "vue"
-import { decimalStr } from "@/helpers"
+import utils from "@/utils"
 
 const calculateAmount = (state, rootState) => {
-  state.amount = decimalStr(
+  state.amount = utils.decimalStr.call(
+    this,
     Object.values(state.cart).reduce(
       (acc, { count, price }) => acc + count * price,
       0

@@ -1,4 +1,5 @@
 <template lang="pug">
+  UIExtensionSlot(name="error" :error="error")
     .container
         .section
             .capsule.content
@@ -9,7 +10,11 @@
 </template>
 
 <script>
+import UIExtensionSlot from "@/components/UIExtensionSlot"
 export default {
+  components: {
+    UIExtensionSlot,
+  },
   props: {
     error: {
       type: Object,

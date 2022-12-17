@@ -1,25 +1,30 @@
 <template lang="pug">
-  .container
-    .section
-      app-hero
+  UIExtensionSlot(name="home_page")
     .container
-      .columns
-        .column
-          .section.capsule.is-clearfix
-            app-sidebar
-            transition-group.content.is-pulled-right(name="items", tag="div")
-              app-product-list-item(v-for="product in products",
-                                    :key="product['id']",
-                                    :item="product")
-      .columns.is-centered
-        b-pagination.stick.is-marginless(:total="total"
-          :current.sync="current"
-          :per-page="perPage"
-          order="is-centered"
-          aria-next-label="Next page"
-          aria-previous-label="Previous page"
-          aria-page-label="Page"
-          aria-current-label="Current page")
+      .section
+        UIExtensionSlot(name="main_hero")
+          app-hero
+      .container
+        .columns
+          .column
+            .section.capsule.is-clearfix
+              UIExtensionSlot(name="sidebar")
+                app-sidebar
+              UIExtensionSlot(name="products" :products="products")
+                transition-group.content.is-pulled-right(name="items", tag="div")
+                  app-product-list-item(v-for="product in products",
+                                        :key="product['id']",
+                                        :item="product")
+        .columns.is-centered
+          UIExtensionSlot(name="pagination" :total="total" :current="current" :per-page="perPage")
+            b-pagination.stick.is-marginless(:total="total"
+              :current.sync="current"
+              :per-page="perPage"
+              order="is-centered"
+              aria-next-label="Next page"
+              aria-previous-label="Previous page"
+              aria-page-label="Page"
+              aria-current-label="Current page")
 </template>
 
 <script>
@@ -27,11 +32,13 @@ import { createNamespacedHelpers } from "vuex"
 import Hero from "@/components/Hero"
 import ProductListItem from "@/components/ProductListItem"
 import Sidebar from "@/components/Sidebar"
+import UIExtensionSlot from "@/components/UIExtensionSlot"
 
 const { mapGetters } = createNamespacedHelpers("product")
 
 export default {
   components: {
+    UIExtensionSlot,
     AppHero: Hero,
     AppProductListItem: ProductListItem,
     AppSidebar: Sidebar,
