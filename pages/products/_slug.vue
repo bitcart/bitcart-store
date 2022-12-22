@@ -4,9 +4,9 @@
       .columns.is-vcentered
         .column.is-5
           UIExtensionSlot(name="product_image")
-          picture.image.is_square
-            img.lazyload(:data-srcset="`${productURL(item.image)}`",
-                        :alt="`Image of ${item.name}`")
+            picture.image.is_square
+              img.lazyload(:data-srcset="`${productURL(item.image)}`",
+                          :alt="`Image of ${item.name}`")
 
         .column.is-6.is-offset-1
           UIExtensionSlot(name="product_description" :item="item")
@@ -16,6 +16,10 @@
             br
             p.has-text-centered
               a.button.is-medium.is-success.is-outlined(@click="addItem(item)", aria-label="Add to cart") Add to cart
+
+        UIExtensionSlot(name="product_columns" :item="item")
+
+      UIExtensionSlot(name="product_container" :item="item")
 </template>
 
 <script>
