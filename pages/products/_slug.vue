@@ -13,6 +13,7 @@
             h1.title.is-2 {{ item.name }}
             p.subtitle.is-4(style="white-space: pre-wrap" v-text="item.description")
             p.is-size-6 {{ item.price }} {{ currency }}
+            p.is-size-6(v-if="item.quantity !== -1") {{ item.quantity > 0 ? `${item.quantity} left in stock` : "Out of stock" }}
             br
             p.has-text-centered
               a.button.is-medium.is-success.is-outlined(@click="addItem(item)", aria-label="Add to cart") Add to cart

@@ -1,53 +1,60 @@
 <template lang="pug">
 .container(v-if="!loading")
   UIExtensionSlot(name="checkout" :invoice="invoice" :payments="tabitem")
-    b-tabs(v-if="showCheckout && !noTabs" type="is-boxed" :animated="false" v-model="selectedTab")
-      b-tab-item(v-for="(item, index) in tabitem" :key="index" :label="item.name")
-        UIExtensionSlot(name="checkout_tab_item" :item="itemv" :qrValue="qrValue" :invoice="invoice" :showRecommendedFee="showRecommendedFee")
-          .card
-            header.card-header.has-text-centered
-              p.card-header-title.is-centered Checkout
-            .card-content
-              .container
-                .columns(v-if="itemv.lightning")
-                  .column
-                    b-tabs(type="is-toggle" position="is-centered" :animated="false" v-model="selectedToCopy")
-                      b-tab-item(label="Invoice")
-                      b-tab-item(label="Node Info")
-                .columns
-                  .column.has-text-centered
-                    qrcode(:options="{width: 256}" :value="qrValue" tag="img")
-                .columns
-                  .column.has-text-centered
-                    p.mt-6.mb-0.title(v-if="itemv.symbol.toUpperCase() !== invoice.currency") 1 {{ itemv.symbol.toUpperCase() }} = {{ itemv.rate_str }}
-                    CopyText(:text="itemv.node_id" v-if="itemv.lightning && selectedToCopy === 1")
-                    CopyText(:text="itemv.payment_address" v-else)
-                    p.mt-6.mb-0.title Waiting for {{ itemv.amount }} {{ itemv.symbol.toUpperCase() }} payment
-                .columns(v-show="showRecommendedFee")
-                  .column.has-text-centered
-                    p.mt-3.mb-0.subtitle Recommended fee: {{ itemv.recommended_fee }} sat/byte
-            .card-footer
-              .card-footer-item
-                button.button.is-primary(@click="copyText(itemv.payment_url, 'URL')")
-                  b-icon(icon="content-copy")
-                  span Copy
-    .card(v-if="showCheckout && noTabs")
-      UIExtensionSlot(name="checkout_empty")
+    .card(v-if="error")
+      UIExtensionSlot(name="checkout_error")
         header.card-header.has-text-centered
-          p.card-header-title.is-centered Empty
-        .card-content.has-text-centered No payment methods available
-    .card(v-if="!showCheckout && !success")
-      UIExtensionSlot(name="checkout_status_display" :texts="texts" :status="status")
-        .card-content
-          .container
-            .columns
-              .column.has-text-centered
-                span {{ texts[status].text}}
-            .columns
-              .column.has-text-centered
-                button.button.is-primary(@click="setActualStep(1)")
-                  b-icon(icon="arrow-left")
-                  span Back to payment details
+          p.card-header-title.is-centered Error
+        .card-content.has-text-centered {{ error }}
+    div(v-else)
+      div
+      b-tabs(v-if="showCheckout && !noTabs" type="is-boxed" :animated="false" v-model="selectedTab")
+        b-tab-item(v-for="(item, index) in tabitem" :key="index" :label="item.name")
+          UIExtensionSlot(name="checkout_tab_item" :item="itemv" :qrValue="qrValue" :invoice="invoice" :showRecommendedFee="showRecommendedFee")
+            .card
+              header.card-header.has-text-centered
+                p.card-header-title.is-centered Checkout
+              .card-content
+                .container
+                  .columns(v-if="itemv.lightning")
+                    .column
+                      b-tabs(type="is-toggle" position="is-centered" :animated="false" v-model="selectedToCopy")
+                        b-tab-item(label="Invoice")
+                        b-tab-item(label="Node Info")
+                  .columns
+                    .column.has-text-centered
+                      qrcode(:options="{width: 256}" :value="qrValue" tag="img")
+                  .columns
+                    .column.has-text-centered
+                      p.mt-6.mb-0.title(v-if="itemv.symbol.toUpperCase() !== invoice.currency") 1 {{ itemv.symbol.toUpperCase() }} = {{ itemv.rate_str }}
+                      CopyText(:text="itemv.node_id" v-if="itemv.lightning && selectedToCopy === 1")
+                      CopyText(:text="itemv.payment_address" v-else)
+                      p.mt-6.mb-0.title Waiting for {{ itemv.amount }} {{ itemv.symbol.toUpperCase() }} payment
+                  .columns(v-show="showRecommendedFee")
+                    .column.has-text-centered
+                      p.mt-3.mb-0.subtitle Recommended fee: {{ itemv.recommended_fee }} sat/byte
+              .card-footer
+                .card-footer-item
+                  button.button.is-primary(@click="copyText(itemv.payment_url, 'URL')")
+                    b-icon(icon="content-copy")
+                    span Copy
+      .card(v-if="showCheckout && noTabs")
+        UIExtensionSlot(name="checkout_empty")
+          header.card-header.has-text-centered
+            p.card-header-title.is-centered Empty
+          .card-content.has-text-centered No payment methods available
+      .card(v-if="!showCheckout && !success")
+        UIExtensionSlot(name="checkout_status_display" :texts="texts" :status="status")
+          .card-content
+            .container
+              .columns
+                .column.has-text-centered
+                  span {{ texts[status].text}}
+              .columns
+                .column.has-text-centered
+                  button.button.is-primary(@click="setActualStep(1)")
+                    b-icon(icon="arrow-left")
+                    span Back to payment details
 </template>
 
 <script>
@@ -94,6 +101,7 @@ export default {
       selectedTab: 0,
       selectedToCopy: 0,
       whatToCopy: "ID",
+      error: null,
       price: 0,
       invoice: {},
       tabitem: {},
@@ -205,6 +213,10 @@ export default {
             ref.showCheckout = false
           }
         }
+      })
+      .catch((err) => {
+        this.error = err.response.data.detail
+        this.loading = false
       })
   },
   methods: {

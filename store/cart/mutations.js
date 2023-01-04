@@ -1,3 +1,4 @@
+import { SnackbarProgrammatic as Snackbar } from "buefy"
 import Vue from "vue"
 import utils from "@/utils"
 
@@ -14,6 +15,18 @@ const calculateAmount = (state, rootState) => {
 
 export default {
   ADD_ITEM(state, item) {
+    if (
+      item.quantity !== -1 &&
+      (state.cart[item.id]?.count || 0) + 1 > item.quantity
+    ) {
+      Snackbar.open({
+        message: `No more ${item.name} available in stock`,
+        type: "is-danger",
+        duration: 2500,
+        position: "is-bottom",
+      })
+      return
+    }
     state.total++
     if (item.id in state.cart) {
       state.cart[item.id].count++
