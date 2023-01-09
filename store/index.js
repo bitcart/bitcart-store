@@ -8,6 +8,7 @@ export const state = () => ({
   path: "/",
   onion: false,
   storeID: 1,
+  apiError: null,
 })
 
 export const mutations = {
@@ -38,6 +39,9 @@ export const mutations = {
   policies(state, val) {
     state.policies = val
   },
+  apiError(state, value) {
+    state.apiError = value
+  },
 }
 export const getters = {
   url: ({ url }) => url,
@@ -66,12 +70,17 @@ export const getters = {
 export const actions = {
   async nuxtServerInit({ commit, dispatch }, { req, $axios, params }) {
     await dispatch("loadEnv", { env: this.$config, req })
-    const { data } = await $axios.get("/manage/stores")
-    commit("policies", data)
-    const storeID = params.id ? params.id : data.pos_id
-    commit("storeID", storeID)
-    const { data: services } = await $axios.get("/tor/services")
-    commit("services", services)
+    try {
+      const { data } = await $axios.get("/manage/stores")
+      commit("policies", data)
+      const storeID = params.id ? params.id : data.pos_id
+      commit("storeID", storeID)
+      const { data: services } = await $axios.get("/tor/services")
+      commit("services", services)
+      commit("apiError", null) // reset error
+    } catch (e) {
+      commit("apiError", e)
+    }
   },
   async loadEnv({ commit }, { env, req }) {
     let onionURL = null

@@ -3,7 +3,7 @@
                         role="navigation",
                         aria-label="main navigation")
     .container.is-flex-touch
-      .navbar-brand
+      .navbar-brand(v-if="$store.state.store?.name")
         nuxt-link.navbar-item(exact, :to="getHomeURL")
           strong
             i {{$store.state.store.name}}
@@ -34,7 +34,7 @@ export default {
     ...cartGetters(["total"]),
     ...mapGetters(["onionURL"]),
     isIndexRoute() {
-      return this.$route.name === "index"
+      return this.$store.state.apiError ? true : this.$route.name === "index"
     },
     getHomeURL() {
       const storeID = this.$route.params.id

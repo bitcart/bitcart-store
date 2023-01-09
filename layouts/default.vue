@@ -5,8 +5,11 @@
         UIExtensionSlot(name="header")
           app-header
       .hero-body
-        nuxt
-        UIExtensionSlot(name="body")
+        div(v-if="$store.state.apiError")
+          troubleshooting-guide(title="Store POS unconfigured")
+        div(v-else)
+          nuxt
+          UIExtensionSlot(name="body")
       .hero-foot
         UIExtensionSlot(name="footer")
           .container
@@ -20,12 +23,14 @@ import UIExtensionSlot from "@/components/UIExtensionSlot"
 import Header from "@/components/Header"
 import VERSION from "@/version"
 import CartSidebar from "@/components/CartSidebar"
+import TroubleshootingGuide from "@/components/TroubleshootingGuide"
 
 export default {
   components: {
     UIExtensionSlot,
     AppHeader: Header,
     AppCartSidebar: CartSidebar,
+    TroubleshootingGuide,
   },
   data() {
     return {
@@ -33,7 +38,9 @@ export default {
     }
   },
   async fetch() {
-    await this.$store.dispatch("syncStats")
+    try {
+      await this.$store.dispatch("syncStats")
+    } catch (e) {}
   },
   head() {
     const themeURL = this.$store.state.store?.theme_settings?.store_theme_url

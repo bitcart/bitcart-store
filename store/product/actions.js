@@ -40,6 +40,7 @@ export default {
           .get(`/products/categories?store=${this.state.storeID}`)
           .then((resp) => commit("SET_CATEGORIES", resp.data))
       })
+      .catch((e) => [])
   },
   fetchCount({ commit }) {
     return this.$axios
