@@ -7,12 +7,7 @@ export default {
   decimalStr(value, divisibility) {
     if (typeof divisibility === "undefined")
       divisibility = this.$store.getters.divisibility
-    const parsedAmount = parseFloat(value).toFixed(divisibility)
-    const [wholeAmount, fractionAmount] = parsedAmount.split(".")
-    const formattedWholeAmount = new Intl.NumberFormat().format(
-      parseInt(wholeAmount, 10)
-    )
-    return formattedWholeAmount + (fractionAmount ? "." + fractionAmount : "")
+    return parseFloat(value).toFixed(divisibility)
   },
   copyToClipboard(text) {
     const el = document.createElement("textarea")
