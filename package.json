@@ -44,6 +44,7 @@
     "eslint-plugin-nuxt": ">=2.0.0",
     "eslint-plugin-prettier": "^4.0.0",
     "lodash.debounce": "^4.0.8",
+    "lodash.mergewith": "^4.6.2",
     "nuxt": "^2.15.1",
     "prettier": "^2.2.1",
     "pug": "^3.0.1",
