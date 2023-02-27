@@ -54,7 +54,10 @@ export const getters = {
     if (env.onionAdminHost)
       return env.onionAdminHost.replace(/^https?:\/\//, "")
     const service = services["BitcartCC Admin Panel"]
-    return service ? service.hostname.replace(/^https?:\/\//, "") : ""
+    console.log(service)
+    return service && service.hostname
+      ? service.hostname.replace(/^https?:\/\//, "")
+      : ""
   },
   adminHost({ onion, env }, { onionAdminHost }) {
     return onion && onionAdminHost
