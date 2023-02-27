@@ -50,6 +50,19 @@ export const getters = {
     const service = services["BitcartCC Store"]
     return service ? service.hostname : ""
   },
+  onionAdminHost({ services, env }) {
+    if (env.onionAdminHost)
+      return env.onionAdminHost.replace(/^https?:\/\//, "")
+    const service = services["BitcartCC Admin Panel"]
+    return service && service.hostname
+      ? service.hostname.replace(/^https?:\/\//, "")
+      : ""
+  },
+  adminHost({ onion, env }, { onionAdminHost }) {
+    return onion && onionAdminHost
+      ? onionAdminHost
+      : env.adminHost.replace(/^https?:\/\//, "")
+  },
   onionURL({ env, path }, { onionHost }) {
     const rootPath = env.rootPath === "/" ? "" : env.rootPath
     return onionHost ? onionHost + rootPath + path : ""
@@ -99,6 +112,8 @@ export const actions = {
       SOCKS_PROXY: env.SOCKS_PROXY,
       onionURL: env.ONION_API_URL || (onionURL ? onionURL.trim() : null),
       onionHost: env.ONION_HOST,
+      onionAdminHost: env.ONION_ADMIN_HOST,
+      adminHost: env.ADMIN_HOST,
       rootPath: env.ROOTPATH,
     })
     if (req) {

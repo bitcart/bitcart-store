@@ -80,6 +80,8 @@ export default {
     SOCKS_PROXY: process.env.BITCART_STORE_SOCKS_PROXY || "",
     ONION_API_URL: process.env.BITCART_STORE_ONION_API_URL || "",
     ONION_HOST: process.env.BITCART_STORE_ONION_HOST || "",
+    ONION_ADMIN_HOST: process.env.BITCART_ADMIN_ONION_HOST || "",
+    ADMIN_HOST: process.env.BITCART_ADMIN_HOST || "localhost:3000",
     ROOTPATH: process.env.BITCART_STORE_ROOTPATH || "/",
   },
   /*
