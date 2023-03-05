@@ -109,10 +109,12 @@ export default {
   },
   computed: {
     total() {
-      return (
+      return this.$utils.decimalStr.call(
+        this,
         parseFloat(this.items.amount) +
-        parseFloat(this.items.tip) -
-        parseFloat(this.items.amount) * (parseFloat(this.items.discount) / 100)
+          parseFloat(this.items.tip) -
+          parseFloat(this.items.amount) *
+            (parseFloat(this.items.discount) / 100)
       )
     },
     currency() {
@@ -125,7 +127,6 @@ export default {
         const variants = [".", "0", "<"]
         return variants[i - 1]
       }
-      console.log("F", i, j)
       return 3 * (j - 1) + i
     },
     processButton(i, j) {
