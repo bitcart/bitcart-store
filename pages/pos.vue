@@ -10,9 +10,8 @@
       <p class="is-size-5">
         {{ items.amount }} {{ currency
         }}<span v-if="items.discount !== '0'">
-          - {{ (items.amount * items.discount) / 100 }} {{ currency }} ({{
-            items.discount
-          }}%)</span
+          - {{ decimalStr((items.amount * items.discount) / 100) }}
+          {{ currency }} ({{ items.discount }}%)</span
         ><span v-if="items.tip !== '0'"> + {{ items.tip }} {{ currency }}</span>
       </p>
     </div>
@@ -86,7 +85,10 @@
 </template>
 
 <script>
+import mixins from "@/utils/mixins"
+
 export default {
+  mixins: [mixins],
   data() {
     return {
       items: {
@@ -131,6 +133,12 @@ export default {
     },
     processButton(i, j) {
       let value = this.getNewValue(this.items[this.currentType], i, j)
+      // strip all values after decimal point of currency
+      if (value.includes(".")) {
+        const toAdd =
+          this.currentType === "discount" ? 2 : this.$store.getters.divisibility
+        value = value.substring(0, value.indexOf(".") + toAdd + 1)
+      }
       if (this.currentType === "discount" && parseFloat(value) > 100)
         value = "100"
       this.items[this.currentType] = value
