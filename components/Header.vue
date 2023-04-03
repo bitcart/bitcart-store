@@ -9,6 +9,13 @@
             i {{$store.state.store.name}}
       .navbar-end.is-flex-touch
         .navbar-item
+            .field
+              p.control
+                a.button.is-light(@click="openPOS")
+                  span.icon.cartitem(style="width: 40px")
+                    i.fa.fa-lg.fa-calculator
+                  span.is-hidden-mobile POS
+        .navbar-item
           .field
             p.control
               a.button.is-light(@click="openSidebarCart(true)")
@@ -51,6 +58,9 @@ export default {
   },
   methods: {
     ...mapActions(["openSidebarCart"]),
+    openPOS() {
+      this.$router.push("/pos")
+    },
   },
 }
 </script>

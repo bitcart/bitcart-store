@@ -169,7 +169,11 @@ export default {
           price: this.total,
         })
         .then((res) => {
-          this.total = "0"
+          this.items = {
+            amount: "0",
+            discount: "0",
+            tip: "0",
+          }
           window.bitcart.onModalReceiveMessage((data) => {
             if (typeof data.data === "object" && "status" in data.data) {
               this.status = data.data.status
