@@ -59,8 +59,9 @@ export const getters = {
       : ""
   },
   adminHost({ onion, env }, { onionAdminHost }) {
+    const rootPath = env.adminRootPath === "/" ? "" : env.adminRootPath
     return onion && onionAdminHost
-      ? onionAdminHost
+      ? onionAdminHost + rootPath
       : env.adminHost.replace(/^https?:\/\//, "")
   },
   onionURL({ env, path }, { onionHost }) {
@@ -115,6 +116,7 @@ export const actions = {
       onionAdminHost: env.ONION_ADMIN_HOST,
       adminHost: env.ADMIN_HOST,
       rootPath: env.ROOTPATH,
+      adminRootPath: env.ADMIN_ROOTPATH,
     })
     if (req) {
       commit("onion", req.headers.host.toLowerCase().endsWith(".onion"))

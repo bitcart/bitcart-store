@@ -83,6 +83,7 @@ export default {
     ONION_ADMIN_HOST: process.env.BITCART_ADMIN_ONION_HOST || "",
     ADMIN_HOST: process.env.BITCART_ADMIN_HOST || "localhost:3000",
     ROOTPATH: process.env.BITCART_STORE_ROOTPATH || "/",
+    ADMIN_ROOTPATH: process.env.BITCART_ADMIN_ROOTPATH || "/",
   },
   /*
    ** Plugins to load before mounting the App
