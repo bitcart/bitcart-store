@@ -110,55 +110,15 @@ export default {
         {
           src: `//${this.$store.getters.adminHost}/modal/bitcart.js`,
           async: true,
+          callback: () => {
+            this.continueCreation()
+          },
         },
       ],
     }
   },
   computed: {
     ...mapGetters(["success", "adminHost"]),
-  },
-  beforeMount() {
-    const cart = Object.assign(
-      {},
-      ...Object.keys(this.cart).map((k) => ({ [k]: this.cart[k].count }))
-    )
-    this.$axios
-      .post("invoices", {
-        store_id: this.$store.state.storeID,
-        currency: this.$store.state.store.default_currency,
-        products: cart,
-        price: this.total,
-        buyer_email: this.email,
-        promocode: this.promocode,
-        shipping_address: this.shippingAddress,
-        notes: this.notes,
-      })
-      .then((res) => {
-        window.bitcart.onModalReceiveMessage((data) => {
-          if (typeof data.data === "object" && "status" in data.data) {
-            this.status = data.data.status
-            if (["paid", "confirmed", "complete"].includes(this.status)) {
-              this.setSuccess(true)
-              this.clearContents()
-              this.clearCount()
-              if (this.invoice.redirect_url) {
-                window.location = this.invoice.redirect_url
-              }
-            } else {
-              this.setSuccess(false)
-            }
-            this.showCheckout = false
-            window.bitcart.hideFrame()
-          }
-        })
-        this.invoice = res.data
-        window.bitcart.showInvoice(res.data.id)
-        this.loading = false
-      })
-      .catch((err) => {
-        this.error = err.response.data.detail
-        this.loading = false
-      })
   },
   methods: {
     ...mapActions([
@@ -170,6 +130,49 @@ export default {
     reopenModal() {
       window.bitcart.showInvoice(this.invoice.id)
       window.bitcart.showFrame()
+    },
+    continueCreation() {
+      const cart = Object.assign(
+        {},
+        ...Object.keys(this.cart).map((k) => ({ [k]: this.cart[k].count }))
+      )
+      this.$axios
+        .post("invoices", {
+          store_id: this.$store.state.storeID,
+          currency: this.$store.state.store.default_currency,
+          products: cart,
+          price: this.total,
+          buyer_email: this.email,
+          promocode: this.promocode,
+          shipping_address: this.shippingAddress,
+          notes: this.notes,
+        })
+        .then((res) => {
+          window.bitcart.onModalReceiveMessage((data) => {
+            if (typeof data.data === "object" && "status" in data.data) {
+              this.status = data.data.status
+              if (["paid", "confirmed", "complete"].includes(this.status)) {
+                this.setSuccess(true)
+                this.clearContents()
+                this.clearCount()
+                if (this.invoice.redirect_url) {
+                  window.location = this.invoice.redirect_url
+                }
+              } else {
+                this.setSuccess(false)
+              }
+              this.showCheckout = false
+              window.bitcart.hideFrame()
+            }
+          })
+          this.invoice = res.data
+          window.bitcart.showInvoice(res.data.id)
+          this.loading = false
+        })
+        .catch((err) => {
+          this.error = err.response ? err.response.data.detail : err
+          this.loading = false
+        })
     },
   },
 }
