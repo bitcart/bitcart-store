@@ -89,6 +89,14 @@ import mixins from "@/utils/mixins"
 
 export default {
   mixins: [mixins],
+  async asyncData({ store, redirect }) {
+    try {
+      await store.dispatch("syncStats")
+    } catch (e) {}
+    if (!store.state.store?.checkout_settings?.pos_screen_enabled) {
+      return redirect("/")
+    }
+  },
   data() {
     return {
       items: {

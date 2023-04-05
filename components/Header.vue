@@ -8,7 +8,7 @@
           strong
             i {{$store.state.store.name}}
       .navbar-end.is-flex-touch
-        .navbar-item
+        .navbar-item(v-if="$store.state.store?.checkout_settings?.pos_screen_enabled")
             .field
               p.control
                 a.button.is-light(@click="openPOS")
