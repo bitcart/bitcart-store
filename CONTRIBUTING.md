@@ -1,14 +1,14 @@
-# Contributing to BitcartCC Store
+# Contributing to Bitcart Store
 
-Welcome, and thank you for your interest in contributing to BitcartCC Store!
+Welcome, and thank you for your interest in contributing to Bitcart Store!
 
-Our [central contributing guidelines](https://github.com/bitcartcc/bitcart/blob/master/CONTRIBUTING.md) apply to all BitcartCC repositories.
+Our [central contributing guidelines](https://github.com/bitcart/bitcart/blob/master/CONTRIBUTING.md) apply to all Bitcart repositories.
 
-Below are the instructions for setting up development environment with BitcartCC Store.
+Below are the instructions for setting up development environment with Bitcart Store.
 
 ## Setting up development environment
 
-Some general advice can be found in our [central contributing guidelines](https://github.com/bitcartcc/bitcart/blob/master/CONTRIBUTING.md#setting-up-development-environment).
+Some general advice can be found in our [central contributing guidelines](https://github.com/bitcart/bitcart/blob/master/CONTRIBUTING.md#setting-up-development-environment).
 
 Installation instructions:
 
@@ -38,7 +38,7 @@ curl https://pre-commit.com/install-local.py | python3 -
 pre-commit install
 ```
 
-Make sure to follow [our coding guidelines](https://github.com/bitcartcc/bitcart/blob/master/CODING_STANDARDS.md) when developing.
+Make sure to follow [our coding guidelines](https://github.com/bitcart/bitcart/blob/master/CODING_STANDARDS.md) when developing.
 
 # Thank You!
 

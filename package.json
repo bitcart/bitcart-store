@@ -1,7 +1,7 @@
 {
   "name": "bitcart-store",
   "version": "1.0.0",
-  "description": "BitcartCC Store",
+  "description": "Bitcart Store",
   "author": "MrNaif2018",
   "private": true,
   "scripts": {

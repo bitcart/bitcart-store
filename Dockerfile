@@ -13,7 +13,7 @@ RUN yarn install \
 
 RUN addgroup -g 19001 tor && addgroup node tor
 
-LABEL org.bitcartcc.image=store
+LABEL org.bitcart.image=store
 ENV NUXT_HOST 0.0.0.0
 ENV NUXT_PORT 3000
 

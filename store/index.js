@@ -47,13 +47,13 @@ export const getters = {
   url: ({ url }) => url,
   onionHost({ services, env }) {
     if (env.onionHost) return env.onionHost
-    const service = services["BitcartCC Store"]
+    const service = services["Bitcart Store"]
     return service ? service.hostname : ""
   },
   onionAdminHost({ services, env }) {
     if (env.onionAdminHost)
       return env.onionAdminHost.replace(/^https?:\/\//, "")
-    const service = services["BitcartCC Admin Panel"]
+    const service = services["Bitcart Admin Panel"]
     return service && service.hostname
       ? service.hostname.replace(/^https?:\/\//, "")
       : ""
@@ -70,7 +70,7 @@ export const getters = {
   },
   apiOnionURL({ services, env }) {
     if (env.onionURL) return env.onionURL
-    const service = services["BitcartCC Merchants API"]
+    const service = services["Bitcart Merchants API"]
     return service ? service.hostname : ""
   },
   apiURL({ onion, env }, { apiOnionURL }) {
@@ -104,7 +104,7 @@ export const actions = {
         onionURL =
           "http://" +
           (await fs.readFile(
-            "/var/lib/tor/hidden_services/BitcartCC-Merchants-API/hostname"
+            "/var/lib/tor/hidden_services/Bitcart-Merchants-API/hostname"
           ))
       } catch {}
     }

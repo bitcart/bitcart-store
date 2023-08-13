@@ -13,7 +13,7 @@
       .hero-foot
         UIExtensionSlot(name="footer")
           .container
-            p &copy; BitcartCC v{{VERSION}}
+            p &copy; Bitcart v{{VERSION}}
       UIExtensionSlot(name="cart_sidebar")
         app-cart-sidebar
 </template>
