@@ -46,7 +46,7 @@
     "lodash.debounce": "^4.0.8",
     "lodash.mergewith": "^4.6.2",
     "nuxt": "^2.15.1",
-    "prettier": "^2.2.1",
+    "prettier": "^3.0.0",
     "pug": "^3.0.1",
     "pug-plain-loader": "^1.1.0",
     "sass": "^1.38.0",
