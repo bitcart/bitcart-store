@@ -55,11 +55,20 @@ export default {
         ? { name: "store-id-cart", params: { id: storeID } }
         : { name: "cart" }
     },
+    getPOSURL() {
+      const storeID = this.$route.params.id
+      return storeID
+        ? {
+            name: "store-id-pos",
+            params: { id: storeID },
+          }
+        : { name: "pos" }
+    },
   },
   methods: {
     ...mapActions(["openSidebarCart"]),
     openPOS() {
-      this.$router.push("/pos")
+      if (!this.$route.path.endsWith("/pos")) this.$router.push(this.getPOSURL)
     },
   },
 }
