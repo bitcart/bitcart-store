@@ -70,7 +70,7 @@ export default {
     },
     promocode: {
       type: String,
-      default: null,
+      default: "",
     },
     shippingAddress: {
       type: String,
