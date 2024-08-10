@@ -65,7 +65,7 @@ export default {
         stepMenuContent
       ),
       email: undefined,
-      promocode: null,
+      promocode: "",
       shippingAddress: "",
       notes: "",
     }
