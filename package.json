@@ -39,7 +39,7 @@
     "bulma-css-vars": "^0.8.0",
     "bulma-steps": "^2.2.1",
     "bulma-switch": "^2.0.0",
-    "eslint": "^8.0.0",
+    "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-nuxt": ">=2.0.0",
     "eslint-plugin-prettier": "^4.0.0",
