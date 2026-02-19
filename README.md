@@ -1,6 +1,6 @@
 # Bitcart Store
 
-[![CircleCI](https://circleci.com/gh/bitcart/bitcart-store.svg?style=svg)](https://circleci.com/gh/bitcart/bitcart-store)
+[![CI](https://github.com/bitcart/bitcart-store/actions/workflows/ci.yml/badge.svg)](https://github.com/bitcart/bitcart-store/actions/workflows/ci.yml)
 
 This is the Bitcart Store.
 
