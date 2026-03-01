@@ -74,6 +74,7 @@ export const getters = {
     return service ? service.hostname : ""
   },
   apiURL({ onion, env }, { apiOnionURL }) {
+    if (process.server && env.SERVER_API_URL) return env.SERVER_API_URL
     return onion && apiOnionURL ? apiOnionURL : env.URL
   },
   emailRequired: ({ store }) =>
@@ -110,6 +111,7 @@ export const actions = {
     }
     commit("setEnv", {
       URL: env.URL,
+      SERVER_API_URL: env.SERVER_API_URL,
       SOCKS_PROXY: env.SOCKS_PROXY,
       onionURL: env.ONION_API_URL || (onionURL ? onionURL.trim() : null),
       onionHost: env.ONION_HOST,
