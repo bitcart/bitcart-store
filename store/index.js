@@ -83,16 +83,20 @@ export const getters = {
     store.currency_data && store.currency_data.divisibility,
 }
 export const actions = {
-  async nuxtServerInit({ commit, dispatch }, { req, $axios, params }) {
+  async nuxtServerInit({ dispatch }, { req, params, route }) {
     await dispatch("loadEnv", { env: this.$config, req })
+    if (!route || route.name === null) return
+    await dispatch("loadAppData", { params })
+  },
+  async loadAppData({ commit }, payload = {}) {
     try {
-      const { data } = await $axios.get("/manage/stores")
+      const { data } = await this.$axios.get("/manage/stores")
       commit("policies", data)
-      const storeID = params.id ? params.id : data.pos_id
+      const storeID = payload.params?.id ? payload.params.id : data.pos_id
       commit("storeID", storeID)
-      const { data: services } = await $axios.get("/tor/services")
+      const { data: services } = await this.$axios.get("/tor/services")
       commit("services", services)
-      commit("apiError", null) // reset error
+      commit("apiError", null)
     } catch (e) {
       commit("apiError", e)
     }

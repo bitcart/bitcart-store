@@ -5,7 +5,7 @@
         UIExtensionSlot(name="header")
           app-header
       .hero-body
-        div(v-if="$store.state.apiError")
+        div(v-if="storeUnconfigured")
           troubleshooting-guide(title="Store POS unconfigured")
         div(v-else)
           nuxt
@@ -38,8 +38,17 @@ export default {
     }
   },
   async fetch() {
+    if (process.server && (!this.$route || this.$route.name === null)) return
+    if (
+      this.$utils.isEmpty(this.$store.state.policies) &&
+      !this.storeUnconfigured
+    ) {
+      await this.$store.dispatch("loadAppData")
+    }
     try {
-      await this.$store.dispatch("syncStats")
+      if (this.$utils.isEmpty(this.$store.state.store)) {
+        await this.$store.dispatch("syncStats")
+      }
     } catch (e) {}
   },
   head() {
@@ -63,7 +72,13 @@ export default {
         : commonHead
     )
   },
+  computed: {
+    storeUnconfigured() {
+      return !!this.$store.state.apiError
+    },
+  },
   beforeCreate() {
+    if (process.server) return
     this.$store.dispatch("syncStats")
   },
 }
