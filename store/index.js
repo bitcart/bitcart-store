@@ -137,7 +137,7 @@ export const actions = {
       const resp = await this.$axios.get(
         `/products/maxprice?store=${this.state.storeID}`
       )
-      commit("product/maxprice", resp.data)
+      commit("product/maxprice", Number(resp.data))
     } catch {}
     try {
       const resp = await this.$axios.get(
