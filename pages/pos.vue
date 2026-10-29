@@ -111,7 +111,7 @@ export default {
     return {
       script: [
         {
-          src: `//${this.$store.getters.adminHost}/modal/bitcart.js`,
+          src: `${this.$store.getters.checkoutBase}/modal/bitcart.js`,
           async: true,
         },
       ],

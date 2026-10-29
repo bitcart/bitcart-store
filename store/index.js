@@ -5,6 +5,7 @@ export const state = () => ({
   url: "",
   services: {},
   policies: {},
+  checkoutURL: "",
   path: "/",
   onion: false,
   storeID: 1,
@@ -39,6 +40,9 @@ export const mutations = {
   policies(state, val) {
     state.policies = val
   },
+  checkoutURL(state, val) {
+    state.checkoutURL = val
+  },
   apiError(state, value) {
     state.apiError = value
   },
@@ -63,6 +67,9 @@ export const getters = {
     return onion && onionAdminHost
       ? onionAdminHost + rootPath
       : env.adminHost.replace(/^https?:\/\//, "")
+  },
+  checkoutBase({ onion, checkoutURL }, { adminHost }) {
+    return !onion && checkoutURL ? checkoutURL : `//${adminHost}`
   },
   onionURL({ env, path }, { onionHost }) {
     const rootPath = env.rootPath === "/" ? "" : env.rootPath
@@ -96,6 +103,8 @@ export const actions = {
       commit("storeID", storeID)
       const { data: services } = await this.$axios.get("/tor/services")
       commit("services", services)
+      const { data: serverPolicies } = await this.$axios.get("/manage/policies")
+      commit("checkoutURL", serverPolicies.checkout_url)
       commit("apiError", null)
     } catch (e) {
       commit("apiError", e)
